@@ -45,6 +45,7 @@
     "lucide-react": "^0.475.0",
     "mammoth": "^1.8.0",
     "next": "15.5.9",
+    "ogl": "0.0.110",
     "patch-package": "^8.0.0",
     "pdf-parse": "^1.1.1",
     "react": "^19.2.1",

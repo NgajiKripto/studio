@@ -1,6 +1,8 @@
+'use client';
 import { Button } from "@/components/ui/button";
 import { QrCode } from "lucide-react";
 import Link from 'next/link';
+import Particles from './particles';
 
 function LeaderboardCard() {
   return (
@@ -40,12 +42,18 @@ function LeaderboardCard() {
 
 export function HeroSection() {
   return (
-    <section className="container mx-auto px-6 py-24 flex flex-col lg:flex-row items-center gap-12">
+    <section className="container mx-auto px-6 py-24 flex flex-col lg:flex-row items-center gap-12 relative isolate">
+       <Particles
+        className="absolute inset-0 -z-10"
+        particleCount={200}
+        particleSpread={15}
+        speed={0.1}
+        alphaParticles={true}
+        particleBaseSize={2}
+        sizeRandomness={1}
+        cameraDistance={20}
+      />
       <div className="w-full lg:w-1/2 flex flex-col gap-8 relative">
-        <div className="absolute inset-0 flex items-center justify-center -z-10">
-          <div className="w-64 h-64 border border-accent/30 rounded-full animate-ping opacity-20"></div>
-        </div>
-        <div className="absolute -left-20 top-0 w-96 h-96 bg-accent/10 rounded-full blur-[120px] -z-10 animate-pulse"></div>
         <h1 className="text-6xl font-black leading-tight text-primary">
           Stop the Waiting Game. Hire and Get Hired, Instantly.
         </h1>
@@ -67,12 +75,7 @@ export function HeroSection() {
         </p>
       </div>
       <div className="w-full lg:w-1/2 relative">
-        <div className="absolute inset-0 flex items-center justify-center -z-10">
-          <div className="w-64 h-64 border border-accent/30 rounded-full animate-ping opacity-20"></div>
-        </div>
         <LeaderboardCard />
-        <div className="absolute -top-10 -right-10 w-64 h-64 bg-primary/10 rounded-full blur-3xl -z-10"></div>
-        <div className="absolute -bottom-10 -left-10 w-48 h-48 bg-accent/10 rounded-full blur-3xl -z-10"></div>
       </div>
     </section>
   );
