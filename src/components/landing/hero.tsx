@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { QrCode } from "lucide-react";
 import Link from 'next/link';
-import Particles from './particles';
+import { GridScan } from './GridScan';
 
 function LeaderboardCard() {
   return (
@@ -43,15 +43,8 @@ function LeaderboardCard() {
 export function HeroSection() {
   return (
     <section className="container mx-auto px-6 py-24 flex flex-col lg:flex-row items-center gap-12 relative isolate">
-       <Particles
+       <GridScan
         className="absolute inset-0 -z-10"
-        particleCount={200}
-        particleSpread={15}
-        speed={0.1}
-        alphaParticles={true}
-        particleBaseSize={2}
-        sizeRandomness={1}
-        cameraDistance={20}
       />
       <div className="w-full lg:w-1/2 flex flex-col gap-8 relative">
         <h1 className="text-6xl font-black leading-tight text-primary">

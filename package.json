@@ -40,6 +40,8 @@
     "date-fns": "^3.6.0",
     "dotenv": "^16.5.0",
     "embla-carousel-react": "^8.6.0",
+    "encoding": "^0.1.13",
+    "face-api.js": "^0.22.2",
     "firebase": "^11.9.1",
     "genkit": "^1.28.0",
     "lucide-react": "^0.475.0",
@@ -48,6 +50,7 @@
     "ogl": "0.0.110",
     "patch-package": "^8.0.0",
     "pdf-parse": "^1.1.1",
+    "postprocessing": "^6.39.1",
     "react": "^19.2.1",
     "react-day-picker": "^9.11.3",
     "react-dom": "^19.2.1",
@@ -55,6 +58,7 @@
     "recharts": "^2.15.1",
     "tailwind-merge": "^3.0.1",
     "tailwindcss-animate": "^1.0.7",
+    "three": "^0.184.0",
     "zod": "^3.24.2"
   },
   "devDependencies": {
