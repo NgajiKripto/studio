@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { QrCode } from "lucide-react";
-import { JobMatchModal } from "@/components/job-match-modal";
+import Link from 'next/link';
 
 function LeaderboardCard() {
   return (
@@ -53,11 +53,11 @@ export function HeroSection() {
           Experience the future of recruitment with our Zero-Storage AI. Instant matching, live applicant leaderboards, and automated workflows designed to accelerate your hiring process without the clutter.
         </p>
         <div className="flex flex-wrap gap-4 pt-4">
-          <JobMatchModal>
+          <Link href="#job-listings">
             <Button size="lg" className="rounded-full shadow-md hover:scale-105 transition-transform duration-200">
-              Cek Kecocokan
+              Lihat Lowongan
             </Button>
-          </JobMatchModal>
+          </Link>
           <Button size="lg" variant="outline" className="rounded-full hover:bg-accent/10">
             Hire Talent
           </Button>

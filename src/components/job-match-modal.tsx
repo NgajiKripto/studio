@@ -7,7 +7,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
   DialogFooter,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -27,7 +26,13 @@ const ACCEPTED_FILE_TYPES = [
 
 type Status = 'idle' | 'analyzing' | 'result';
 
-export function JobMatchModal({ children }: { children: React.ReactNode }) {
+interface JobMatchModalProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  jobDescription: string;
+}
+
+export function JobMatchModal({ open, onOpenChange, jobDescription }: JobMatchModalProps) {
   const [isDragging, setIsDragging] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [manualInput, setManualInput] = useState({ lastPosition: '', experience: '', skills: '' });
@@ -122,12 +127,23 @@ export function JobMatchModal({ children }: { children: React.ReactNode }) {
       return;
     }
 
+    if (!jobDescription) {
+        toast({
+            variant: 'destructive',
+            title: 'Kesalahan Aplikasi',
+            description: 'Deskripsi pekerjaan tidak ditemukan.',
+        });
+        return;
+    }
+
     setStatus('analyzing');
     setError(null);
 
     try {
       let resumeText = '';
       const formData = new FormData();
+      
+      formData.append('jobDescription', jobDescription);
 
       if (file) {
         formData.append('file', file);
@@ -249,7 +265,7 @@ export function JobMatchModal({ children }: { children: React.ReactNode }) {
             <DialogHeader className="p-6 pb-4">
               <DialogTitle className="text-2xl font-bold">Cek Kecocokan CV</DialogTitle>
               <DialogDescription>
-                Unggah CV Anda dan isi beberapa detail untuk melihat seberapa cocok Anda dengan lowongan yang ada.
+                Unggah CV Anda dan isi beberapa detail untuk melihat seberapa cocok Anda dengan lowongan yang dipilih.
               </DialogDescription>
             </DialogHeader>
             <div className="px-6 pb-6 grid gap-6">
@@ -327,8 +343,12 @@ export function JobMatchModal({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <Dialog onOpenChange={(open) => !open && resetState()}>
-      <DialogTrigger asChild>{children}</DialogTrigger>
+    <Dialog open={open} onOpenChange={(isOpen) => {
+        if (!isOpen) {
+            resetState();
+        }
+        onOpenChange(isOpen);
+    }}>
       <DialogContent className="sm:max-w-[625px] p-0 border-gray-200 rounded-lg">
         {renderContent()}
       </DialogContent>

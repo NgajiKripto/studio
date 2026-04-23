@@ -3,29 +3,19 @@ import pdf from 'pdf-parse';
 import mammoth from 'mammoth';
 import { aiResumeKeywordFiltering } from '@/ai/flows/ai-resume-keyword-filtering-flow';
 
-// Data dummy untuk kualifikasi pekerjaan
-const jobKualifikasi = `
-Posisi: Senior Frontend Engineer (React)
-
-Deskripsi Pekerjaan:
-Kami mencari seorang Senior Frontend Engineer yang berpengalaman untuk bergabung dengan tim kami.
-Anda akan bertanggung jawab untuk mengembangkan antarmuka pengguna (UI) berkualitas tinggi, modern, dan responsif untuk aplikasi web kami.
-
-Kualifikasi Wajib:
-- Pengalaman profesional minimal 5 tahun dalam pengembangan frontend.
-- Sangat mahir dengan React.js dan ekosistemnya (Redux, React Router).
-- Keahlian mendalam dalam TypeScript, JavaScript (ES6+), HTML5, dan CSS3.
-- Pengalaman dengan state management library seperti Zustand atau Recoil.
-- Memahami prinsip-prinsip desain UI/UX dan mampu menerjemahkan desain Figma ke dalam kode.
-- Familiar dengan CI/CD dan Git.
-- Kemampuan menulis kode yang bersih, teruji, dan mudah dipelihara.
-`;
-
 export async function POST(request: Request) {
   try {
     const formData = await request.formData();
     const file = formData.get('file') as File | null;
     const resumeTextFromForm = formData.get('resumeText') as string | null;
+    const jobDescription = formData.get('jobDescription') as string | null;
+
+    if (!jobDescription) {
+        return NextResponse.json(
+          { error: 'Job description is missing.' },
+          { status: 400 }
+        );
+    }
 
     let candidateResume = '';
 
@@ -66,7 +56,7 @@ export async function POST(request: Request) {
 
     // Panggil Genkit AI flow untuk analisis
     const analysisResult = await aiResumeKeywordFiltering({
-      jobDescription: jobKualifikasi,
+      jobDescription: jobDescription,
       candidateResume,
     });
 

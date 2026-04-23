@@ -3,6 +3,7 @@ import { HeroSection } from "@/components/landing/hero";
 import { ProblemSolutionSection } from "@/components/landing/problem-solution";
 import { FeaturesSection } from "@/components/landing/features";
 import { HowItWorksSection } from "@/components/landing/how-it-works";
+import { JobListingSection } from "@/components/landing/job-listing";
 import { CtaSection } from "@/components/landing/cta";
 import { Footer } from "@/components/landing/footer";
 
@@ -15,6 +16,7 @@ export default function Home() {
         <ProblemSolutionSection />
         <FeaturesSection />
         <HowItWorksSection />
+        <JobListingSection />
         <CtaSection />
       </main>
       <Footer />
