@@ -26,11 +26,19 @@ export type AiResumeKeywordFilteringInput = z.infer<
 
 const AiResumeKeywordFilteringOutputSchema = z.object({
   score: z
-    .number().min(0).max(100)
-    .describe('A match score between 0 and 100 indicating how well the resume matches the job description.'),
-  reason: z
-    .string()
-    .describe('A brief explanation for the given match score, highlighting key strengths or weaknesses.'),
+    .number()
+    .min(0)
+    .max(100)
+    .describe('A match score between 0 and 100.'),
+  status: z
+    .enum(['Lolos', 'Gagal'])
+    .describe('The final status, "Lolos" if score >= 70, otherwise "Gagal".'),
+  cocok: z
+    .array(z.string())
+    .describe('An array of skills from the resume that match the job description.'),
+  kurang: z
+    .array(z.string())
+    .describe('An array of required skills that are missing from the resume.'),
 });
 export type AiResumeKeywordFilteringOutput = z.infer<
   typeof AiResumeKeywordFilteringOutputSchema
@@ -46,21 +54,23 @@ const aiResumeKeywordFilteringPrompt = ai.definePrompt({
   name: 'aiResumeKeywordFilteringPrompt',
   input: {schema: AiResumeKeywordFilteringInputSchema},
   output: {schema: AiResumeKeywordFilteringOutputSchema},
-  prompt: `You are an expert HR recruiter assistant. Your task is to evaluate a candidate's resume against a given job description and provide a match score from 0 to 100, along with a brief explanation.
+  prompt: `Anda adalah AI Recruitment Assistant. Analisis teks CV berikut dan cocokkan dengan kualifikasi pekerjaan. Anda HANYA boleh membalas dengan format JSON murni tanpa markdown, tanpa backticks, dan tanpa teks pengantar. Format wajib:
+{
+  "score": <angka 0-100>,
+  "status": <"Lolos" atau "Gagal">,
+  "cocok": [<array skill yang sesuai>],
+  "kurang": [<array skill yang tidak ada>]
+}
 
-- A score of 0-69 means the candidate is not a good fit.
-- A score of 70-84 means the candidate is a potential fit.
-- A score of 85-100 means the candidate is a strong fit.
+Tetapkan "status" menjadi "Lolos" jika skor 70 atau lebih, dan "Gagal" jika sebaliknya.
+Dasarkan skor Anda pada keberadaan keterampilan yang dibutuhkan, pengalaman bertahun-tahun, dan relevansi secara keseluruhan.
 
-Base your score on the presence of required skills, years of experience, and overall relevance to the job description.
-
-Job Description:
+Kualifikasi Pekerjaan:
 {{{jobDescription}}}
 
-Candidate Resume:
+CV Kandidat:
 {{{candidateResume}}}
-
-Provide a 'score' and a 'reason' for your evaluation in a strict JSON format. Example: { "score": 85, "reason": "Sangat cocok dengan pengalaman React" }.`,
+`,
 });
 
 const aiResumeKeywordFilteringFlow = ai.defineFlow(

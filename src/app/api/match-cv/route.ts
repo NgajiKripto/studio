@@ -3,8 +3,8 @@ import pdf from 'pdf-parse';
 import mammoth from 'mammoth';
 import { aiResumeKeywordFiltering } from '@/ai/flows/ai-resume-keyword-filtering-flow';
 
-// Hardcoded job description for demonstration purposes
-const jobDescription = `
+// Data dummy untuk kualifikasi pekerjaan
+const jobKualifikasi = `
 Posisi: Senior Frontend Engineer (React)
 
 Deskripsi Pekerjaan:
@@ -20,9 +20,6 @@ Kualifikasi Wajib:
 - Familiar dengan CI/CD dan Git.
 - Kemampuan menulis kode yang bersih, teruji, dan mudah dipelihara.
 `;
-
-// Helper function to strip HTML tags
-const stripHtml = (html: string) => html.replace(/<[^>]*>?/gm, '');
 
 export async function POST(request: Request) {
   try {
@@ -67,9 +64,9 @@ export async function POST(request: Request) {
         );
     }
 
-    // Call the Genkit AI flow for analysis
+    // Panggil Genkit AI flow untuk analisis
     const analysisResult = await aiResumeKeywordFiltering({
-      jobDescription,
+      jobDescription: jobKualifikasi,
       candidateResume,
     });
 
@@ -77,8 +74,9 @@ export async function POST(request: Request) {
     
   } catch (error: any) {
     console.error('Error processing CV:', error);
+    // Jika pdf-parse atau API model gagal, kembalikan response JSON yang rapi
     return NextResponse.json(
-      { error: 'An unexpected error occurred on the server.' },
+      { error: 'An unexpected error occurred on the server while processing the CV.' },
       { status: 500 }
     );
   }

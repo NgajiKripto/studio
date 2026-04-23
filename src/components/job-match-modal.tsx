@@ -14,7 +14,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { UploadCloud, FileText, X, Loader2, ServerCrash, CheckCircle, XCircle } from 'lucide-react';
+import { UploadCloud, FileText, X, Loader2, ServerCrash, CheckCircle, XCircle, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import type { AiResumeKeywordFilteringOutput } from '@/ai/flows/ai-resume-keyword-filtering-flow';
@@ -186,31 +186,58 @@ export function JobMatchModal({ children }: { children: React.ReactNode }) {
           );
         }
         if (analysisResult) {
-            const isQualified = analysisResult.score >= 70;
+            const isQualified = analysisResult.status === 'Lolos';
             return (
-                <div className="flex flex-col items-center justify-center h-auto gap-4 text-center p-6">
-                    {isQualified ? (
-                        <CheckCircle className="h-16 w-16 text-green-500" />
-                    ) : (
-                        <XCircle className="h-16 w-16 text-destructive" />
-                    )}
-                    <h3 className={cn(
-                        "text-2xl font-bold",
-                        isQualified ? "text-green-600" : "text-destructive"
-                    )}>
-                        {isQualified ? "Anda Kandidat yang Cocok!" : "Belum Cukup Sesuai"}
-                    </h3>
-                     <div className="bg-muted text-muted-foreground p-2 px-4 rounded-full text-sm font-semibold">
-                      Skor Kecocokan: <span className={cn("font-bold", isQualified ? "text-green-600" : "text-destructive")}>{analysisResult.score}</span> / 100
-                    </div>
-                    <p className="text-muted-foreground max-w-md">{analysisResult.reason}</p>
-                    <DialogFooter className="mt-6 w-full flex-col gap-2">
-                       {isQualified && (
-                         <Button size="lg" className="w-full">Lanjutkan Kirim CV ke HRD</Button>
-                       )}
-                       <Button size="lg" variant={isQualified ? "outline" : "default"} className="w-full" onClick={resetState}>Analisis CV Lain</Button>
-                    </DialogFooter>
+              <div className="flex flex-col items-center justify-center h-auto text-center p-6">
+                {isQualified ? (
+                  <CheckCircle className="h-16 w-16 text-green-500" />
+                ) : (
+                  <XCircle className="h-16 w-16 text-destructive" />
+                )}
+                <h3 className={cn(
+                  "text-2xl font-bold mt-4",
+                  isQualified ? "text-green-600" : "text-destructive"
+                )}>
+                  Status: {analysisResult.status}
+                </h3>
+                <div className="bg-muted text-muted-foreground p-2 px-4 rounded-full text-sm font-semibold my-4">
+                  Skor Kecocokan: <span className={cn("font-bold", isQualified ? "text-green-600" : "text-destructive")}>{analysisResult.score}</span> / 100
                 </div>
+
+                <div className="w-full max-w-md text-left grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                  <div>
+                    <h4 className="font-semibold text-foreground mb-2">Keahlian Sesuai</h4>
+                    <ul className="space-y-1 text-sm text-muted-foreground">
+                      {analysisResult.cocok.map((skill, i) => (
+                        <li key={`cocok-${i}`} className="flex items-center gap-2">
+                          <Check className="h-4 w-4 text-green-500 flex-shrink-0" />
+                          <span>{skill}</span>
+                        </li>
+                      ))}
+                       {analysisResult.cocok.length === 0 && <li className='text-xs italic'>Tidak ada keahlian yang cocok.</li>}
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-foreground mb-2">Keahlian Kurang</h4>
+                     <ul className="space-y-1 text-sm text-muted-foreground">
+                      {analysisResult.kurang.map((skill, i) => (
+                        <li key={`kurang-${i}`} className="flex items-center gap-2">
+                          <X className="h-4 w-4 text-destructive flex-shrink-0" />
+                           <span>{skill}</span>
+                        </li>
+                      ))}
+                      {analysisResult.kurang.length === 0 && <li className='text-xs italic'>Semua keahlian terpenuhi.</li>}
+                    </ul>
+                  </div>
+                </div>
+
+                <DialogFooter className="mt-8 w-full flex-col gap-2">
+                   {isQualified && (
+                     <Button size="lg" className="w-full">Lanjutkan Kirim CV ke HRD</Button>
+                   )}
+                   <Button size="lg" variant={isQualified ? "outline" : "default"} className="w-full" onClick={resetState}>Analisis CV Lain</Button>
+                </DialogFooter>
+              </div>
             )
         }
         return null;
