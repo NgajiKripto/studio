@@ -1,5 +1,5 @@
+import { HeroSection } from "@/components/ui/hero-section-6";
 import { Header } from "@/components/landing/header";
-import MinimalistHeroDemo from "@/components/ui/demo";
 import { ProblemSolutionSection } from "@/components/landing/problem-solution";
 import { FeaturesSection } from "@/components/landing/features";
 import { HowItWorksSection } from "@/components/landing/how-it-works";
@@ -11,8 +11,8 @@ export default function Home() {
   return (
     <div className="bg-background text-foreground">
       <Header />
-      <main className="pt-20">
-        <MinimalistHeroDemo />
+      <main>
+        <HeroSection />
         <ProblemSolutionSection />
         <FeaturesSection />
         <HowItWorksSection />
