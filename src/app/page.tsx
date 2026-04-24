@@ -1,4 +1,5 @@
 import { HeroSection } from "@/components/ui/hero-section-6";
+import { Header } from "@/components/landing/header";
 import { ProblemSolutionSection } from "@/components/landing/problem-solution";
 import { FeaturesSection } from "@/components/landing/features";
 import { HowItWorksSection } from "@/components/landing/how-it-works";
@@ -9,6 +10,7 @@ import { Footer } from "@/components/landing/footer";
 export default function Home() {
   return (
     <div className="bg-background text-foreground">
+      <Header />
       <main>
         <HeroSection />
         <ProblemSolutionSection />
