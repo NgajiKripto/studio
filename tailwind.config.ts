@@ -1,4 +1,5 @@
 import type {Config} from 'tailwindcss';
+import animate from 'tailwindcss-animate';
 
 export default {
   darkMode: ['class'],
@@ -10,13 +11,19 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        body: ['Alegreya', 'serif'],
-        headline: ['Belleza', 'sans-serif'],
+        body: ['Figtree', 'sans-serif'],
+        headline: ['Figtree', 'sans-serif'],
         code: ['monospace'],
+      },
+      fontSize: {
+        h1: ['12px', { lineHeight: '1.2' }],
+        h2: ['12px', { lineHeight: '1.2' }],
+        body: ['13px', { lineHeight: '1.4' }],
       },
       colors: {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
+        link: 'hsl(var(--link))',
         card: {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
@@ -95,5 +102,5 @@ export default {
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [animate],
 } satisfies Config;
