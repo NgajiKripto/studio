@@ -7,7 +7,7 @@ import { prisma } from "@/lib/prisma";
 import { MUAVerdict } from "@/components/products/MUAVerdict";
 import { ProductDetailClient } from "@/components/products/ProductDetailClient";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Star, Info, CheckCircle } from "lucide-react";
+import { ArrowLeft, Star, Info, CheckCircle, Sparkles } from "lucide-react";
 
 interface ProductPageProps {
   params: Promise<{ id: string }>;

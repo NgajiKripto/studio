@@ -6,9 +6,9 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+  allowedDevOrigins: [
+    '6000-firebase-studio-1778276634894.cluster-c36dgv2kibakqwbbbsgmia3fny.cloudworkstations.dev',
+  ],
   images: {
     remotePatterns: [
       {
@@ -29,11 +29,6 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
-    ],
-  },
-  experimental: {
-    allowedDevOrigins: [
-      '6000-firebase-studio-1778276634894.cluster-c36dgv2kibakqwbbbsgmia3fny.cloudworkstations.dev',
     ],
   },
 };
