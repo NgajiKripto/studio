@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Sparkles, ShoppingBag, Menu, X } from "lucide-react";
+import { Sparkles, ShoppingBag, Menu, X, Fingerprint } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -27,8 +27,11 @@ export function Navbar() {
             <Link href="/catalog" className="text-sm font-medium hover:text-primary transition-colors">
               Catalog
             </Link>
-            <Link href="/recommend" className="text-sm font-medium flex items-center gap-1.5 text-accent hover:text-primary transition-colors">
-              AI Recommendations
+            <Link href="/diagnostic" className="text-sm font-medium flex items-center gap-1.5 text-accent hover:text-primary transition-colors">
+              <Fingerprint className="h-4 w-4" /> Skin Quiz
+            </Link>
+            <Link href="/recommend" className="text-sm font-medium hover:text-primary transition-colors">
+              AI Picks
             </Link>
             <Button variant="default" className="rounded-full px-6">
               Expert Tips
@@ -63,8 +66,15 @@ export function Navbar() {
             Catalog
           </Link>
           <Link
-            href="/recommend"
+            href="/diagnostic"
             className="block px-3 py-2 rounded-md text-base font-medium text-accent hover:bg-muted"
+            onClick={() => setIsOpen(false)}
+          >
+            Skin Quiz
+          </Link>
+          <Link
+            href="/recommend"
+            className="block px-3 py-2 rounded-md text-base font-medium hover:bg-muted"
             onClick={() => setIsOpen(false)}
           >
             AI Recommendations
