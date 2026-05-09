@@ -165,8 +165,8 @@ export async function generateStaticParams() {
     const products = await prisma.product.findMany({ select: { id: true } });
     return products.map((p) => ({ id: p.id }));
   } catch (error) {
-    const errorType = error instanceof Error ? error.name : "UnknownError";
-    console.warn(`Failed to generate static params for /products/[id], falling back to runtime rendering. (${errorType})`);
+    const errorName = error instanceof Error ? error.name : "UnknownError";
+    console.warn(`Failed to generate static params for /products/[id], falling back to runtime rendering. (${errorName})`);
     return [];
   }
 }
