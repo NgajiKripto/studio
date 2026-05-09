@@ -1,9 +1,6 @@
-
 "use client";
 
 import { useEffect, useState } from "react";
-import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -76,103 +73,99 @@ export default function AdminPage() {
   };
 
   return (
-    <>
-      <Navbar />
-      <main className="flex-grow bg-background py-12">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-            <div>
-              <h1 className="text-3xl font-headline font-bold">Admin Panel</h1>
-              <p className="text-muted-foreground">Kelola katalog produk Muakeup Anda.</p>
-            </div>
-            <Button asChild className="rounded-full">
-              <Link href="/admin/add">
-                <Plus className="h-4 w-4 mr-2" /> Tambah Produk
-              </Link>
-            </Button>
+    <main className="flex-grow bg-background py-12">
+      <div className="container mx-auto px-4">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+          <div>
+            <h1 className="text-3xl font-headline font-bold">Admin Panel</h1>
+            <p className="text-muted-foreground">Kelola katalog produk Muakeup Anda.</p>
           </div>
-
-          <div className="bg-white rounded-3xl shadow-sm border overflow-hidden">
-            {isLoading ? (
-              <div className="flex flex-col items-center justify-center py-20 gap-4">
-                <Loader2 className="h-8 w-8 animate-spin text-primary" />
-                <p className="text-muted-foreground">Memuat produk...</p>
-              </div>
-            ) : products.length > 0 ? (
-              <ScrollArea className="w-full">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Nama</TableHead>
-                      <TableHead>Brand</TableHead>
-                      <TableHead>Kategori</TableHead>
-                      <TableHead className="text-right">Aksi</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {products.map((product) => (
-                      <TableRow key={product.id}>
-                        <TableCell className="font-bold">{product.name}</TableCell>
-                        <TableCell>{product.brand}</TableCell>
-                        <TableCell>
-                          <span className="text-xs bg-secondary px-2 py-1 rounded-full">{product.category}</span>
-                        </TableCell>
-                        <TableCell className="text-right">
-                          <div className="flex justify-end gap-2">
-                            <Button variant="ghost" size="icon" asChild>
-                              <Link href={`/admin/${product.id}/edit`}>
-                                <Edit className="h-4 w-4 text-primary" />
-                              </Link>
-                            </Button>
-                            
-                            <AlertDialog>
-                              <AlertDialogTrigger asChild>
-                                <Button variant="ghost" size="icon">
-                                  <Trash2 className="h-4 w-4 text-destructive" />
-                                </Button>
-                              </AlertDialogTrigger>
-                              <AlertDialogContent>
-                                <AlertDialogHeader>
-                                  <AlertDialogTitle>Hapus produk?</AlertDialogTitle>
-                                  <AlertDialogDescription>
-                                    Tindakan ini tidak dapat dibatalkan. Produk "{product.name}" akan dihapus permanen dari database.
-                                  </AlertDialogDescription>
-                                </AlertDialogHeader>
-                                <AlertDialogFooter>
-                                  <AlertDialogCancel>Batal</AlertDialogCancel>
-                                  <AlertDialogAction 
-                                    onClick={() => handleDelete(product.id)}
-                                    className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-                                  >
-                                    Hapus
-                                  </AlertDialogAction>
-                                </AlertDialogFooter>
-                              </AlertDialogContent>
-                            </AlertDialog>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-                <ScrollBar orientation="horizontal" />
-              </ScrollArea>
-            ) : (
-              <div className="text-center py-20 space-y-4">
-                <div className="bg-muted w-16 h-16 rounded-full flex items-center justify-center mx-auto">
-                  <Package className="h-8 w-8 text-muted-foreground" />
-                </div>
-                <h3 className="text-xl font-bold">Belum ada produk</h3>
-                <p className="text-muted-foreground">Mulai tambahkan produk pertama Anda ke katalog.</p>
-                <Button asChild variant="outline" className="rounded-full">
-                  <Link href="/admin/add">Tambah Produk</Link>
-                </Button>
-              </div>
-            )}
-          </div>
+          <Button asChild className="rounded-full">
+            <Link href="/admin/add">
+              <Plus className="h-4 w-4 mr-2" /> Tambah Produk
+            </Link>
+          </Button>
         </div>
-      </main>
-      <Footer />
-    </>
+
+        <div className="bg-white rounded-3xl shadow-sm border overflow-hidden">
+          {isLoading ? (
+            <div className="flex flex-col items-center justify-center py-20 gap-4">
+              <Loader2 className="h-8 w-8 animate-spin text-primary" />
+              <p className="text-muted-foreground">Memuat produk...</p>
+            </div>
+          ) : products.length > 0 ? (
+            <ScrollArea className="w-full">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Nama</TableHead>
+                    <TableHead>Brand</TableHead>
+                    <TableHead>Kategori</TableHead>
+                    <TableHead className="text-right">Aksi</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {products.map((product) => (
+                    <TableRow key={product.id}>
+                      <TableCell className="font-bold">{product.name}</TableCell>
+                      <TableCell>{product.brand}</TableCell>
+                      <TableCell>
+                        <span className="text-xs bg-secondary px-2 py-1 rounded-full">{product.category}</span>
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <div className="flex justify-end gap-2">
+                          <Button variant="ghost" size="icon" asChild>
+                            <Link href={`/admin/${product.id}/edit`}>
+                              <Edit className="h-4 w-4 text-primary" />
+                            </Link>
+                          </Button>
+                          
+                          <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                              <Button variant="ghost" size="icon">
+                                <Trash2 className="h-4 w-4 text-destructive" />
+                              </Button>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                              <AlertDialogHeader>
+                                <AlertDialogTitle>Hapus produk?</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                  Tindakan ini tidak dapat dibatalkan. Produk "{product.name}" akan dihapus permanen dari database.
+                                </AlertDialogDescription>
+                              </AlertDialogHeader>
+                              <AlertDialogFooter>
+                                <AlertDialogCancel>Batal</AlertDialogCancel>
+                                <AlertDialogAction 
+                                  onClick={() => handleDelete(product.id)}
+                                  className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                                >
+                                  Hapus
+                                </AlertDialogAction>
+                              </AlertDialogFooter>
+                            </AlertDialogContent>
+                          </AlertDialog>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+              <ScrollBar orientation="horizontal" />
+            </ScrollArea>
+          ) : (
+            <div className="text-center py-20 space-y-4">
+              <div className="bg-muted w-16 h-16 rounded-full flex items-center justify-center mx-auto">
+                <Package className="h-8 w-8 text-muted-foreground" />
+              </div>
+              <h3 className="text-xl font-bold">Belum ada produk</h3>
+              <p className="text-muted-foreground">Mulai tambahkan produk pertama Anda ke katalog.</p>
+              <Button asChild variant="outline" className="rounded-full">
+                <Link href="/admin/add">Tambah Produk</Link>
+              </Button>
+            </div>
+          )}
+        </div>
+      </div>
+    </main>
   );
 }
