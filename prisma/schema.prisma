@@ -1,10 +1,49 @@
+
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
+}
+
+model Product {
+  id            String             @id @default(cuid())
+  name          String
+  brand         String
+  category      String
+  description   String
+  priceEstimate String
+  affiliateUrl  String
+  imageUrl      String
+  muaVerdict    String
+  skinTypes     ProductSkinType[]
+  skinTones     ProductSkinTone[]
+  faceShapes    ProductFaceShape[]
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+}
+
+model ProductSkinType {
+  id        String   @id @default(cuid())
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+  skinType  SkinType
+}
+
+model ProductSkinTone {
+  id        String   @id @default(cuid())
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+  skinTone  SkinTone
+}
+
+model ProductFaceShape {
+  id        String    @id @default(cuid())
+  product   Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+  faceShape FaceShape
 }
 
 enum SkinType {
@@ -40,48 +79,4 @@ enum FaceShape {
   HEART
   DIAMOND
   OBLONG
-}
-
-model Product {
-  id             String             @id @default(cuid())
-  name           String
-  brand          String
-  category       String
-  description    String
-  priceEstimate  String
-  affiliateUrl   String
-  imageUrl       String
-  muaVerdict     String             @db.Text
-  createdAt      DateTime           @default(now())
-  updatedAt      DateTime           @updatedAt
-  skinTypes      ProductSkinType[]
-  skinTones      ProductSkinTone[]
-  faceShapes     ProductFaceShape[]
-
-  @@index([brand])
-  @@index([category])
-}
-
-model ProductSkinType {
-  productId String
-  skinType  SkinType
-  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-
-  @@id([productId, skinType])
-}
-
-model ProductSkinTone {
-  productId String
-  skinTone  SkinTone
-  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-
-  @@id([productId, skinTone])
-}
-
-model ProductFaceShape {
-  productId String
-  faceShape FaceShape
-  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-
-  @@id([productId, faceShape])
 }

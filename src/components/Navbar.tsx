@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Sparkles, ShoppingBag, Menu, X, Fingerprint } from "lucide-react";
+import { Sparkles, Menu, X, Fingerprint, LayoutDashboard } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -24,17 +24,20 @@ export function Navbar() {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-8">
-            <Link href="/catalog" className="text-sm font-medium hover:text-primary transition-colors">
-              Catalog
+            <Link href="/" className="text-sm font-medium hover:text-primary transition-colors">
+              Beranda
+            </Link>
+            <Link href="/products" className="text-sm font-medium hover:text-primary transition-colors">
+              Katalog
             </Link>
             <Link href="/diagnostic" className="text-sm font-medium flex items-center gap-1.5 text-accent hover:text-primary transition-colors">
-              <Fingerprint className="h-4 w-4" /> Skin Quiz
+              <Fingerprint className="h-4 w-4" /> Kuis Kulit
             </Link>
             <Link href="/recommend" className="text-sm font-medium hover:text-primary transition-colors">
               AI Picks
             </Link>
-            <Button variant="default" className="rounded-full px-6">
-              Expert Tips
+            <Button variant="default" className="rounded-full px-6" asChild>
+              <Link href="/admin">Admin</Link>
             </Button>
           </div>
 
@@ -54,23 +57,30 @@ export function Navbar() {
       <div
         className={cn(
           "md:hidden absolute w-full bg-background border-b transition-all duration-300 ease-in-out",
-          isOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0 overflow-hidden"
+          isOpen ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0 overflow-hidden"
         )}
       >
         <div className="px-4 pt-2 pb-6 space-y-1">
           <Link
-            href="/catalog"
+            href="/"
             className="block px-3 py-2 rounded-md text-base font-medium hover:bg-muted"
             onClick={() => setIsOpen(false)}
           >
-            Catalog
+            Beranda
+          </Link>
+          <Link
+            href="/products"
+            className="block px-3 py-2 rounded-md text-base font-medium hover:bg-muted"
+            onClick={() => setIsOpen(false)}
+          >
+            Katalog
           </Link>
           <Link
             href="/diagnostic"
             className="block px-3 py-2 rounded-md text-base font-medium text-accent hover:bg-muted"
             onClick={() => setIsOpen(false)}
           >
-            Skin Quiz
+            Kuis Kulit
           </Link>
           <Link
             href="/recommend"
@@ -79,9 +89,9 @@ export function Navbar() {
           >
             AI Recommendations
           </Link>
-          <div className="pt-4">
-            <Button variant="default" className="w-full rounded-full">
-              Expert Tips
+          <div className="pt-4 px-3">
+            <Button variant="default" className="w-full rounded-full gap-2" asChild onClick={() => setIsOpen(false)}>
+              <Link href="/admin"><LayoutDashboard className="h-4 w-4" /> Panel Admin</Link>
             </Button>
           </div>
         </div>
