@@ -1,0 +1,87 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum SkinType {
+  OILY
+  DRY
+  NORMAL
+  COMBINATION
+  SENSITIVE
+}
+
+enum SkinTone {
+  FAIR_COOL
+  FAIR_WARM
+  FAIR_NEUTRAL
+  LIGHT_COOL
+  LIGHT_WARM
+  LIGHT_NEUTRAL
+  MEDIUM_COOL
+  MEDIUM_WARM
+  MEDIUM_NEUTRAL
+  TAN_COOL
+  TAN_WARM
+  TAN_NEUTRAL
+  DEEP_COOL
+  DEEP_WARM
+  DEEP_NEUTRAL
+}
+
+enum FaceShape {
+  OVAL
+  ROUND
+  SQUARE
+  HEART
+  DIAMOND
+  OBLONG
+}
+
+model Product {
+  id             String             @id @default(cuid())
+  name           String
+  brand          String
+  category       String
+  description    String
+  priceEstimate  String
+  affiliateUrl   String
+  imageUrl       String
+  muaVerdict     String             @db.Text
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+  skinTypes      ProductSkinType[]
+  skinTones      ProductSkinTone[]
+  faceShapes     ProductFaceShape[]
+
+  @@index([brand])
+  @@index([category])
+}
+
+model ProductSkinType {
+  productId String
+  skinType  SkinType
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@id([productId, skinType])
+}
+
+model ProductSkinTone {
+  productId String
+  skinTone  SkinTone
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@id([productId, skinTone])
+}
+
+model ProductFaceShape {
+  productId String
+  faceShape FaceShape
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@id([productId, faceShape])
+}

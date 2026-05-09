@@ -1,0 +1,160 @@
+import { PlaceHolderImages } from './placeholder-images';
+import { SkinType, SkinTone, FaceShape } from './constants';
+
+export interface Product {
+  id: string;
+  name: string;
+  brand: string;
+  category: string;
+  description: string;
+  priceEstimate: string;
+  affiliateUrl: string;
+  imageUrl: string;
+  muaVerdict: string;
+  skinTypes: SkinType[];
+  skinTones: SkinTone[];
+  faceShapes: FaceShape[];
+}
+
+export const PRODUCTS: Product[] = [
+  {
+    id: '1',
+    name: 'SuperStay Matte Ink',
+    brand: 'Maybelline',
+    category: 'Lipstick',
+    description: 'Long-lasting liquid lipstick with a flawless matte finish.',
+    priceEstimate: '$10 - $12',
+    affiliateUrl: 'https://example.com/buy-1',
+    imageUrl: 'https://picsum.photos/seed/lip1/400/400',
+    muaVerdict: 'Perfect for long days when you need a bold lip that won\'t budge. Excellent pigment payoff.',
+    skinTypes: ['OILY', 'DRY', 'NORMAL', 'COMBINATION', 'SENSITIVE'],
+    skinTones: ['FAIR_COOL', 'LIGHT_COOL', 'MEDIUM_COOL', 'TAN_COOL', 'DEEP_COOL'],
+    faceShapes: ['OVAL', 'ROUND', 'HEART', 'SQUARE', 'DIAMOND', 'OBLONG'],
+  },
+  {
+    id: '2',
+    name: 'Exclusive Matte Lip Cream',
+    brand: 'Wardah',
+    category: 'Lipstick',
+    description: 'Creamy matte lipstick with high coverage and breathable formula.',
+    priceEstimate: '$5 - $7',
+    affiliateUrl: 'https://example.com/buy-2',
+    imageUrl: 'https://picsum.photos/seed/lip2/400/400',
+    muaVerdict: 'A great everyday option. The formula is lightweight and comfortable for all-day wear.',
+    skinTypes: ['NORMAL', 'DRY', 'SENSITIVE'],
+    skinTones: ['FAIR_WARM', 'LIGHT_WARM', 'MEDIUM_WARM', 'TAN_WARM', 'DEEP_WARM'],
+    faceShapes: ['OVAL', 'ROUND', 'HEART', 'SQUARE', 'DIAMOND', 'OBLONG'],
+  },
+  {
+    id: '3',
+    name: 'Powerstay Matte Powder Foundation',
+    brand: 'Make Over',
+    category: 'Foundation',
+    description: 'A long-lasting powder foundation that provides a smooth, matte finish.',
+    priceEstimate: '$12 - $15',
+    affiliateUrl: 'https://example.com/buy-3',
+    imageUrl: 'https://picsum.photos/seed/found1/400/400',
+    muaVerdict: 'Ideal for oily skin types looking for full coverage without the cakey feeling.',
+    skinTypes: ['OILY', 'COMBINATION'],
+    skinTones: ['MEDIUM_NEUTRAL', 'TAN_NEUTRAL', 'DEEP_NEUTRAL'],
+    faceShapes: ['OVAL', 'ROUND', 'SQUARE'],
+  },
+  {
+    id: '4',
+    name: 'Mineralist Hydra-Smoothing Lipstick',
+    brand: 'bareMinerals',
+    category: 'Lipstick',
+    description: 'Clean, mineral-infused lipstick that hydrates and smooths lips.',
+    priceEstimate: '$20 - $25',
+    affiliateUrl: 'https://example.com/buy-4',
+    imageUrl: 'https://picsum.photos/seed/lip3/400/400',
+    muaVerdict: 'Beautifully hydrating. Highly recommended for mature or dry lips.',
+    skinTypes: ['DRY', 'SENSITIVE', 'NORMAL'],
+    skinTones: ['FAIR_COOL', 'FAIR_WARM', 'FAIR_NEUTRAL'],
+    faceShapes: ['OVAL', 'HEART', 'DIAMOND'],
+  },
+  {
+    id: '5',
+    name: 'Double Wear Stay-in-Place Foundation',
+    brand: 'Estée Lauder',
+    category: 'Foundation',
+    description: 'The #1 foundation worldwide. 24-hour wear. Flawless, natural, matte.',
+    priceEstimate: '$45 - $50',
+    affiliateUrl: 'https://example.com/buy-5',
+    imageUrl: 'https://picsum.photos/seed/found2/400/400',
+    muaVerdict: 'The gold standard for bridal and red carpet makeup. Incredible staying power.',
+    skinTypes: ['OILY', 'COMBINATION', 'NORMAL'],
+    skinTones: ['MEDIUM_NEUTRAL', 'MEDIUM_WARM', 'TAN_WARM', 'LIGHT_NEUTRAL'],
+    faceShapes: ['OVAL', 'ROUND', 'SQUARE', 'HEART', 'DIAMOND', 'OBLONG'],
+  },
+  {
+    id: '6',
+    name: 'Orgasm Blush',
+    brand: 'NARS',
+    category: 'Blush',
+    description: 'The industry\'s most iconic shade of blush for a natural, healthy-looking glow.',
+    priceEstimate: '$30 - $35',
+    affiliateUrl: 'https://example.com/buy-6',
+    imageUrl: 'https://picsum.photos/seed/blush1/400/400',
+    muaVerdict: 'Universally flattering. It adds the perfect amount of shimmer and warmth to any look.',
+    skinTypes: ['NORMAL', 'DRY', 'COMBINATION', 'OILY', 'SENSITIVE'],
+    skinTones: ['LIGHT_WARM', 'MEDIUM_WARM', 'TAN_WARM', 'FAIR_WARM'],
+    faceShapes: ['ROUND', 'SQUARE', 'OBLONG', 'OVAL'],
+  },
+  {
+    id: '7',
+    name: 'Airbrush Flawless Finish',
+    brand: 'Charlotte Tilbury',
+    category: 'Powder',
+    description: 'Ultra-finely milled powder that blurs lines and imperfections.',
+    priceEstimate: '$45 - $48',
+    affiliateUrl: 'https://example.com/buy-7',
+    imageUrl: 'https://picsum.photos/seed/powder1/400/400',
+    muaVerdict: 'Magic in a compact. It literally makes your skin look like it has a filter on it.',
+    skinTypes: ['NORMAL', 'COMBINATION', 'DRY', 'SENSITIVE'],
+    skinTones: ['FAIR_NEUTRAL', 'LIGHT_NEUTRAL', 'MEDIUM_NEUTRAL', 'TAN_NEUTRAL'],
+    faceShapes: ['OVAL', 'ROUND', 'HEART', 'SQUARE', 'DIAMOND', 'OBLONG'],
+  },
+  {
+    id: '8',
+    name: 'Liquid Touch Brightening Concealer',
+    brand: 'Rare Beauty',
+    category: 'Concealer',
+    description: 'Hydrating, long-wearing concealer that blends seamlessly.',
+    priceEstimate: '$22 - $26',
+    affiliateUrl: 'https://example.com/buy-8',
+    imageUrl: 'https://picsum.photos/seed/conc1/400/400',
+    muaVerdict: 'Incredible coverage that doesn\'t feel heavy. Great for covering dark circles.',
+    skinTypes: ['DRY', 'NORMAL', 'COMBINATION', 'SENSITIVE'],
+    skinTones: ['FAIR_COOL', 'LIGHT_WARM', 'MEDIUM_NEUTRAL', 'TAN_COOL'],
+    faceShapes: ['OVAL', 'HEART', 'DIAMOND'],
+  },
+  {
+    id: '9',
+    name: 'Better Than Sex Mascara',
+    brand: 'Too Faced',
+    category: 'Mascara',
+    description: 'An hourglass-shaped brush that separates, coats, and curls each lash to voluptuous perfection.',
+    priceEstimate: '$28 - $30',
+    affiliateUrl: 'https://example.com/buy-9',
+    imageUrl: 'https://picsum.photos/seed/masc1/400/400',
+    muaVerdict: 'Dramatic volume in just one coat. A must-have for those who want that false lash effect.',
+    skinTypes: ['OILY', 'DRY', 'NORMAL', 'COMBINATION', 'SENSITIVE'],
+    skinTones: ['FAIR_COOL', 'LIGHT_WARM', 'MEDIUM_NEUTRAL', 'TAN_COOL', 'DEEP_NEUTRAL'],
+    faceShapes: ['OVAL', 'ROUND', 'SQUARE', 'HEART', 'DIAMOND', 'OBLONG'],
+  },
+  {
+    id: '10',
+    name: 'Glow Screen SPF 40',
+    brand: 'Supergoop!',
+    category: 'Sunscreen',
+    description: 'A glowy primer that protects skin with SPF 40 and leaves a dewy finish.',
+    priceEstimate: '$36 - $38',
+    affiliateUrl: 'https://example.com/buy-10',
+    imageUrl: 'https://picsum.photos/seed/sun1/400/400',
+    muaVerdict: 'The perfect hybrid of skincare and makeup. Gives a beautiful lit-from-within glow.',
+    skinTypes: ['DRY', 'NORMAL', 'COMBINATION'],
+    skinTones: ['FAIR_NEUTRAL', 'LIGHT_WARM', 'MEDIUM_WARM', 'TAN_NEUTRAL'],
+    faceShapes: ['OVAL', 'HEART', 'DIAMOND'],
+  }
+];

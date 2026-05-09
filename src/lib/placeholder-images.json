@@ -1,3 +1,40 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "makeup-hero",
+      "description": "Elegant makeup palette and brushes on a soft lilac background",
+      "imageUrl": "https://picsum.photos/seed/makeup1/1200/600",
+      "imageHint": "makeup palette"
+    },
+    {
+      "id": "foundation-1",
+      "description": "High-end foundation bottle with smooth texture",
+      "imageUrl": "https://picsum.photos/seed/foundation1/600/400",
+      "imageHint": "makeup foundation"
+    },
+    {
+      "id": "lipstick-1",
+      "description": "Luxury deep plum lipstick",
+      "imageUrl": "https://picsum.photos/seed/lipstick1/600/400",
+      "imageHint": "plum lipstick"
+    },
+    {
+      "id": "eyeshadow-1",
+      "description": "Earth toned eyeshadow palette",
+      "imageUrl": "https://picsum.photos/seed/eyeshadow1/600/400",
+      "imageHint": "eyeshadow palette"
+    },
+    {
+      "id": "blush-1",
+      "description": "Soft pink blush compact",
+      "imageUrl": "https://picsum.photos/seed/blush1/600/400",
+      "imageHint": "makeup blush"
+    },
+    {
+      "id": "mascara-1",
+      "description": "Sleek black mascara tube",
+      "imageUrl": "https://picsum.photos/seed/mascara1/600/400",
+      "imageHint": "mascara"
+    }
+  ]
 }
