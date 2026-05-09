@@ -9,74 +9,39 @@ datasource db {
 }
 
 model Product {
-  id            String             @id @default(cuid())
-  name          String
-  brand         String
-  category      String
-  description   String
-  priceEstimate String
-  affiliateUrl  String
-  imageUrl      String
-  muaVerdict    String
-  skinTypes     ProductSkinType[]
-  skinTones     ProductSkinTone[]
-  faceShapes    ProductFaceShape[]
-  createdAt     DateTime           @default(now())
-  updatedAt     DateTime           @updatedAt
+  id              String             @id @default(cuid())
+  name            String
+  brand           String
+  category        String
+  description     String
+  priceEstimate   String
+  affiliateUrl    String
+  imageUrl        String
+  muaVerdict      String
+  skinTypes       ProductSkinType[]
+  skinTones       ProductSkinTone[]
+  faceShapes      ProductFaceShape[]
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
 }
 
 model ProductSkinType {
-  id        String   @id @default(cuid())
-  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  id        String  @id @default(cuid())
   productId String
-  skinType  SkinType
+  skinType  String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
 model ProductSkinTone {
-  id        String   @id @default(cuid())
-  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  id        String  @id @default(cuid())
   productId String
-  skinTone  SkinTone
+  skinTone  String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
 model ProductFaceShape {
-  id        String    @id @default(cuid())
-  product   Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  id        String  @id @default(cuid())
   productId String
-  faceShape FaceShape
-}
-
-enum SkinType {
-  OILY
-  DRY
-  NORMAL
-  COMBINATION
-  SENSITIVE
-}
-
-enum SkinTone {
-  FAIR_COOL
-  FAIR_WARM
-  FAIR_NEUTRAL
-  LIGHT_COOL
-  LIGHT_WARM
-  LIGHT_NEUTRAL
-  MEDIUM_COOL
-  MEDIUM_WARM
-  MEDIUM_NEUTRAL
-  TAN_COOL
-  TAN_WARM
-  TAN_NEUTRAL
-  DEEP_COOL
-  DEEP_WARM
-  DEEP_NEUTRAL
-}
-
-enum FaceShape {
-  OVAL
-  ROUND
-  SQUARE
-  HEART
-  DIAMOND
-  OBLONG
+  faceShape String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
