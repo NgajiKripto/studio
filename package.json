@@ -9,7 +9,7 @@
     "genkit:watch": "genkit start -- tsx --watch src/ai/dev.ts",
     "build": "NODE_ENV=production next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "postinstall": "prisma generate && prisma db push --accept-data-loss",
     "seed": "tsx prisma/seed.ts"
@@ -47,7 +47,7 @@
     "firebase": "^11.9.1",
     "genkit": "^1.28.0",
     "lucide-react": "^0.475.0",
-    "next": "15.5.9",
+    "next": "^16.1.6",
     "patch-package": "^8.0.0",
     "react": "^19.2.1",
     "react-day-picker": "^9.11.3",
@@ -59,6 +59,8 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "eslint": "^9.39.0",
+    "eslint-config-next": "^16.1.6",
     "@types/node": "^20",
     "@types/react": "^19.2.1",
     "@types/react-dom": "^19.2.1",
