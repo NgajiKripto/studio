@@ -164,7 +164,8 @@ export async function generateStaticParams() {
   try {
     const products = await prisma.product.findMany({ select: { id: true } });
     return products.map((p) => ({ id: p.id }));
-  } catch {
+  } catch (error) {
+    console.warn("Failed to generate static params for /products/[id], falling back to runtime rendering.", error);
     return [];
   }
 }
