@@ -2,26 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 import {
   ADMIN_SESSION_COOKIE_NAME,
   createAdminSessionToken,
+  getAdminSessionTtlSeconds,
   getAdminPanelPath,
   isClientIpAllowed,
   isDeviceAllowed,
   secureCompare,
 } from "@/lib/admin-security";
-
-const ADMIN_SESSION_MAX_AGE_SECONDS = (() => {
-  const parsedMaxAge = Number.parseInt(process.env.ADMIN_SESSION_MAX_AGE_SECONDS ?? "", 10);
-  const MIN_SESSION_DURATION_SECONDS = 60 * 5;
-  const MAX_SESSION_DURATION_SECONDS = 60 * 60 * 24;
-
-  if (
-    Number.isFinite(parsedMaxAge) &&
-    parsedMaxAge >= MIN_SESSION_DURATION_SECONDS &&
-    parsedMaxAge <= MAX_SESSION_DURATION_SECONDS
-  ) {
-    return parsedMaxAge;
-  }
-  return 60 * 60 * 8;
-})();
 
 export async function POST(req: NextRequest) {
   if (!process.env.ADMIN_ACCESS_KEY || !process.env.ADMIN_SESSION_SECRET) {
@@ -45,7 +31,7 @@ export async function POST(req: NextRequest) {
       !expectedKey ||
       !secureCompare(providedKey, expectedKey)
     ) {
-      return NextResponse.json({ error: "Akses ditolak." }, { status: 401 });
+      return NextResponse.json({ error: "Akses ditolak." }, { status: 403 });
     }
 
     const response = NextResponse.json({ success: true, adminPath: getAdminPanelPath() });
@@ -56,7 +42,7 @@ export async function POST(req: NextRequest) {
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
       path: "/",
-      maxAge: ADMIN_SESSION_MAX_AGE_SECONDS,
+      maxAge: getAdminSessionTtlSeconds(),
     });
 
     return response;

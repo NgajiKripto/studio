@@ -1,4 +1,4 @@
-import { createHash, createHmac, timingSafeEqual } from "crypto";
+import { createHash, createHmac, randomBytes, timingSafeEqual } from "crypto";
 import type { NextRequest } from "next/server";
 
 export const ADMIN_SESSION_COOKIE_NAME = "muakeup_admin_session";
@@ -89,15 +89,44 @@ function hasRequiredAdminSecrets() {
   return Boolean(process.env.ADMIN_ACCESS_KEY && process.env.ADMIN_SESSION_SECRET);
 }
 
-function getSessionSignature(headers: Headers) {
+export function getAdminSessionTtlSeconds() {
+  const parsedTtl = Number.parseInt(process.env.ADMIN_SESSION_MAX_AGE_SECONDS ?? "", 10);
+  const minAllowedSessionDuration = 60 * 5;
+  const maxAllowedSessionDuration = 60 * 60 * 24;
+
+  if (
+    Number.isFinite(parsedTtl) &&
+    parsedTtl >= minAllowedSessionDuration &&
+    parsedTtl <= maxAllowedSessionDuration
+  ) {
+    return parsedTtl;
+  }
+
+  return 60 * 60 * 8;
+}
+
+function signSessionPayload(
+  headers: Headers,
+  expiresAtEpochSeconds: number,
+  nonce: string
+) {
   const secret = process.env.ADMIN_SESSION_SECRET;
   if (!secret) return null;
-  return hmac(getDeviceFingerprint(headers), secret);
+
+  const fingerprint = getDeviceFingerprint(headers);
+  return hmac(`${fingerprint}.${expiresAtEpochSeconds}.${nonce}`, secret);
 }
 
 export function createAdminSessionToken(headers: Headers) {
-  const signature = getSessionSignature(headers);
-  return signature ?? "";
+  if (!process.env.ADMIN_SESSION_SECRET) return "";
+
+  const ttlSeconds = getAdminSessionTtlSeconds();
+  const expiresAt = Math.floor(Date.now() / 1000) + ttlSeconds;
+  const nonce = randomBytes(16).toString("hex");
+  const signature = signSessionPayload(headers, expiresAt, nonce);
+
+  if (!signature) return "";
+  return `${expiresAt}.${nonce}.${signature}`;
 }
 
 export function isAdminAuthorizedRequest(
@@ -109,10 +138,17 @@ export function isAdminAuthorizedRequest(
   if (!isDeviceAllowed(headers)) return false;
   if (!isClientIpAllowed(headers)) return false;
 
-  const expectedSignature = getSessionSignature(headers);
+  const [expiresAtRaw, nonce, signature] = sessionToken.split(".");
+  const expiresAt = Number.parseInt(expiresAtRaw ?? "", 10);
+
+  if (!expiresAtRaw || !nonce || !signature) return false;
+  if (!Number.isFinite(expiresAt)) return false;
+  if (expiresAt < Math.floor(Date.now() / 1000)) return false;
+
+  const expectedSignature = signSessionPayload(headers, expiresAt, nonce);
   if (!expectedSignature) return false;
 
-  return secureCompare(sessionToken, expectedSignature);
+  return secureCompare(signature, expectedSignature);
 }
 
 export function getAdminSessionTokenFromRequest(req: NextRequest) {
