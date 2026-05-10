@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
   }
 
   if (!isDeviceAllowed(req.headers)) {
-    return NextResponse.json({ error: "Akses perangkat ditolak." }, { status: 403 });
+    return NextResponse.json({ error: "Akses ditolak." }, { status: 403 });
   }
 
   try {
@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
       !expectedKey ||
       !secureCompare(providedKey, expectedKey)
     ) {
-      return NextResponse.json({ error: "Kunci akses admin tidak valid." }, { status: 401 });
+      return NextResponse.json({ error: "Akses ditolak." }, { status: 401 });
     }
 
     const response = NextResponse.json({ success: true, adminPath: getAdminPanelPath() });
