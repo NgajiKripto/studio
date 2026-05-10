@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Sparkles, Menu, X, Fingerprint } from "lucide-react";
+import { Sparkles, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 
@@ -30,7 +30,7 @@ export function Navbar() {
               Katalog
             </Link>
             <Link href="/diagnostic" className="text-sm font-medium flex items-center gap-1.5 text-accent hover:text-primary transition-colors">
-              <Fingerprint className="h-4 w-4" /> Kuis Kulit
+              Kuis Kulit
             </Link>
             <Link href="/recommend" className="text-sm font-medium hover:text-primary transition-colors">
               AI Picks

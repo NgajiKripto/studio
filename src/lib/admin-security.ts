@@ -24,8 +24,14 @@ export function secureCompare(a: string, b: string) {
   aBuffer.copy(aPadded);
   bBuffer.copy(bPadded);
 
-  const isEqual = timingSafeEqual(aPadded, bPadded);
-  return isEqual && aBuffer.length === bBuffer.length;
+  const aLengthBuffer = Buffer.alloc(4);
+  const bLengthBuffer = Buffer.alloc(4);
+  aLengthBuffer.writeUInt32BE(aBuffer.length);
+  bLengthBuffer.writeUInt32BE(bBuffer.length);
+
+  const isValueEqual = timingSafeEqual(aPadded, bPadded);
+  const isLengthEqual = timingSafeEqual(aLengthBuffer, bLengthBuffer);
+  return isValueEqual && isLengthEqual;
 }
 
 function normalizePath(value: string | undefined, fallback: string) {
