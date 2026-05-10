@@ -1,9 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { Sparkles, Menu, X, Fingerprint, LayoutDashboard } from "lucide-react";
+import { Sparkles, Menu, X, Fingerprint } from "lucide-react";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 export function Navbar() {
@@ -36,9 +35,6 @@ export function Navbar() {
             <Link href="/recommend" className="text-sm font-medium hover:text-primary transition-colors">
               AI Picks
             </Link>
-            <Button variant="default" className="rounded-full px-6" asChild>
-              <Link href="/admin">Admin</Link>
-            </Button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -89,11 +85,6 @@ export function Navbar() {
           >
             AI Recommendations
           </Link>
-          <div className="pt-4 px-3">
-            <Button variant="default" className="w-full rounded-full gap-2" asChild onClick={() => setIsOpen(false)}>
-              <Link href="/admin"><LayoutDashboard className="h-4 w-4" /> Panel Admin</Link>
-            </Button>
-          </div>
         </div>
       </div>
     </nav>

@@ -2,6 +2,10 @@
 export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import {
+  getAdminSessionTokenFromRequest,
+  isAdminAuthorizedRequest,
+} from "@/lib/admin-security";
 
 export async function GET(
   req: NextRequest,
@@ -32,6 +36,11 @@ export async function PUT(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const sessionToken = getAdminSessionTokenFromRequest(req);
+  if (!isAdminAuthorizedRequest(req.headers, sessionToken)) {
+    return NextResponse.json({ error: "Not found" }, { status: 404 });
+  }
+
   const { id } = await params;
   try {
     const body = await req.json();
@@ -84,6 +93,11 @@ export async function DELETE(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const sessionToken = getAdminSessionTokenFromRequest(req);
+  if (!isAdminAuthorizedRequest(req.headers, sessionToken)) {
+    return NextResponse.json({ error: "Not found" }, { status: 404 });
+  }
+
   const { id } = await params;
   try {
     // Relationships should be handled by onDelete: Cascade in schema, 
