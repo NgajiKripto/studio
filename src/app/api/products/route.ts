@@ -2,6 +2,10 @@
 export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import {
+  getAdminSessionTokenFromRequest,
+  isAdminAuthorizedRequest,
+} from "@/lib/admin-security";
 
 export async function GET() {
   try {
@@ -22,6 +26,11 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
+  const sessionToken = getAdminSessionTokenFromRequest(req);
+  if (!isAdminAuthorizedRequest(req.headers, sessionToken)) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+
   try {
     const body = await req.json();
     const { 
