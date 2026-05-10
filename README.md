@@ -33,4 +33,6 @@ Set environment variables berikut:
 
 Secara default fingerprint dibentuk dari hash `user-agent`.  
 Jika `ADMIN_STRICT_DEVICE_FINGERPRINT=true`, fingerprint memakai hash `user-agent + accept-language`.  
+
+> Catatan: fingerprint berbasis header tetap punya keterbatasan karena header bisa dipalsukan. Untuk tingkat keamanan lebih tinggi, kombinasikan dengan rotasi `ADMIN_ACCESS_KEY` berkala dan pembatasan jaringan/proxy tepercaya.
 Jika ingin mode “hanya perangkat tertentu”, isi `ADMIN_ALLOWED_DEVICE_FINGERPRINTS` dengan fingerprint perangkat admin.

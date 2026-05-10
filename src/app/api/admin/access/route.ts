@@ -9,10 +9,16 @@ import {
 
 const ADMIN_SESSION_MAX_AGE_SECONDS = (() => {
   const parsed = Number.parseInt(process.env.ADMIN_SESSION_MAX_AGE_SECONDS ?? "", 10);
-  const minAge = 60 * 5;
-  const maxAge = 60 * 60 * 24;
+  const MIN_SESSION_DURATION_SECONDS = 60 * 5;
+  const MAX_SESSION_DURATION_SECONDS = 60 * 60 * 24;
 
-  if (Number.isFinite(parsed) && parsed >= minAge && parsed <= maxAge) return parsed;
+  if (
+    Number.isFinite(parsed) &&
+    parsed >= MIN_SESSION_DURATION_SECONDS &&
+    parsed <= MAX_SESSION_DURATION_SECONDS
+  ) {
+    return parsed;
+  }
   return 60 * 60 * 8;
 })();
 

@@ -17,21 +17,8 @@ function hmac(value: string, secret: string) {
 export function secureCompare(a: string, b: string) {
   const aBuffer = Buffer.from(a, "utf8");
   const bBuffer = Buffer.from(b, "utf8");
-  const maxLength = Math.max(aBuffer.length, bBuffer.length);
-
-  const aPadded = Buffer.alloc(maxLength);
-  const bPadded = Buffer.alloc(maxLength);
-  aBuffer.copy(aPadded);
-  bBuffer.copy(bPadded);
-
-  const aLengthBuffer = Buffer.alloc(4);
-  const bLengthBuffer = Buffer.alloc(4);
-  aLengthBuffer.writeUInt32BE(aBuffer.length);
-  bLengthBuffer.writeUInt32BE(bBuffer.length);
-
-  const isValueEqual = timingSafeEqual(aPadded, bPadded);
-  const isLengthEqual = timingSafeEqual(aLengthBuffer, bLengthBuffer);
-  return isValueEqual && isLengthEqual;
+  if (aBuffer.length !== bBuffer.length) return false;
+  return timingSafeEqual(aBuffer, bBuffer);
 }
 
 function normalizePath(value: string | undefined, fallback: string) {

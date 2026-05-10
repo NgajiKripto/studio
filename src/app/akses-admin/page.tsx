@@ -61,7 +61,7 @@ export default function AdminAccessPage() {
               value={accessKey}
               onChange={(event) => setAccessKey(event.target.value)}
               placeholder="Kunci akses admin"
-              autoComplete="one-time-code"
+              autoComplete="current-password"
               required
             />
 
