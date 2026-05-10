@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Sparkles, Instagram, Facebook, Twitter, ShieldCheck } from "lucide-react";
+import { Sparkles, Instagram, Facebook, Twitter } from "lucide-react";
 
 export function Footer() {
   return (
@@ -37,7 +37,6 @@ export function Footer() {
               <li><Link href="/products" className="hover:text-primary transition-colors">Semua Produk</Link></li>
               <li><Link href="/diagnostic" className="hover:text-primary transition-colors">Kuis Diagnostik</Link></li>
               <li><Link href="/recommend" className="hover:text-primary transition-colors">Rekomendasi AI</Link></li>
-              <li><Link href="/admin" className="hover:text-primary transition-colors flex items-center gap-2"><ShieldCheck className="h-4 w-4" /> Admin Panel</Link></li>
             </ul>
           </div>
           
