@@ -7,9 +7,11 @@ import {
   secureCompare,
 } from "@/lib/admin-security";
 
-const ADMIN_SESSION_MAX_AGE_SECONDS = Number(
-  process.env.ADMIN_SESSION_MAX_AGE_SECONDS ?? 60 * 60 * 8
-);
+const ADMIN_SESSION_MAX_AGE_SECONDS = (() => {
+  const parsed = Number.parseInt(process.env.ADMIN_SESSION_MAX_AGE_SECONDS ?? "", 10);
+  if (Number.isFinite(parsed) && parsed > 0) return parsed;
+  return 60 * 60 * 8;
+})();
 
 export async function POST(req: NextRequest) {
   if (!process.env.ADMIN_ACCESS_KEY || !process.env.ADMIN_SESSION_SECRET) {

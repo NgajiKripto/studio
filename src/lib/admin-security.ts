@@ -51,9 +51,7 @@ export function getDeviceFingerprint(headers: Headers) {
   }
 
   const acceptLanguage = headers.get("accept-language") ?? "";
-  const forwardedFor = headers.get("x-forwarded-for") ?? "";
-  const clientIp = forwardedFor.split(",")[0]?.trim() ?? "";
-  return sha256(`${userAgent}|${acceptLanguage}|${clientIp}`);
+  return sha256(`${userAgent}|${acceptLanguage}`);
 }
 
 export function isDeviceAllowed(headers: Headers) {

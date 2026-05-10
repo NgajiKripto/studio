@@ -23,7 +23,7 @@ Set environment variables berikut:
 - `ADMIN_SESSION_MAX_AGE_SECONDS` (opsional, default `28800`)  
   Durasi sesi admin dalam detik.
 - `ADMIN_STRICT_DEVICE_FINGERPRINT` (opsional, default `false`)  
-  Jika `true`, fingerprint memakai gabungan `user-agent + accept-language + IP`.
+  Jika `true`, fingerprint memakai gabungan `user-agent + accept-language`.
 - `ADMIN_PANEL_PATH` (opsional, default `/admin`)  
   Path panel admin yang dikembalikan setelah login sukses.
 - `ADMIN_ENTRY_PATH` (opsional, default `/akses-admin`)  
@@ -32,5 +32,5 @@ Set environment variables berikut:
 ### Cara mendapatkan fingerprint perangkat
 
 Secara default fingerprint dibentuk dari hash `user-agent`.  
-Jika `ADMIN_STRICT_DEVICE_FINGERPRINT=true`, fingerprint memakai hash `user-agent + accept-language + IP client (x-forwarded-for)`.  
+Jika `ADMIN_STRICT_DEVICE_FINGERPRINT=true`, fingerprint memakai hash `user-agent + accept-language`.  
 Jika ingin mode “hanya perangkat tertentu”, isi `ADMIN_ALLOWED_DEVICE_FINGERPRINTS` dengan fingerprint perangkat admin.
