@@ -3,21 +3,22 @@ import {
   ADMIN_SESSION_COOKIE_NAME,
   createAdminSessionToken,
   getAdminPanelPath,
+  isClientIpAllowed,
   isDeviceAllowed,
   secureCompare,
 } from "@/lib/admin-security";
 
 const ADMIN_SESSION_MAX_AGE_SECONDS = (() => {
-  const parsed = Number.parseInt(process.env.ADMIN_SESSION_MAX_AGE_SECONDS ?? "", 10);
+  const parsedMaxAge = Number.parseInt(process.env.ADMIN_SESSION_MAX_AGE_SECONDS ?? "", 10);
   const MIN_SESSION_DURATION_SECONDS = 60 * 5;
   const MAX_SESSION_DURATION_SECONDS = 60 * 60 * 24;
 
   if (
-    Number.isFinite(parsed) &&
-    parsed >= MIN_SESSION_DURATION_SECONDS &&
-    parsed <= MAX_SESSION_DURATION_SECONDS
+    Number.isFinite(parsedMaxAge) &&
+    parsedMaxAge >= MIN_SESSION_DURATION_SECONDS &&
+    parsedMaxAge <= MAX_SESSION_DURATION_SECONDS
   ) {
-    return parsed;
+    return parsedMaxAge;
   }
   return 60 * 60 * 8;
 })();
@@ -30,7 +31,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  if (!isDeviceAllowed(req.headers)) {
+  if (!isDeviceAllowed(req.headers) || !isClientIpAllowed(req.headers)) {
     return NextResponse.json({ error: "Akses ditolak." }, { status: 403 });
   }
 

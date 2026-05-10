@@ -62,6 +62,29 @@ export function isDeviceAllowed(headers: Headers) {
   return allowedFingerprints.includes(currentFingerprint);
 }
 
+function getClientIp(headers: Headers) {
+  const realIp = headers.get("x-real-ip")?.trim();
+  if (realIp) return realIp;
+
+  const forwardedFor = headers.get("x-forwarded-for") ?? "";
+  return forwardedFor.split(",")[0]?.trim() ?? "";
+}
+
+export function isClientIpAllowed(headers: Headers) {
+  const raw = process.env.ADMIN_ALLOWED_IPS ?? "";
+  const allowedIps = raw
+    .split(",")
+    .map((item) => item.trim())
+    .filter(Boolean);
+
+  if (allowedIps.length === 0) {
+    return true;
+  }
+
+  const clientIp = getClientIp(headers);
+  return Boolean(clientIp) && allowedIps.includes(clientIp);
+}
+
 function hasRequiredAdminSecrets() {
   return Boolean(process.env.ADMIN_ACCESS_KEY && process.env.ADMIN_SESSION_SECRET);
 }
@@ -84,6 +107,7 @@ export function isAdminAuthorizedRequest(
   if (!hasRequiredAdminSecrets()) return false;
   if (!sessionToken) return false;
   if (!isDeviceAllowed(headers)) return false;
+  if (!isClientIpAllowed(headers)) return false;
 
   const expectedSignature = getSessionSignature(headers);
   if (!expectedSignature) return false;

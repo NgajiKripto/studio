@@ -20,6 +20,8 @@ Set environment variables berikut:
   Secret untuk menandatangani sesi admin.
 - `ADMIN_ALLOWED_DEVICE_FINGERPRINTS` (opsional)  
   Daftar fingerprint perangkat yang diizinkan, dipisah koma. Jika kosong, fitur whitelist perangkat dinonaktifkan.
+- `ADMIN_ALLOWED_IPS` (opsional)  
+  Daftar IP yang diizinkan untuk akses admin, dipisah koma.
 - `ADMIN_SESSION_MAX_AGE_SECONDS` (opsional, default `28800`)  
   Durasi sesi admin dalam detik.
 - `ADMIN_STRICT_DEVICE_FINGERPRINT` (opsional, default `false`)  
@@ -34,5 +36,5 @@ Set environment variables berikut:
 Secara default fingerprint dibentuk dari hash `user-agent`.  
 Jika `ADMIN_STRICT_DEVICE_FINGERPRINT=true`, fingerprint memakai hash `user-agent + accept-language`.  
 
-> Catatan: Fingerprint berbasis header (termasuk `user-agent`) punya keterbatasan karena header bisa dipalsukan. Untuk keamanan lebih tinggi, kombinasikan dengan rotasi `ADMIN_ACCESS_KEY` berkala dan pembatasan jaringan/proxy tepercaya.
+> Catatan: Fingerprint berbasis header (termasuk `user-agent`) punya keterbatasan karena header bisa dipalsukan. Untuk keamanan lebih tinggi, kombinasikan dengan rotasi `ADMIN_ACCESS_KEY` berkala, `ADMIN_ALLOWED_IPS`, dan pembatasan jaringan/proxy tepercaya.
 Jika ingin mode “hanya perangkat tertentu”, isi `ADMIN_ALLOWED_DEVICE_FINGERPRINTS` dengan fingerprint perangkat admin.
