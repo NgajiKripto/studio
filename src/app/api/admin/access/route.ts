@@ -4,7 +4,12 @@ import {
   createAdminSessionToken,
   getAdminPanelPath,
   isDeviceAllowed,
+  secureCompare,
 } from "@/lib/admin-security";
+
+const ADMIN_SESSION_MAX_AGE_SECONDS = Number(
+  process.env.ADMIN_SESSION_MAX_AGE_SECONDS ?? 60 * 60 * 8
+);
 
 export async function POST(req: NextRequest) {
   if (!process.env.ADMIN_ACCESS_KEY || !process.env.ADMIN_SESSION_SECRET) {
@@ -22,7 +27,12 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const providedKey = body?.accessKey;
 
-    if (typeof providedKey !== "string" || providedKey !== process.env.ADMIN_ACCESS_KEY) {
+    const expectedKey = process.env.ADMIN_ACCESS_KEY;
+    if (
+      typeof providedKey !== "string" ||
+      !expectedKey ||
+      !secureCompare(providedKey, expectedKey)
+    ) {
       return NextResponse.json({ error: "Kunci akses admin tidak valid." }, { status: 401 });
     }
 
@@ -34,7 +44,7 @@ export async function POST(req: NextRequest) {
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
       path: "/",
-      maxAge: 60 * 60 * 24 * 30,
+      maxAge: ADMIN_SESSION_MAX_AGE_SECONDS,
     });
 
     return response;

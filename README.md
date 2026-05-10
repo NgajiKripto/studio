@@ -9,7 +9,7 @@ To get started, take a look at src/app/page.tsx.
 Admin panel sekarang diproteksi dengan kombinasi:
 - Jalur akses tersembunyi: `/akses-admin`
 - Access key admin (server-side)
-- Sesi admin berbasis cookie httpOnly
+- Sesi admin berbasis cookie httpOnly (default 8 jam, bisa diatur via env)
 - (Opsional) whitelist fingerprint perangkat tertentu
 
 Set environment variables berikut:
@@ -20,6 +20,10 @@ Set environment variables berikut:
   Secret untuk menandatangani sesi admin.
 - `ADMIN_ALLOWED_DEVICE_FINGERPRINTS` (opsional)  
   Daftar fingerprint perangkat yang diizinkan, dipisah koma. Jika kosong, fitur whitelist perangkat dinonaktifkan.
+- `ADMIN_SESSION_MAX_AGE_SECONDS` (opsional, default `28800`)  
+  Durasi sesi admin dalam detik.
+- `ADMIN_STRICT_DEVICE_FINGERPRINT` (opsional, default `false`)  
+  Jika `true`, fingerprint memakai gabungan `user-agent + accept-language + IP`.
 - `ADMIN_PANEL_PATH` (opsional, default `/admin`)  
   Path panel admin yang dikembalikan setelah login sukses.
 - `ADMIN_ENTRY_PATH` (opsional, default `/akses-admin`)  
@@ -27,5 +31,6 @@ Set environment variables berikut:
 
 ### Cara mendapatkan fingerprint perangkat
 
-Fingerprint dibentuk dari hash `user-agent` + `accept-language` request.  
+Secara default fingerprint dibentuk dari hash `user-agent`.  
+Jika `ADMIN_STRICT_DEVICE_FINGERPRINT=true`, fingerprint memakai hash `user-agent + accept-language + IP client (x-forwarded-for)`.  
 Jika ingin mode “hanya perangkat tertentu”, isi `ADMIN_ALLOWED_DEVICE_FINGERPRINTS` dengan fingerprint perangkat admin.

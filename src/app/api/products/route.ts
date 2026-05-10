@@ -28,7 +28,7 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   const sessionToken = getAdminSessionTokenFromRequest(req);
   if (!isAdminAuthorizedRequest(req.headers, sessionToken)) {
-    return NextResponse.json({ error: "Not found" }, { status: 404 });
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
   try {

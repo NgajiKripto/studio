@@ -38,7 +38,7 @@ export async function PUT(
 ) {
   const sessionToken = getAdminSessionTokenFromRequest(req);
   if (!isAdminAuthorizedRequest(req.headers, sessionToken)) {
-    return NextResponse.json({ error: "Not found" }, { status: 404 });
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
   const { id } = await params;
@@ -95,7 +95,7 @@ export async function DELETE(
 ) {
   const sessionToken = getAdminSessionTokenFromRequest(req);
   if (!isAdminAuthorizedRequest(req.headers, sessionToken)) {
-    return NextResponse.json({ error: "Not found" }, { status: 404 });
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
   const { id } = await params;

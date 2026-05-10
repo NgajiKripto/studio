@@ -1,7 +1,8 @@
 import { cookies, headers } from "next/headers";
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 import {
   ADMIN_SESSION_COOKIE_NAME,
+  getAdminEntryPath,
   isAdminAuthorizedRequest,
 } from "@/lib/admin-security";
 
@@ -13,7 +14,7 @@ export default async function AdminLayout({
   const sessionToken = cookieStore.get(ADMIN_SESSION_COOKIE_NAME)?.value;
 
   if (!isAdminAuthorizedRequest(headerStore, sessionToken)) {
-    notFound();
+    redirect(getAdminEntryPath());
   }
 
   return children;

@@ -14,12 +14,18 @@ function hmac(value: string, secret: string) {
   return createHmac("sha256", secret).update(value).digest("hex");
 }
 
-function secureCompare(a: string, b: string) {
+export function secureCompare(a: string, b: string) {
   const aBuffer = Buffer.from(a, "utf8");
   const bBuffer = Buffer.from(b, "utf8");
+  const maxLength = Math.max(aBuffer.length, bBuffer.length);
 
-  if (aBuffer.length !== bBuffer.length) return false;
-  return timingSafeEqual(aBuffer, bBuffer);
+  const aPadded = Buffer.alloc(maxLength);
+  const bPadded = Buffer.alloc(maxLength);
+  aBuffer.copy(aPadded);
+  bBuffer.copy(bPadded);
+
+  const isEqual = timingSafeEqual(aPadded, bPadded);
+  return isEqual && aBuffer.length === bBuffer.length;
 }
 
 function normalizePath(value: string | undefined, fallback: string) {
@@ -38,8 +44,16 @@ export function getAdminPanelPath() {
 
 export function getDeviceFingerprint(headers: Headers) {
   const userAgent = headers.get("user-agent") ?? "";
+  const strictDeviceFingerprint = process.env.ADMIN_STRICT_DEVICE_FINGERPRINT === "true";
+
+  if (!strictDeviceFingerprint) {
+    return sha256(userAgent);
+  }
+
   const acceptLanguage = headers.get("accept-language") ?? "";
-  return sha256(`${userAgent}|${acceptLanguage}`);
+  const forwardedFor = headers.get("x-forwarded-for") ?? "";
+  const clientIp = forwardedFor.split(",")[0]?.trim() ?? "";
+  return sha256(`${userAgent}|${acceptLanguage}|${clientIp}`);
 }
 
 export function isDeviceAllowed(headers: Headers) {
