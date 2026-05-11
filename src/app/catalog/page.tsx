@@ -43,7 +43,7 @@ export default function CatalogPage() {
       <div className="space-y-2">
         <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Skin Type</Label>
         <Select value={selectedType} onValueChange={(v) => setSelectedType(v as SkinType | "ALL")}>
-          <SelectTrigger className="rounded-xl bg-white border-border">
+          <SelectTrigger className="rounded-xl bg-card border-border">
             <SelectValue placeholder="All Skin Types" />
           </SelectTrigger>
           <SelectContent>
@@ -58,7 +58,7 @@ export default function CatalogPage() {
       <div className="space-y-2">
         <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Skin Tone</Label>
         <Select value={selectedTone} onValueChange={(v) => setSelectedTone(v as SkinTone | "ALL")}>
-          <SelectTrigger className="rounded-xl bg-white border-border">
+          <SelectTrigger className="rounded-xl bg-card border-border">
             <SelectValue placeholder="All Skin Tones" />
           </SelectTrigger>
           <SelectContent>
@@ -73,7 +73,7 @@ export default function CatalogPage() {
       <div className="space-y-2">
         <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Face Shape</Label>
         <Select value={selectedShape} onValueChange={(v) => setSelectedShape(v as FaceShape | "ALL")}>
-          <SelectTrigger className="rounded-xl bg-white border-border">
+          <SelectTrigger className="rounded-xl bg-card border-border">
             <SelectValue placeholder="All Face Shapes" />
           </SelectTrigger>
           <SelectContent>
@@ -104,7 +104,7 @@ export default function CatalogPage() {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
           {/* Desktop Sidebar */}
           <aside className="hidden lg:block">
-            <div className="sticky top-24 bg-white rounded-2xl p-6 border border-border/50 shadow-sm">
+            <div className="sticky top-24 bg-card rounded-2xl p-6 border border-border/50 shadow-sm">
               <h2 className="font-headline text-lg font-bold mb-6">Filters</h2>
               <FilterPanel />
             </div>
@@ -117,7 +117,7 @@ export default function CatalogPage() {
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
                   placeholder="Search products..."
-                  className="pl-10 rounded-xl bg-white border-border"
+                  className="pl-10 rounded-xl bg-card border-border"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
@@ -151,7 +151,7 @@ export default function CatalogPage() {
                 ))}
               </div>
             ) : (
-              <div className="text-center py-20 bg-white rounded-2xl border border-border/50">
+              <div className="text-center py-20 bg-card rounded-2xl border border-border/50">
                 <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center mx-auto mb-4">
                   <Search className="h-6 w-6 text-muted-foreground" />
                 </div>

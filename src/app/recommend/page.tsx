@@ -97,7 +97,7 @@ export default function RecommendPage() {
           </div>
         )}
 
-        <Card className="bg-white rounded-2xl shadow-lg border border-border/50 p-8 md:p-10">
+        <Card className="bg-card rounded-2xl shadow-lg border border-border/50 p-8 md:p-10">
           {step === "SKIN_TYPE" && (
             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4">
               <div className="text-center">
