@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { prisma } from "@/lib/prisma";
 import { Button } from "@/components/ui/button";
+import BlurText from "@/components/ui/blur-text";
 import { Heart, ArrowRight, ChevronDown } from "lucide-react";
 
 export default async function Home() {
@@ -30,7 +31,13 @@ export default async function Home() {
                 Triple Skin Diagnostic
               </div>
               <h1 className="font-headline text-5xl md:text-6xl lg:text-7xl font-bold text-foreground leading-[1.1]">
-                Personalized beauty for every skin.
+                <BlurText
+                  text="Personalized beauty for every skin."
+                  delay={120}
+                  className="inline"
+                  animateBy="words"
+                  direction="top"
+                />
               </h1>
               <p className="text-muted-foreground text-lg max-w-md leading-relaxed">
                 Discover your perfect match with our Triple Skin Diagnostic. We analyze your skin type, tone, and face shape to curate a personalized makeup catalog just for you.
