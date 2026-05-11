@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { ConfettiButton } from "@/components/ui/confetti-button";
 import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
@@ -290,9 +291,9 @@ export function DiagnosticQuiz() {
         />
 
         <div className="space-y-3 pt-4">
-          <Button size="lg" className="w-full rounded-full font-semibold" onClick={goToCatalog}>
+          <ConfettiButton size="lg" className="w-full rounded-full font-semibold" onClick={goToCatalog}>
             View Matching Products <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
+          </ConfettiButton>
           <Button variant="ghost" className="w-full text-muted-foreground" onClick={() => setStep(1)}>
             <RotateCcw className="mr-2 h-4 w-4" /> Retake Quiz
           </Button>
