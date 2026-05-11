@@ -134,7 +134,7 @@ export default function BlurText({
       {elements.map((segment, index) => {
         return (
           <motion.span
-            key={index}
+            key={`${index}-${segment}`}
             initial={fromSnapshot}
             animate={inView ? animateKeyframes : fromSnapshot}
             transition={{
