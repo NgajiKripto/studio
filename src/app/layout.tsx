@@ -5,8 +5,23 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: 'Muakeup - Personalized Beauty for Every Skin',
-  description: 'Discover your perfect match with our Triple Skin Diagnostic. We analyze your skin type, tone, and face shape to curate a personalized makeup catalog just for you.',
+  title: {
+    default: 'Muakeup - Rekomendasi Makeup Personal dari MUA',
+    template: '%s | Muakeup - Rekomendasi Makeup Personal dari MUA',
+  },
+  description: 'Temukan makeup yang cocok untuk jenis kulit, warna kulit, dan bentuk wajahmu. Rekomendasi dari MUA profesional, beli via link affiliate brand ternama.',
+  openGraph: {
+    type: 'website',
+    locale: 'id_ID',
+    siteName: 'Muakeup',
+    title: 'Muakeup - Rekomendasi Makeup Personal dari MUA',
+    description: 'Temukan makeup yang cocok untuk jenis kulit, warna kulit, dan bentuk wajahmu. Rekomendasi dari MUA profesional.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Muakeup - Rekomendasi Makeup Personal dari MUA',
+    description: 'Temukan makeup yang cocok untuk jenis kulit, warna kulit, dan bentuk wajahmu. Rekomendasi dari MUA profesional.',
+  },
 };
 
 export default function RootLayout({

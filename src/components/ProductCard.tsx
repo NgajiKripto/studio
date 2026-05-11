@@ -20,7 +20,7 @@ export function ProductCard({ product }: ProductCardProps) {
         <div className="relative aspect-[4/5] overflow-hidden bg-gradient-to-br from-primary/10 to-secondary/10">
           <Image
             src={product.imageUrl}
-            alt={product.name}
+            alt={`Produk ${product.name} dari ${product.brand} - makeup ${product.category}`}
             fill
             className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
             data-ai-hint="makeup product"

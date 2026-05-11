@@ -1,4 +1,5 @@
 export const dynamic = 'force-dynamic';
+import type { Metadata } from "next";
 import { Suspense } from "react";
 import { prisma } from "@/lib/prisma";
 import { ProductFilters } from "@/components/products/ProductFilters";
@@ -7,6 +8,17 @@ import { ProfileBanner } from "@/components/products/ProfileBanner";
 import { ProductSkeleton } from "@/components/products/ProductSkeleton";
 import { SkinType, SkinTone, FaceShape } from "@/lib/constants";
 import { Sparkles } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Katalog Produk Makeup - Rekomendasi Sesuai Jenis Kulit",
+  description:
+    "Jelajahi katalog produk makeup terlengkap dengan filter berdasarkan jenis kulit, warna kulit, dan bentuk wajah. Temukan foundation, lipstik, contour terbaik untukmu.",
+  openGraph: {
+    title: "Katalog Produk Makeup | Muakeup",
+    description:
+      "Jelajahi katalog produk makeup terlengkap dengan filter berdasarkan jenis kulit, warna kulit, dan bentuk wajah.",
+  },
+};
 
 interface ProductsPageProps {
   searchParams: Promise<{
@@ -71,10 +83,10 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
             Personalized For You
           </div>
           <h1 className="text-4xl md:text-5xl font-extrabold text-foreground mb-3 tracking-tight">
-            Beauty Catalog
+            Katalog Produk Makeup
           </h1>
           <p className="text-muted-foreground text-lg">
-            Discover products curated for your unique beauty profile.
+            Temukan produk makeup terbaik yang dikurasi sesuai profil kecantikan unikmu.
           </p>
         </header>
 
