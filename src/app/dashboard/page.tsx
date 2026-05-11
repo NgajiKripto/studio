@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import { Card } from "@/components/ui/card";
