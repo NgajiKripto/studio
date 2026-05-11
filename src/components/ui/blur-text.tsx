@@ -26,7 +26,9 @@ const buildKeyframes = (from: AnimationSnapshot, steps: AnimationSnapshot[]) => 
 
   const keyframes: Record<string, AnimationValue[]> = {};
   keys.forEach((key) => {
-    const firstDefined = from[key] ?? steps.find((step) => step[key] !== undefined)?.[key] ?? 0;
+    const firstDefined = from[key] ?? steps.find((step) => step[key] !== undefined)?.[key];
+    if (firstDefined === undefined) return;
+
     const values: AnimationValue[] = [firstDefined];
 
     steps.forEach((step) => {
@@ -36,6 +38,11 @@ const buildKeyframes = (from: AnimationSnapshot, steps: AnimationSnapshot[]) => 
     keyframes[key] = values;
   });
   return keyframes;
+};
+
+const buildTimes = (stepCount: number) => {
+  if (stepCount <= 1) return [0];
+  return Array.from({ length: stepCount }, (_, index) => index / (stepCount - 1));
 };
 
 export default function BlurText({
@@ -100,7 +107,7 @@ export default function BlurText({
 
   const stepCount = toSnapshots.length + 1;
   const totalDuration = stepDuration * (stepCount - 1);
-  const times = Array.from({ length: stepCount }, (_, i) => (stepCount === 1 ? 0 : i / (stepCount - 1)));
+  const times = buildTimes(stepCount);
   const animateKeyframes = buildKeyframes(fromSnapshot, toSnapshots);
 
   return (
