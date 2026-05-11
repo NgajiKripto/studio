@@ -174,7 +174,7 @@ export default function RecommendPage() {
                   >
                     <div className={cn(
                       "w-12 h-16 border-2 border-muted-foreground/30 mb-3",
-                      shape.value === 'ROUND' && "rounded-lg",
+                      shape.value === 'ROUND' && "rounded-full",
                       shape.value === 'OVAL' && "rounded-[40%]",
                       shape.value === 'SQUARE' && "rounded-sm",
                       shape.value === 'HEART' && "rounded-b-full rounded-t-[10%]",

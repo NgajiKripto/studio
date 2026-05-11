@@ -98,8 +98,8 @@ export function ProductDetailClient({ productId, tags, brandName }: ProductDetai
           <div className="grid grid-cols-1 gap-4">
             {[skinComp, toneComp, shapeComp].map((comp, idx) => comp && (
               <div key={idx} className={cn(
-                "p-5 rounded-lg border flex items-start gap-4 transition-all hover:shadow-md",
-                comp.status === "MATCH" ? "bg-primary/40 border-primary/70" : "bg-secondary/20 border-secondary/50"
+                "p-5 rounded-lg border bg-card flex items-start gap-4 transition-all hover:shadow-md",
+                comp.status === "MATCH" ? "border-primary/70" : "border-secondary/50"
               )}>
                 <div className={cn(
                   "p-2 rounded-lg shrink-0",

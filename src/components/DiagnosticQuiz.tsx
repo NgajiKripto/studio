@@ -201,7 +201,7 @@ export function DiagnosticQuiz() {
                   skinDepth === d.id ? "scale-110" : "opacity-60"
                 )}
               >
-                  <div className={cn("w-full aspect-square rounded-lg border-2", d.color, skinDepth === d.id ? "border-primary shadow-lg" : "border-transparent")} />
+                  <div className={cn("w-full aspect-square rounded-full border-2", d.color, skinDepth === d.id ? "border-primary shadow-lg" : "border-transparent")} />
                 <span className="text-[10px] font-bold uppercase tracking-tighter">{d.id}</span>
               </div>
             ))}

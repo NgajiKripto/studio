@@ -49,7 +49,7 @@ export function ProfileBanner() {
         ? "bg-accent/5 border-accent/20" 
         : "bg-primary/5 border-primary/20"
     )}>
-      <div className="absolute top-0 right-0 -z-10 w-32 h-32 bg-accent/10 rounded-lg blur-3xl -mr-16 -mt-16" />
+      <div className="absolute top-0 right-0 -z-10 w-32 h-32 bg-accent/10 blur-3xl -mr-16 -mt-16" />
       
       <div className="flex flex-col md:flex-row items-center gap-6 justify-between">
         <div className="flex items-center gap-4">

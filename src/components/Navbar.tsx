@@ -22,7 +22,7 @@ export function Navbar() {
         <div className="flex items-center justify-between rounded-lg border border-border/50 bg-card/85 px-4 py-3 shadow-sm">
           <Link href="/" className="flex items-center gap-2">
             <div className="rounded-lg bg-primary p-2">
-              <Sparkles className="h-5 w-5 text-foreground" />
+              <Sparkles className="h-5 w-5 text-primary-foreground" />
             </div>
             <span className="font-headline text-xl font-bold text-foreground">Muakeup</span>
           </Link>
@@ -60,7 +60,7 @@ export function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="block rounded-lg px-3 py-2 text-sm font-semibold text-link hover:bg-primary/40"
+                  className="block rounded-lg px-3 py-2 text-sm font-semibold text-link hover:bg-secondary/20"
                   onClick={() => setIsOpen(false)}
                 >
                   {link.label}

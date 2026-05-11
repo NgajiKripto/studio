@@ -34,6 +34,8 @@
     --chart-5: 250 70% 72%;
     --font-body: "Manrope", -apple-system, sans-serif;
     --font-heading: "Font Med", -apple-system, sans-serif;
+    --body-token: 7.84px;
+    --body-scale: 2.04;
   }
 
   .dark {
@@ -66,7 +68,8 @@
   }
 
   body {
-    @apply bg-background text-foreground font-body text-base;
+    @apply bg-background text-foreground font-body;
+    font-size: calc(var(--body-token) * var(--body-scale));
   }
 
   h1,

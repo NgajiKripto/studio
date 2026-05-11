@@ -9,7 +9,7 @@ export function Footer() {
           <div className="space-y-4 md:col-span-2">
             <Link href="/" className="flex items-center gap-2">
               <div className="rounded-lg bg-primary p-2">
-                <Sparkles className="h-5 w-5 text-foreground" />
+                <Sparkles className="h-5 w-5 text-primary-foreground" />
               </div>
               <span className="font-headline text-2xl font-bold text-foreground">Muakeup</span>
             </Link>
