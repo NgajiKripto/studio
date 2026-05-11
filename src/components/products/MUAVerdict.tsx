@@ -8,7 +8,7 @@ interface MUAVerdictProps {
 
 export function MUAVerdict({ verdict, brand }: MUAVerdictProps) {
   return (
-    <div className="relative p-8 md:p-10 rounded-[2.5rem] bg-[#FAF7F2] border-l-[6px] border-primary shadow-sm overflow-hidden group">
+    <div className="relative overflow-hidden rounded-lg border border-border/60 bg-card p-8 shadow-sm group md:p-10">
       <div className="absolute top-0 right-0 p-6 opacity-5 transition-transform group-hover:scale-110 duration-700">
         <Quote className="h-24 w-24 text-primary fill-primary" />
       </div>

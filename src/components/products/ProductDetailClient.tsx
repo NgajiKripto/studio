@@ -4,7 +4,7 @@
 import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, AlertCircle, XCircle, Sparkles, ShoppingCart, ArrowRight } from "lucide-react";
+import { CheckCircle2, AlertCircle, Sparkles, ShoppingCart, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
@@ -88,9 +88,9 @@ export function ProductDetailClient({ productId, tags, brandName }: ProductDetai
         </h3>
 
         {!profile ? (
-          <div className="p-8 rounded-[2rem] border-2 border-dashed bg-secondary/10 text-center space-y-4">
+          <div className="p-8 rounded-lg border-2 border-dashed border-border bg-secondary/10 text-center space-y-4">
             <p className="text-muted-foreground">Belum tahu tipe kulit atau bentuk wajahmu? Biarkan kami menganalisisnya untukmu.</p>
-            <Button asChild variant="outline" className="rounded-full gap-2">
+            <Button asChild variant="outline" className="gap-2">
               <Link href="/diagnostic">Mulai Kuis Diagnostik <ArrowRight className="h-4 w-4" /></Link>
             </Button>
           </div>
@@ -98,12 +98,12 @@ export function ProductDetailClient({ productId, tags, brandName }: ProductDetai
           <div className="grid grid-cols-1 gap-4">
             {[skinComp, toneComp, shapeComp].map((comp, idx) => comp && (
               <div key={idx} className={cn(
-                "p-5 rounded-2xl border flex items-start gap-4 transition-all hover:shadow-md",
-                comp.status === "MATCH" ? "bg-green-50/50 border-green-100" : "bg-orange-50/50 border-orange-100"
+                "p-5 rounded-lg border bg-card flex items-start gap-4 transition-all hover:shadow-md",
+                comp.status === "MATCH" ? "border-primary/70" : "border-secondary/50"
               )}>
                 <div className={cn(
-                  "p-2 rounded-xl shrink-0",
-                  comp.status === "MATCH" ? "bg-green-100 text-green-600" : "bg-orange-100 text-orange-600"
+                  "p-2 rounded-lg shrink-0",
+                  comp.status === "MATCH" ? "bg-primary text-foreground" : "bg-secondary/30 text-link"
                 )}>
                   {comp.status === "MATCH" ? <CheckCircle2 className="h-5 w-5" /> : <AlertCircle className="h-5 w-5" />}
                 </div>
@@ -124,12 +124,12 @@ export function ProductDetailClient({ productId, tags, brandName }: ProductDetai
 
       {/* Action Buttons */}
       <div className="pt-6 flex flex-col sm:flex-row gap-4">
-        <Button size="lg" className="h-16 px-10 rounded-full text-lg font-bold shadow-xl flex-grow gap-3" asChild>
+        <Button size="lg" className="h-16 px-10 text-lg font-bold shadow-xl flex-grow gap-3" asChild>
           <Link href={`/out?productId=${productId}`}>
             Dapatkan di Official {brandName} <ArrowRight className="h-5 w-5" />
           </Link>
         </Button>
-        <Button variant="outline" size="lg" className="h-16 w-16 rounded-full flex-shrink-0 border-primary/20 hover:border-primary">
+        <Button variant="outline" size="lg" className="h-16 w-16 flex-shrink-0 border-accent/40 hover:border-accent">
           <ShoppingCart className="h-6 w-6 text-primary" />
         </Button>
       </div>

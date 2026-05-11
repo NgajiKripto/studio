@@ -94,7 +94,7 @@ export function DiagnosticQuiz() {
   const renderStep1 = () => (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="text-center space-y-2">
-        <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+        <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
           <Waves className="text-primary h-6 w-6" />
         </div>
         <h2 className="text-3xl font-headline font-bold">Jenis Kulitmu?</h2>
@@ -153,7 +153,7 @@ export function DiagnosticQuiz() {
               <Button 
                 key={opt.val}
                 variant={undertoneAnswers.jewelry === opt.val ? "default" : "outline"}
-                className="rounded-xl h-12"
+                className="h-12"
                 onClick={() => setUndertoneAnswers({...undertoneAnswers, jewelry: opt.val as any})}
               >
                 {opt.label}
@@ -173,7 +173,7 @@ export function DiagnosticQuiz() {
               <Button 
                 key={opt.val}
                 variant={undertoneAnswers.veins === opt.val ? "default" : "outline"}
-                className="rounded-xl h-12"
+                className="h-12"
                 onClick={() => setUndertoneAnswers({...undertoneAnswers, veins: opt.val as any})}
               >
                 {opt.label}
@@ -201,7 +201,7 @@ export function DiagnosticQuiz() {
                   skinDepth === d.id ? "scale-110" : "opacity-60"
                 )}
               >
-                <div className={cn("w-full aspect-square rounded-full border-2", d.color, skinDepth === d.id ? "border-primary shadow-lg" : "border-transparent")} />
+                  <div className={cn("w-full aspect-square rounded-full border-2", d.color, skinDepth === d.id ? "border-primary shadow-lg" : "border-transparent")} />
                 <span className="text-[10px] font-bold uppercase tracking-tighter">{d.id}</span>
               </div>
             ))}
@@ -214,8 +214,8 @@ export function DiagnosticQuiz() {
   const renderStep3 = () => (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="text-center space-y-2">
-        <div className="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
-          <Fingerprint className="text-pink-600 h-6 w-6" />
+        <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+          <Fingerprint className="text-link h-6 w-6" />
         </div>
         <h2 className="text-3xl font-headline font-bold">Bentuk Wajah</h2>
         <p className="text-muted-foreground italic">"Lihat cermin, tarik rambut ke belakang. Bandingkan dengan diagram."</p>
@@ -260,8 +260,8 @@ export function DiagnosticQuiz() {
     return (
       <div className="space-y-10 py-8 animate-in zoom-in duration-700">
         <div className="text-center space-y-4">
-          <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto shadow-inner">
-            <Check className="text-green-600 h-10 w-10" />
+          <div className="w-20 h-20 bg-primary rounded-lg flex items-center justify-center mx-auto shadow-inner">
+            <Check className="text-foreground h-10 w-10" />
           </div>
           <div>
             <h2 className="text-4xl font-headline font-bold">Diagnostik Selesai!</h2>
@@ -270,8 +270,8 @@ export function DiagnosticQuiz() {
         </div>
 
         <div className="grid grid-cols-1 gap-6">
-          <div className="p-6 rounded-3xl bg-secondary/30 border border-primary/10 flex items-center gap-6">
-            <div className="w-16 h-16 rounded-2xl bg-white flex items-center justify-center shadow-sm">
+          <div className="p-6 rounded-lg bg-secondary/30 border border-primary/10 flex items-center gap-6">
+            <div className="w-16 h-16 rounded-lg bg-card flex items-center justify-center shadow-sm">
               <Waves className="text-primary h-8 w-8" />
             </div>
             <div>
@@ -280,8 +280,8 @@ export function DiagnosticQuiz() {
             </div>
           </div>
 
-          <div className="p-6 rounded-3xl bg-secondary/30 border border-primary/10 flex items-center gap-6">
-            <div className="w-16 h-16 rounded-2xl bg-white flex items-center justify-center shadow-sm">
+          <div className="p-6 rounded-lg bg-secondary/30 border border-primary/10 flex items-center gap-6">
+            <div className="w-16 h-16 rounded-lg bg-card flex items-center justify-center shadow-sm">
               <Palette className="text-accent h-8 w-8" />
             </div>
             <div>
@@ -290,19 +290,19 @@ export function DiagnosticQuiz() {
             </div>
           </div>
 
-          <div className="p-6 rounded-3xl bg-secondary/30 border border-primary/10 flex items-center gap-6">
-            <div className="w-16 h-16 rounded-2xl bg-white flex items-center justify-center shadow-sm">
-              <Fingerprint className="text-pink-600 h-8 w-8" />
+          <div className="p-6 rounded-lg bg-secondary/30 border border-primary/10 flex items-center gap-6">
+            <div className="w-16 h-16 rounded-lg bg-card flex items-center justify-center shadow-sm">
+              <Fingerprint className="text-link h-8 w-8" />
             </div>
             <div>
-              <p className="text-xs font-bold uppercase tracking-widest text-pink-600">Bentuk Wajah</p>
+              <p className="text-xs font-bold uppercase tracking-widest text-link">Bentuk Wajah</p>
               <h3 className="text-2xl font-headline font-bold">{results.faceShape}</h3>
             </div>
           </div>
         </div>
 
         <div className="space-y-4">
-          <Button size="lg" className="w-full h-14 rounded-full text-lg font-bold shadow-xl" onClick={goToCatalog}>
+          <Button size="lg" className="w-full h-14 text-lg font-bold shadow-xl" onClick={goToCatalog}>
             Lihat Produk yang Cocok <ArrowRight className="ml-2 h-5 w-5" />
           </Button>
           <Button variant="ghost" className="w-full text-muted-foreground" onClick={() => setStep(1)}>
@@ -321,7 +321,7 @@ export function DiagnosticQuiz() {
   };
 
   return (
-    <Card className="w-full max-w-2xl mx-auto overflow-hidden border-none shadow-2xl bg-white/80 backdrop-blur-xl rounded-[3rem]">
+    <Card className="w-full max-w-2xl mx-auto overflow-hidden border-none shadow-2xl bg-card/80 backdrop-blur-xl rounded-lg">
       <div className="p-1 px-8 pt-8">
         {step < 4 && <Progress value={progress} className="h-1 bg-muted" />}
       </div>
@@ -338,7 +338,7 @@ export function DiagnosticQuiz() {
               variant="ghost" 
               onClick={() => setStep((s) => (s - 1) as Step)} 
               disabled={step === 1}
-              className="rounded-full"
+                className="rounded-lg"
             >
               <ArrowLeft className="h-4 w-4 mr-2" /> Kembali
             </Button>
@@ -347,7 +347,7 @@ export function DiagnosticQuiz() {
               size="lg"
               onClick={() => step === 3 ? handleFinish() : setStep((s) => (s + 1) as Step)} 
               disabled={isNextDisabled()}
-              className="rounded-full px-8 shadow-lg"
+                className="rounded-lg px-8 shadow-lg"
             >
               {step === 3 ? "Selesai" : "Lanjut"} <ArrowRight className="h-4 w-4 ml-2" />
             </Button>

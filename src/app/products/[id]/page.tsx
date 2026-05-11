@@ -8,7 +8,7 @@ import { prisma } from "@/lib/prisma";
 import { MUAVerdict } from "@/components/products/MUAVerdict";
 import { ProductDetailClient } from "@/components/products/ProductDetailClient";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Star, Info, CheckCircle } from "lucide-react";
+import { ArrowLeft, Star, Info, CheckCircle, Sparkles } from "lucide-react";
 
 interface ProductPageProps {
   params: Promise<{ id: string }>;
@@ -59,7 +59,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
           {/* Visual Column */}
           <div className="space-y-8 animate-in slide-in-from-left duration-700">
-            <div className="relative aspect-square rounded-[3.5rem] overflow-hidden shadow-2xl bg-white border border-primary/5">
+            <div className="relative aspect-square rounded-lg overflow-hidden shadow-2xl bg-card border border-border/60">
               <Image
                 src={product.imageUrl}
                 alt={product.name}
@@ -70,7 +70,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
             </div>
             <div className="grid grid-cols-3 gap-4">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="relative aspect-square rounded-[1.5rem] overflow-hidden border bg-white opacity-60 hover:opacity-100 transition-opacity cursor-pointer">
+                <div key={i} className="relative aspect-square rounded-lg overflow-hidden border border-border/60 bg-card opacity-60 hover:opacity-100 transition-opacity cursor-pointer">
                   <Image
                     src={`https://picsum.photos/seed/detail-${id}-${i}/400/400`}
                     alt="Product shot"

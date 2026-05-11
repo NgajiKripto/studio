@@ -44,9 +44,9 @@ export default function AdminAccessPage() {
   return (
     <main className="flex-grow bg-background py-16">
       <div className="container mx-auto px-4 max-w-md">
-        <div className="bg-white border rounded-3xl shadow-sm p-8 md:p-10 space-y-6">
+        <div className="bg-card border rounded-lg shadow-sm p-8 md:p-10 space-y-6">
           <div className="space-y-2 text-center">
-            <div className="mx-auto w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+            <div className="mx-auto w-12 h-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
               <LockKeyhole className="h-6 w-6" />
             </div>
             <h1 className="text-2xl font-bold font-headline">Akses Admin</h1>
@@ -67,7 +67,7 @@ export default function AdminAccessPage() {
 
             {error ? <p className="text-sm text-destructive">{error}</p> : null}
 
-            <Button type="submit" className="w-full rounded-full" disabled={isLoading}>
+            <Button type="submit" className="w-full rounded-lg" disabled={isLoading}>
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Memverifikasi...

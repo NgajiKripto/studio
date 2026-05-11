@@ -11,14 +11,14 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        body: ['Figtree', 'sans-serif'],
-        headline: ['Figtree', 'sans-serif'],
+        body: ['var(--font-body)', 'Manrope', '-apple-system', 'sans-serif'],
+        headline: ['var(--font-heading)', 'Font Med', '-apple-system', 'sans-serif'],
         code: ['monospace'],
       },
       fontSize: {
-        h1: ['12px', { lineHeight: '1.2' }],
-        h2: ['12px', { lineHeight: '1.2' }],
-        body: ['13px', { lineHeight: '1.4' }],
+        h1: ['71.4067px', { lineHeight: '1.1' }],
+        h2: ['31.372px', { lineHeight: '1.2' }],
+        body: ['7.84px', { lineHeight: '1.4' }],
       },
       colors: {
         background: 'hsl(var(--background))',

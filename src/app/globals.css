@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@300..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,55 +6,59 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 250 100% 87%;
     --foreground: 0 0% 0%;
-    --link: 240 100% 47%;
+    --link: 232 100% 76%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 0%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 0%;
-    --primary: 47 99% 61%;
+    --primary: 304 100% 93%;
     --primary-foreground: 0 0% 0%;
-    --secondary: 251 98% 61%;
+    --secondary: 232 100% 76%;
     --secondary-foreground: 0 0% 100%;
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 35%;
-    --accent: 47 99% 61%;
-    --accent-foreground: 0 0% 0%;
+    --muted: 250 100% 95%;
+    --muted-foreground: 232 15% 35%;
+    --accent: 232 100% 76%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 85%;
-    --input: 0 0% 85%;
-    --ring: 47 99% 61%;
-    --radius: 25px;
-    --chart-1: 47 99% 61%;
-    --chart-2: 251 98% 61%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
+    --border: 232 45% 72%;
+    --input: 232 45% 72%;
+    --ring: 232 100% 76%;
+    --radius: 10px;
+    --chart-1: 304 100% 93%;
+    --chart-2: 232 100% 76%;
+    --chart-3: 250 100% 87%;
+    --chart-4: 232 70% 65%;
+    --chart-5: 250 70% 72%;
+    --font-body: "Manrope", -apple-system, sans-serif;
+    --font-heading: "Font Med", -apple-system, sans-serif;
+    --body-token: 7.84px;
+    --body-scale: 2.04;
   }
 
   .dark {
-    --background: 0 0% 8%;
-    --foreground: 0 0% 96%;
-    --link: 240 100% 70%;
-    --card: 0 0% 10%;
-    --card-foreground: 0 0% 96%;
-    --popover: 0 0% 10%;
-    --popover-foreground: 0 0% 96%;
-    --primary: 47 99% 61%;
+    --background: 245 40% 14%;
+    --foreground: 0 0% 98%;
+    --link: 232 100% 76%;
+    --card: 245 35% 18%;
+    --card-foreground: 0 0% 98%;
+    --popover: 245 35% 18%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 304 100% 93%;
     --primary-foreground: 0 0% 0%;
-    --secondary: 251 98% 61%;
+    --secondary: 232 100% 76%;
     --secondary-foreground: 0 0% 100%;
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 70%;
-    --accent: 47 99% 61%;
-    --accent-foreground: 0 0% 0%;
+    --muted: 245 28% 24%;
+    --muted-foreground: 0 0% 80%;
+    --accent: 232 100% 76%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
-    --ring: 47 99% 61%;
+    --border: 245 28% 28%;
+    --input: 245 28% 28%;
+    --ring: 232 100% 76%;
   }
 }
 
@@ -62,18 +66,29 @@
   * {
     @apply border-border;
   }
+
   body {
-    @apply bg-background text-foreground font-body text-body;
+    @apply bg-background text-foreground font-body;
+    font-size: calc(var(--body-token) * var(--body-scale));
   }
-  h1, h2, h3, h4, h5, h6 {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-headline;
   }
+
   h1 {
     @apply text-h1;
   }
+
   h2 {
     @apply text-h2;
   }
+
   a {
     @apply text-link;
   }

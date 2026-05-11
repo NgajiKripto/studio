@@ -154,11 +154,11 @@ export function ProductFilters({ isMobile }: ProductFiltersProps) {
     return (
       <Sheet>
         <SheetTrigger asChild>
-          <Button variant="outline" size="sm" className="rounded-full gap-2">
+          <Button variant="outline" size="sm" className="gap-2">
             <SlidersHorizontal className="h-4 w-4" /> Filters
           </Button>
         </SheetTrigger>
-        <SheetContent side="bottom" className="h-[80vh] rounded-t-[3rem]">
+        <SheetContent side="bottom" className="h-[80vh] rounded-t-lg">
           <SheetHeader className="text-left mb-6">
             <SheetTitle className="font-headline text-2xl">Filter Produk</SheetTitle>
           </SheetHeader>
@@ -171,7 +171,7 @@ export function ProductFilters({ isMobile }: ProductFiltersProps) {
   }
 
   return (
-    <div className="bg-white p-8 rounded-[2rem] shadow-sm border border-primary/5">
+    <div className="bg-card p-8 rounded-lg shadow-sm border border-border/60">
       <FilterContent />
     </div>
   );

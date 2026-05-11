@@ -58,7 +58,7 @@ export default function EditProductPage({ params }: EditProductPageProps) {
           <p className="text-muted-foreground">Perbarui informasi dan tag untuk produk ini.</p>
         </header>
 
-        <div className="bg-white rounded-[2.5rem] shadow-sm border p-8 md:p-12">
+        <div className="bg-card rounded-lg shadow-sm border p-8 md:p-12">
           {isLoading ? (
             <div className="flex flex-col items-center justify-center py-20 gap-4">
               <Loader2 className="h-8 w-8 animate-spin text-primary" />

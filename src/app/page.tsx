@@ -64,7 +64,7 @@ export default async function Home() {
               </div>
             </div>
             
-            <div className="relative aspect-[4/5] rounded-[4rem] overflow-hidden shadow-2xl animate-in slide-in-from-right duration-1000">
+            <div className="relative aspect-[4/5] rounded-lg overflow-hidden shadow-2xl animate-in slide-in-from-right duration-1000">
               <Image
                 src="https://picsum.photos/seed/beauty-hero/1000/1250"
                 alt="Makeup Artistry"
@@ -116,11 +116,11 @@ export default async function Home() {
                 icon: Fingerprint, 
                 title: "Fit Bentuk Wajah", 
                 desc: "Placement produk yang tepat sesuai bentuk wajahmu (oval, square, heart) untuk hasil maksimal.",
-                color: "text-pink-600 bg-pink-50"
+                color: "text-accent bg-accent/10"
               }
             ].map((step, idx) => (
-              <div key={idx} className="group p-10 rounded-[3rem] bg-background hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
-                <div className={cn("w-20 h-20 rounded-3xl flex items-center justify-center mx-auto mb-8 transition-transform group-hover:rotate-12", step.color)}>
+              <div key={idx} className="group p-10 rounded-lg bg-background hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
+                <div className={cn("w-20 h-20 rounded-lg flex items-center justify-center mx-auto mb-8 transition-transform group-hover:rotate-12", step.color)}>
                   <step.icon className="h-10 w-10" />
                 </div>
                 <h3 className="text-2xl font-headline font-bold mb-4">{step.title}</h3>
@@ -179,7 +179,7 @@ export default async function Home() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             <div className="flex items-center gap-6">
-              <div className="w-16 h-16 rounded-2xl bg-green-50 flex items-center justify-center text-green-600 shrink-0">
+              <div className="w-16 h-16 rounded-lg bg-primary flex items-center justify-center text-link shrink-0">
                 <ShieldCheck className="h-8 w-8" />
               </div>
               <div>
@@ -188,7 +188,7 @@ export default async function Home() {
               </div>
             </div>
             <div className="flex items-center gap-6">
-              <div className="w-16 h-16 rounded-2xl bg-orange-50 flex items-center justify-center text-orange-600 shrink-0">
+              <div className="w-16 h-16 rounded-lg bg-primary flex items-center justify-center text-link shrink-0">
                 <Zap className="h-8 w-8" />
               </div>
               <div>
@@ -197,7 +197,7 @@ export default async function Home() {
               </div>
             </div>
             <div className="flex items-center gap-6">
-              <div className="w-16 h-16 rounded-2xl bg-primary/5 flex items-center justify-center text-primary shrink-0">
+              <div className="w-16 h-16 rounded-lg bg-primary flex items-center justify-center text-link shrink-0">
                 <Sparkles className="h-8 w-8" />
               </div>
               <div>
@@ -212,7 +212,7 @@ export default async function Home() {
       {/* Final CTA */}
       <section className="py-32">
         <div className="container mx-auto px-4">
-          <div className="relative p-16 md:p-32 rounded-[5rem] bg-primary overflow-hidden text-center space-y-10">
+          <div className="relative p-16 md:p-32 rounded-lg bg-primary overflow-hidden text-center space-y-10">
             <div className="absolute top-0 right-0 w-96 h-96 bg-accent/20 rounded-full blur-[100px] -mr-48 -mt-48" />
             <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent/20 rounded-full blur-[100px] -ml-48 -mb-48" />
             
@@ -224,7 +224,7 @@ export default async function Home() {
                 Hanya butuh 2 menit kuis untuk mempermudah hidupmu dalam memilih makeup selamanya.
               </p>
               <div className="pt-6">
-                <Button size="lg" variant="secondary" className="rounded-full px-12 h-16 text-xl font-bold shadow-2xl hover:scale-105 transition-transform" asChild>
+                <Button size="lg" className="px-12 h-16 text-xl font-bold shadow-2xl hover:scale-105 transition-transform" asChild>
                   <Link href="/diagnostic">
                     Mulai Diagnostik Sekarang
                   </Link>

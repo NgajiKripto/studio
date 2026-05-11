@@ -40,7 +40,7 @@ export default async function ProductPage({ params }: Props) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
           {/* Image Gallery */}
           <div className="space-y-6">
-            <div className="relative aspect-square rounded-[3rem] overflow-hidden shadow-2xl bg-white border">
+            <div className="relative aspect-square rounded-lg overflow-hidden shadow-2xl bg-card border border-border/60">
               <Image
                 src={product.imageUrl}
                 alt={product.name}
@@ -51,7 +51,7 @@ export default async function ProductPage({ params }: Props) {
             </div>
             <div className="grid grid-cols-4 gap-4">
               {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="relative aspect-square rounded-2xl overflow-hidden border bg-white hover:border-primary cursor-pointer transition-colors">
+                <div key={i} className="relative aspect-square rounded-lg overflow-hidden border border-border/60 bg-card hover:border-accent cursor-pointer transition-colors">
                   <Image
                     src={`https://picsum.photos/seed/product-${id}-${i}/200/200`}
                     alt={`${product.name} thumbnail ${i}`}
@@ -87,7 +87,7 @@ export default async function ProductPage({ params }: Props) {
               </div>
             </div>
 
-            <div className="p-8 rounded-[2rem] bg-accent/5 border border-accent/10 relative overflow-hidden">
+            <div className="p-8 rounded-lg bg-accent/10 border border-accent/30 relative overflow-hidden">
               <div className="absolute top-0 right-0 p-4 opacity-10">
                 <Star className="h-16 w-16 fill-accent" />
               </div>
@@ -106,8 +106,8 @@ export default async function ProductPage({ params }: Props) {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-4 p-6 bg-white rounded-3xl shadow-sm">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-4 p-6 bg-card rounded-lg shadow-sm border border-border/60">
                 <h4 className="font-bold flex items-center gap-2 text-primary">
                   <CheckCircle className="h-5 w-5" /> Best For
                 </h4>
@@ -117,7 +117,7 @@ export default async function ProductPage({ params }: Props) {
                   ))}
                 </div>
               </div>
-              <div className="space-y-4 p-6 bg-white rounded-3xl shadow-sm">
+              <div className="space-y-4 p-6 bg-card rounded-lg shadow-sm border border-border/60">
                 <h4 className="font-bold flex items-center gap-2 text-accent">
                   <Info className="h-5 w-5" /> Ideal Faces
                 </h4>
@@ -149,7 +149,7 @@ export default async function ProductPage({ params }: Props) {
             {PRODUCTS.filter(p => p.id !== id).slice(0, 4).map((related) => (
               <div key={related.id} className="group">
                 <Link href={`/product/${related.id}`}>
-                  <div className="relative aspect-square rounded-[2rem] overflow-hidden mb-4 shadow-sm group-hover:shadow-md transition-all">
+                  <div className="relative aspect-square rounded-lg overflow-hidden mb-4 shadow-sm group-hover:shadow-md transition-all">
                     <Image src={related.imageUrl} alt={related.name} fill className="object-cover transition-transform group-hover:scale-105" />
                   </div>
                   <p className="text-xs uppercase font-bold text-muted-foreground tracking-widest">{related.brand}</p>

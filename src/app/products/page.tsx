@@ -97,7 +97,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                   ))}
                 </div>
               ) : (
-                <div className="text-center py-20 bg-white/50 rounded-[2.5rem] border-2 border-dashed">
+                <div className="text-center py-20 bg-card/80 rounded-lg border-2 border-dashed border-border">
                   <h3 className="text-xl font-headline font-bold mb-2">Tidak ada produk ditemukan</h3>
                   <p className="text-muted-foreground">Coba sesuaikan filter atau kata kunci pencarian Anda.</p>
                 </div>
