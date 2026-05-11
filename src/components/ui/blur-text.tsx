@@ -24,9 +24,26 @@ type BlurTextProps = {
 const buildKeyframes = (from: AnimationSnapshot, steps: AnimationSnapshot[]) => {
   const keys = new Set([...Object.keys(from), ...steps.flatMap((step) => Object.keys(step))]);
 
+  const firstDefinedByKey = new Map<string, AnimationValue>();
+  keys.forEach((key) => {
+    const sourceValue = from[key];
+    if (sourceValue !== undefined) {
+      firstDefinedByKey.set(key, sourceValue);
+      return;
+    }
+
+    for (const step of steps) {
+      const stepValue = step[key];
+      if (stepValue !== undefined) {
+        firstDefinedByKey.set(key, stepValue);
+        break;
+      }
+    }
+  });
+
   const keyframes: Record<string, AnimationValue[]> = {};
   keys.forEach((key) => {
-    const firstDefined = from[key] ?? steps.find((step) => step[key] !== undefined)?.[key];
+    const firstDefined = firstDefinedByKey.get(key);
     if (firstDefined === undefined) return;
 
     const values: AnimationValue[] = [firstDefined];
@@ -117,7 +134,7 @@ export default function BlurText({
       {elements.map((segment, index) => {
         return (
           <motion.span
-            key={`${segment}-${index}`}
+            key={index}
             initial={fromSnapshot}
             animate={inView ? animateKeyframes : fromSnapshot}
             transition={{
