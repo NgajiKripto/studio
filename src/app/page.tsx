@@ -21,7 +21,7 @@ export default async function Home() {
   return (
     <main className="flex flex-col">
       {/* Hero Section */}
-      <section className="relative bg-white overflow-hidden">
+      <section className="relative bg-card overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left Content */}
@@ -49,7 +49,7 @@ export default async function Home() {
 
             {/* Right - Hero Image */}
             <div className="relative flex justify-center lg:justify-end">
-              <div className="relative w-80 h-96 lg:w-96 lg:h-[480px] rounded-[2rem] overflow-hidden shadow-2xl border-8 border-white">
+              <div className="relative w-80 h-96 lg:w-96 lg:h-[480px] rounded-[2rem] overflow-hidden shadow-2xl border-8 border-card">
                 <Image
                   src="https://picsum.photos/seed/beauty-hero/800/1000"
                   alt="Beauty Portrait"
@@ -88,7 +88,7 @@ export default async function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Step 1 - Skin Type */}
-            <div className="bg-white rounded-2xl p-8 shadow-sm border border-border/50 hover:shadow-md transition-shadow">
+            <div className="bg-card rounded-2xl p-8 shadow-sm border border-border/50 hover:shadow-md transition-shadow">
               <div className="mb-6">
                 <div className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center mb-4">
                   <svg className="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -104,7 +104,7 @@ export default async function Home() {
             </div>
 
             {/* Step 2 - Skin Tone */}
-            <div className="bg-white rounded-2xl p-8 shadow-sm border border-border/50 hover:shadow-md transition-shadow">
+            <div className="bg-card rounded-2xl p-8 shadow-sm border border-border/50 hover:shadow-md transition-shadow">
               <div className="mb-6">
                 <div className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center mb-4">
                   <svg className="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -120,7 +120,7 @@ export default async function Home() {
             </div>
 
             {/* Step 3 - Face Shape */}
-            <div className="bg-white rounded-2xl p-8 shadow-sm border border-border/50 hover:shadow-md transition-shadow">
+            <div className="bg-card rounded-2xl p-8 shadow-sm border border-border/50 hover:shadow-md transition-shadow">
               <div className="mb-6">
                 <div className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center mb-4">
                   <svg className="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -139,7 +139,7 @@ export default async function Home() {
       </section>
 
       {/* Featured Catalog Section */}
-      <section className="py-20 lg:py-28 bg-white">
+      <section className="py-20 lg:py-28 bg-card">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-end justify-between mb-12">
             <div>
@@ -206,7 +206,7 @@ export default async function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {/* Testimonial 1 */}
-            <div className="bg-white rounded-2xl p-8 shadow-sm border border-border/50">
+            <div className="bg-card rounded-2xl p-8 shadow-sm border border-border/50">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 rounded-full bg-secondary overflow-hidden">
                   <Image
@@ -228,7 +228,7 @@ export default async function Home() {
             </div>
 
             {/* Testimonial 2 */}
-            <div className="bg-white rounded-2xl p-8 shadow-sm border border-border/50">
+            <div className="bg-card rounded-2xl p-8 shadow-sm border border-border/50">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 rounded-full bg-secondary overflow-hidden">
                   <Image

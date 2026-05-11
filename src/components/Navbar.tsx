@@ -17,7 +17,7 @@ export function Navbar() {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md border-b border-border/50">
+    <nav className="sticky top-0 z-50 w-full bg-card/80 backdrop-blur-md border-b border-border/50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -62,7 +62,7 @@ export function Navbar() {
       {/* Mobile Menu */}
       <div
         className={cn(
-          "md:hidden transition-all duration-300 ease-in-out overflow-hidden bg-white border-b border-border/50",
+          "md:hidden transition-all duration-300 ease-in-out overflow-hidden bg-card border-b border-border/50",
           isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0 border-none"
         )}
       >

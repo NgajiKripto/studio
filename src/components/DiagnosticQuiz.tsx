@@ -102,7 +102,7 @@ export function DiagnosticQuiz() {
             onClick={() => setSkinType(type.id as SkinType)}
             className={cn(
               "p-4 rounded-xl border-2 transition-all cursor-pointer hover:border-primary/50",
-              skinType === type.id ? "border-primary bg-primary/5" : "border-border bg-white"
+              skinType === type.id ? "border-primary bg-primary/5" : "border-border bg-card"
             )}
           >
             <div className="flex justify-between items-center">
@@ -218,7 +218,7 @@ export function DiagnosticQuiz() {
             onClick={() => setFaceShape(shape.id as FaceShape)}
             className={cn(
               "flex flex-col items-center p-5 rounded-2xl border-2 transition-all cursor-pointer",
-              faceShape === shape.id ? "border-primary bg-primary/5" : "border-border bg-white hover:border-primary/30"
+              faceShape === shape.id ? "border-primary bg-primary/5" : "border-border bg-card hover:border-primary/30"
             )}
           >
             <div className={cn(
@@ -251,7 +251,7 @@ export function DiagnosticQuiz() {
 
         <div className="grid grid-cols-1 gap-4">
           <div className="p-5 rounded-xl bg-secondary/50 border border-border/50 flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center shadow-sm">
+            <div className="w-12 h-12 rounded-xl bg-card flex items-center justify-center shadow-sm">
               <span className="text-lg">💧</span>
             </div>
             <div>
@@ -261,7 +261,7 @@ export function DiagnosticQuiz() {
           </div>
 
           <div className="p-5 rounded-xl bg-secondary/50 border border-border/50 flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center shadow-sm">
+            <div className="w-12 h-12 rounded-xl bg-card flex items-center justify-center shadow-sm">
               <span className="text-lg">🎨</span>
             </div>
             <div>
@@ -271,7 +271,7 @@ export function DiagnosticQuiz() {
           </div>
 
           <div className="p-5 rounded-xl bg-secondary/50 border border-border/50 flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center shadow-sm">
+            <div className="w-12 h-12 rounded-xl bg-card flex items-center justify-center shadow-sm">
               <span className="text-lg">💎</span>
             </div>
             <div>
@@ -301,7 +301,7 @@ export function DiagnosticQuiz() {
   };
 
   return (
-    <Card className="w-full max-w-xl mx-auto overflow-hidden border border-border/50 shadow-lg bg-white rounded-2xl">
+    <Card className="w-full max-w-xl mx-auto overflow-hidden border border-border/50 shadow-lg bg-card rounded-2xl">
       <div className="px-8 pt-8">
         {step < 4 && <Progress value={progress} className="h-1.5 bg-muted rounded-full" />}
       </div>

@@ -94,7 +94,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                   ))}
                 </div>
               ) : (
-                <div className="text-center py-20 bg-white rounded-2xl border border-border/50">
+                <div className="text-center py-20 bg-card rounded-2xl border border-border/50">
                   <h3 className="font-headline text-xl font-bold mb-2">No products found</h3>
                   <p className="text-muted-foreground text-sm">Try adjusting your filters or search terms.</p>
                 </div>

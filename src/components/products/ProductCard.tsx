@@ -51,7 +51,7 @@ export function ProductCard({ product }: ProductCardProps) {
             "absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-sm",
             matchScore >= 80
               ? "bg-primary/90 text-primary-foreground"
-              : "bg-white/90 text-foreground"
+              : "bg-card/90 text-foreground"
           )}>
             {matchScore}% Match
           </div>
