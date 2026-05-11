@@ -12,8 +12,8 @@ export function Navbar() {
   const links = [
     { href: "/diagnostic", label: "Diagnostic" },
     { href: "/products", label: "Catalog" },
-    { href: "/recommend", label: "How it Works" },
-    { href: "/recommend", label: "Testimonials" },
+    { href: "/circle", label: "Glow Circle" },
+    { href: "/dashboard", label: "Dashboard" },
   ];
 
   return (
