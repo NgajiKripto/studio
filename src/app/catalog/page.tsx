@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, RotateCcw, SlidersHorizontal } from "lucide-react";
+import { Search, RotateCcw, SlidersHorizontal, Sparkles } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 
 export default function CatalogPage() {
@@ -40,10 +40,10 @@ export default function CatalogPage() {
 
   const FilterPanel = () => (
     <div className="space-y-6">
-      <div className="space-y-2">
-        <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Skin Type</Label>
+      <div className="space-y-2.5">
+        <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Skin Type</Label>
         <Select value={selectedType} onValueChange={(v) => setSelectedType(v as SkinType | "ALL")}>
-          <SelectTrigger className="rounded-xl bg-card border-border">
+          <SelectTrigger className="rounded-xl bg-white/60 border-white/40 backdrop-blur-sm focus:ring-secondary">
             <SelectValue placeholder="All Skin Types" />
           </SelectTrigger>
           <SelectContent>
@@ -55,10 +55,10 @@ export default function CatalogPage() {
         </Select>
       </div>
 
-      <div className="space-y-2">
-        <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Skin Tone</Label>
+      <div className="space-y-2.5">
+        <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Skin Tone</Label>
         <Select value={selectedTone} onValueChange={(v) => setSelectedTone(v as SkinTone | "ALL")}>
-          <SelectTrigger className="rounded-xl bg-card border-border">
+          <SelectTrigger className="rounded-xl bg-white/60 border-white/40 backdrop-blur-sm focus:ring-secondary">
             <SelectValue placeholder="All Skin Tones" />
           </SelectTrigger>
           <SelectContent>
@@ -70,10 +70,10 @@ export default function CatalogPage() {
         </Select>
       </div>
 
-      <div className="space-y-2">
-        <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Face Shape</Label>
+      <div className="space-y-2.5">
+        <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Face Shape</Label>
         <Select value={selectedShape} onValueChange={(v) => setSelectedShape(v as FaceShape | "ALL")}>
-          <SelectTrigger className="rounded-xl bg-card border-border">
+          <SelectTrigger className="rounded-xl bg-white/60 border-white/40 backdrop-blur-sm focus:ring-secondary">
             <SelectValue placeholder="All Face Shapes" />
           </SelectTrigger>
           <SelectContent>
@@ -85,27 +85,46 @@ export default function CatalogPage() {
         </Select>
       </div>
 
-      <Button variant="ghost" className="w-full text-muted-foreground hover:text-primary" onClick={clearFilters}>
-        <RotateCcw className="h-4 w-4 mr-2" /> Reset Filters
-      </Button>
+      <div className="pt-2">
+        <Button
+          variant="ghost"
+          className="w-full text-muted-foreground hover:text-secondary rounded-xl"
+          onClick={clearFilters}
+        >
+          <RotateCcw className="h-4 w-4 mr-2" /> Reset Filters
+        </Button>
+      </div>
     </div>
   );
 
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen relative">
+      {/* Background decoration */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl -z-10" />
+      <div className="absolute bottom-20 left-0 w-80 h-80 bg-secondary/10 rounded-full blur-3xl -z-10" />
+
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <header className="mb-12">
-          <h1 className="font-headline text-4xl md:text-5xl font-bold text-foreground mb-3">Product Catalog</h1>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary/10 text-secondary text-xs font-semibold mb-4">
+            <Sparkles className="h-3 w-3" />
+            Curated Collection
+          </div>
+          <h1 className="text-4xl md:text-5xl font-extrabold text-foreground mb-3 tracking-tight">
+            Product Catalog
+          </h1>
           <p className="text-muted-foreground text-lg max-w-xl">
             Explore our curated selection of makeup products, filtered to match your beauty profile.
           </p>
         </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-10 lg:gap-12">
           {/* Desktop Sidebar */}
           <aside className="hidden lg:block">
-            <div className="sticky top-24 bg-card rounded-2xl p-6 border border-border/50 shadow-sm">
-              <h2 className="font-headline text-lg font-bold mb-6">Filters</h2>
+            <div className="sticky top-24 glass-card rounded-2xl p-6 shadow-lg">
+              <h2 className="text-lg font-bold mb-6 flex items-center gap-2">
+                <SlidersHorizontal className="h-4 w-4 text-secondary" />
+                Filters
+              </h2>
               <FilterPanel />
             </div>
           </aside>
@@ -114,29 +133,29 @@ export default function CatalogPage() {
           <div className="lg:col-span-3 space-y-6">
             <div className="flex flex-col sm:flex-row gap-4 justify-between items-center">
               <div className="relative w-full sm:max-w-sm">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
                   placeholder="Search products..."
-                  className="pl-10 rounded-xl bg-card border-border"
+                  className="pl-10 rounded-xl bg-white/60 border-white/40 backdrop-blur-sm focus:ring-secondary h-11"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
               </div>
 
               <div className="flex items-center gap-4 w-full sm:w-auto">
-                <span className="text-sm text-muted-foreground whitespace-nowrap">
-                  {filteredProducts.length} products
+                <span className="text-sm text-muted-foreground whitespace-nowrap font-medium">
+                  <span className="text-foreground font-bold">{filteredProducts.length}</span> products
                 </span>
 
                 <Sheet>
                   <SheetTrigger asChild>
-                    <Button variant="outline" size="icon" className="lg:hidden rounded-xl">
+                    <Button variant="outline" size="icon" className="lg:hidden rounded-xl glass-card">
                       <SlidersHorizontal className="h-4 w-4" />
                     </Button>
                   </SheetTrigger>
                   <SheetContent side="left" className="w-80">
                     <SheetHeader className="mb-6">
-                      <SheetTitle className="font-headline text-xl">Filters</SheetTitle>
+                      <SheetTitle className="text-xl font-bold">Filters</SheetTitle>
                     </SheetHeader>
                     <FilterPanel />
                   </SheetContent>
@@ -151,13 +170,19 @@ export default function CatalogPage() {
                 ))}
               </div>
             ) : (
-              <div className="text-center py-20 bg-card rounded-2xl border border-border/50">
-                <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center mx-auto mb-4">
-                  <Search className="h-6 w-6 text-muted-foreground" />
+              <div className="text-center py-20 glass-card rounded-3xl">
+                <div className="w-16 h-16 rounded-full gradient-bg-soft flex items-center justify-center mx-auto mb-4">
+                  <Search className="h-6 w-6 text-secondary" />
                 </div>
-                <h3 className="font-headline text-xl font-bold mb-2">No products found</h3>
-                <p className="text-muted-foreground text-sm">Try adjusting your filters.</p>
-                <Button variant="link" onClick={clearFilters} className="mt-4 text-primary">Clear all filters</Button>
+                <h3 className="text-xl font-bold mb-2">No products found</h3>
+                <p className="text-muted-foreground text-sm mb-4">Try adjusting your filters or search terms.</p>
+                <Button
+                  variant="outline"
+                  onClick={clearFilters}
+                  className="rounded-full text-secondary border-secondary/30 hover:bg-secondary/10"
+                >
+                  Clear all filters
+                </Button>
               </div>
             )}
           </div>
