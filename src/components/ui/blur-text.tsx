@@ -45,6 +45,8 @@ const buildTimes = (stepCount: number) => {
   return Array.from({ length: stepCount }, (_, index) => index / (stepCount - 1));
 };
 
+const NON_BREAKING_SPACE = "\u00A0";
+
 export default function BlurText({
   text = "",
   delay = 200,
@@ -128,7 +130,7 @@ export default function BlurText({
             onAnimationComplete={index === elements.length - 1 ? onAnimationComplete : undefined}
           >
             {segment}
-            {animateBy === "words" && index < elements.length - 1 ? "\u00A0" : ""}
+            {animateBy === "words" && index < elements.length - 1 ? NON_BREAKING_SPACE : ""}
           </motion.span>
         );
       })}
