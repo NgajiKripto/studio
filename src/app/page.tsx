@@ -3,8 +3,62 @@ import Link from "next/link";
 import Image from "next/image";
 import { prisma } from "@/lib/prisma";
 import { Button } from "@/components/ui/button";
+import { Marquee } from "@/components/ui/marquee";
 import BlurText from "@/components/ui/blur-text";
 import { Heart, ArrowRight, ChevronDown, Sparkles, Star, Droplets, Palette, Layers } from "lucide-react";
+
+const communityTestimonials = [
+  {
+    id: "emma-wilson",
+    name: "Emma Wilson",
+    title: "Product Designer, TechCorp",
+    image: "https://picsum.photos/seed/community-emma/100/100",
+    body: "This design system has transformed our workflow. The components are intuitive and well-documented.",
+  },
+  {
+    id: "lucas-chen",
+    name: "Lucas Chen",
+    title: "Frontend Developer, WebFlow",
+    image: "https://picsum.photos/seed/community-lucas/100/100",
+    body: "The components are well-structured and customizable. They've significantly reduced our development time.",
+  },
+  {
+    id: "sophia-martinez",
+    name: "Sophia Martinez",
+    title: "UI/UX Lead, DesignHub",
+    image: "https://picsum.photos/seed/community-sophia/100/100",
+    body: "Every component feels polished and professional. It's become our go-to resource for all projects.",
+  },
+  {
+    id: "oliver-thompson",
+    name: "Oliver Thompson",
+    title: "Creative Director, StudioX",
+    image: "https://picsum.photos/seed/community-oliver/100/100",
+    body: "This design system brings consistency and efficiency to our creative process. Beautiful and functional.",
+  },
+];
+
+function TestimonialCard({ item }: { item: (typeof communityTestimonials)[number] }) {
+  return (
+    <article className="glass-card rounded-3xl p-6 w-[320px] md:w-[360px] hover-lift">
+      <div className="flex items-center gap-1 mb-4">
+        {[1, 2, 3, 4, 5].map((index) => (
+          <Star key={index} className="h-4 w-4 text-amber-400 fill-amber-400" />
+        ))}
+      </div>
+      <p className="text-muted-foreground text-sm leading-relaxed mb-6">&quot;{item.body}&quot;</p>
+      <div className="flex items-center gap-3">
+        <div className="w-10 h-10 rounded-full overflow-hidden ring-2 ring-primary/30">
+          <Image src={item.image} alt={item.name} width={40} height={40} className="object-cover" />
+        </div>
+        <div>
+          <p className="font-semibold text-sm text-foreground">{item.name}</p>
+          <p className="text-xs text-muted-foreground">{item.title}</p>
+        </div>
+      </div>
+    </article>
+  );
+}
 
 export default async function Home() {
   const featuredProducts = await prisma.product.findMany({
@@ -354,60 +408,19 @@ export default async function Home() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {/* Testimonial 1 */}
-            <div className="glass-card rounded-3xl p-8 hover-lift">
-              <div className="flex items-center gap-1 mb-4">
-                {[1, 2, 3, 4, 5].map((i) => (
-                  <Star key={i} className="h-4 w-4 text-amber-400 fill-amber-400" />
-                ))}
-              </div>
-              <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-                &quot;The diagnostic tool is incredible. It recommended a foundation I never would have picked myself, and it&apos;s a perfect match. Finally, my skin looks flawless without looking cakey!&quot;
-              </p>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full overflow-hidden ring-2 ring-primary/30">
-                  <Image
-                    src="https://picsum.photos/seed/sarah/100/100"
-                    alt="Sarah J."
-                    width={40}
-                    height={40}
-                    className="object-cover"
-                  />
-                </div>
-                <div>
-                  <p className="font-semibold text-sm text-foreground">Sarah J.</p>
-                  <p className="text-xs text-muted-foreground">Oily Skin • Warm Undertone</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Testimonial 2 */}
-            <div className="glass-card rounded-3xl p-8 hover-lift">
-              <div className="flex items-center gap-1 mb-4">
-                {[1, 2, 3, 4, 5].map((i) => (
-                  <Star key={i} className="h-4 w-4 text-amber-400 fill-amber-400" />
-                ))}
-              </div>
-              <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-                &quot;I&apos;ve always struggled to find makeup that works with my dry skin. The curated catalog made shopping so easy, and the products feel luxurious and hydrating. Highly recommend!&quot;
-              </p>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full overflow-hidden ring-2 ring-secondary/30">
-                  <Image
-                    src="https://picsum.photos/seed/alex/100/100"
-                    alt="Alex M."
-                    width={40}
-                    height={40}
-                    className="object-cover"
-                  />
-                </div>
-                <div>
-                  <p className="font-semibold text-sm text-foreground">Alex M.</p>
-                  <p className="text-xs text-muted-foreground">Dry Skin • Cool Undertone</p>
-                </div>
-              </div>
-            </div>
+          <div className="relative mx-auto max-w-6xl overflow-hidden">
+            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-background to-transparent" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-background to-transparent" />
+            <Marquee pauseOnHover className="[--duration:42s] py-2">
+              {communityTestimonials.map((item) => (
+                <TestimonialCard key={`community-left-${item.id}`} item={item} />
+              ))}
+            </Marquee>
+            <Marquee reverse pauseOnHover className="[--duration:48s] py-2 mt-4">
+              {communityTestimonials.map((item) => (
+                <TestimonialCard key={`community-right-${item.id}`} item={item} />
+              ))}
+            </Marquee>
           </div>
         </div>
       </section>
