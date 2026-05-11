@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { SKIN_TYPES, SKIN_TONES, FACE_SHAPES, SkinType, SkinTone, FaceShape } from "@/lib/constants";
+import { SkinTwinRecommendation } from "@/components/SkinTwinRecommendation";
 
 type Step = 1 | 2 | 3 | 4;
 
@@ -280,6 +281,13 @@ export function DiagnosticQuiz() {
             </div>
           </div>
         </div>
+
+        {/* Skin Twin Recommendation */}
+        <SkinTwinRecommendation
+          skinType={results.skinType}
+          skinTone={results.skinTone}
+          faceShape={results.faceShape}
+        />
 
         <div className="space-y-3 pt-4">
           <Button size="lg" className="w-full rounded-full font-semibold" onClick={goToCatalog}>
