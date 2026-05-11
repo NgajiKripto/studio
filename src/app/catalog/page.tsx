@@ -102,7 +102,7 @@ export default function CatalogPage() {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
           {/* Desktop Sidebar */}
           <aside className="hidden lg:block space-y-8">
-            <div className="p-6 rounded-3xl bg-secondary/20 border border-primary/5">
+            <div className="p-6 rounded-lg bg-card/80 border border-border/60">
               <div className="flex items-center gap-2 mb-6">
                 <Filter className="h-5 w-5 text-primary" />
                 <h2 className="font-headline text-xl font-bold">Filters</h2>
@@ -116,9 +116,9 @@ export default function CatalogPage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-between items-center">
               <div className="relative w-full sm:max-w-md">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input 
+                  <Input 
                   placeholder="Search by brand, product or category..." 
-                  className="pl-10 rounded-full border-none shadow-sm bg-white focus-visible:ring-accent"
+                    className="pl-10 bg-card/90"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
@@ -132,7 +132,7 @@ export default function CatalogPage() {
                 {/* Mobile Filter Toggle */}
                 <Sheet>
                   <SheetTrigger asChild>
-                    <Button variant="outline" size="icon" className="lg:hidden rounded-full">
+                    <Button variant="outline" size="icon" className="lg:hidden">
                       <SlidersHorizontal className="h-4 w-4" />
                     </Button>
                   </SheetTrigger>
@@ -155,7 +155,7 @@ export default function CatalogPage() {
                 ))}
               </div>
             ) : (
-              <div className="text-center py-20 bg-white/50 rounded-3xl border-2 border-dashed">
+              <div className="text-center py-20 bg-card/80 rounded-lg border-2 border-dashed border-border">
                 <div className="bg-muted w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Search className="h-8 w-8 text-muted-foreground" />
                 </div>

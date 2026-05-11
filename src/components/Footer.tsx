@@ -3,59 +3,49 @@ import { Sparkles, Instagram, Facebook, Twitter } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="bg-white border-t py-16">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
-          <div className="col-span-1 md:col-span-2 space-y-6">
-            <Link href="/" className="flex items-center space-x-2">
-              <div className="bg-primary p-1.5 rounded-lg">
-                <Sparkles className="h-5 w-5 text-primary-foreground" />
+    <footer className="border-t border-border/70 bg-card/70">
+      <div className="container mx-auto px-4 py-12 sm:px-8">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
+          <div className="space-y-4 md:col-span-2">
+            <Link href="/" className="flex items-center gap-2">
+              <div className="rounded-lg bg-primary p-2">
+                <Sparkles className="h-5 w-5 text-foreground" />
               </div>
-              <span className="font-headline text-2xl font-bold tracking-tight text-primary">
-                Muakeup
-              </span>
+              <span className="font-headline text-2xl font-bold text-foreground">Muakeup</span>
             </Link>
-            <p className="text-sm text-muted-foreground max-w-sm leading-relaxed">
-              Memberdayakan perjalanan kecantikan Anda dengan kurasi ahli. Misi kami adalah memberikan rekomendasi makeup profesional yang disesuaikan secara unik untuk fitur wajah Anda.
+            <p className="max-w-md text-sm leading-6 text-muted-foreground">
+              Rekomendasi makeup personal berbasis standar MUA profesional untuk bantu kamu memilih produk yang paling cocok.
             </p>
-            <div className="flex space-x-4">
-              <div className="w-10 h-10 rounded-full bg-secondary/50 flex items-center justify-center text-muted-foreground hover:text-primary transition-colors cursor-pointer">
-                <Instagram className="h-5 w-5" />
-              </div>
-              <div className="w-10 h-10 rounded-full bg-secondary/50 flex items-center justify-center text-muted-foreground hover:text-primary transition-colors cursor-pointer">
-                <Facebook className="h-5 w-5" />
-              </div>
-              <div className="w-10 h-10 rounded-full bg-secondary/50 flex items-center justify-center text-muted-foreground hover:text-primary transition-colors cursor-pointer">
-                <Twitter className="h-5 w-5" />
-              </div>
+            <div className="flex gap-4 text-link">
+              {[Instagram, Facebook, Twitter].map((Icon, idx) => (
+                <div key={idx} className="flex h-10 w-10 items-center justify-center rounded-lg border border-border/60 bg-background/50">
+                  <Icon className="h-5 w-5" />
+                </div>
+              ))}
             </div>
           </div>
-          
+
           <div>
-            <h4 className="font-headline font-bold text-sm uppercase tracking-widest text-primary mb-6">Navigasi</h4>
-            <ul className="space-y-4 text-sm text-muted-foreground">
-              <li><Link href="/products" className="hover:text-primary transition-colors">Semua Produk</Link></li>
-              <li><Link href="/diagnostic" className="hover:text-primary transition-colors">Kuis Diagnostik</Link></li>
-              <li><Link href="/recommend" className="hover:text-primary transition-colors">Rekomendasi AI</Link></li>
+            <h4 className="mb-4 font-headline text-sm font-bold uppercase tracking-wide text-foreground">Navigasi</h4>
+            <ul className="space-y-3 text-sm">
+              <li><Link href="/products" className="text-link hover:opacity-80">Semua Produk</Link></li>
+              <li><Link href="/diagnostic" className="text-link hover:opacity-80">Kuis Diagnostik</Link></li>
+              <li><Link href="/recommend" className="text-link hover:opacity-80">Rekomendasi AI</Link></li>
             </ul>
           </div>
-          
+
           <div>
-            <h4 className="font-headline font-bold text-sm uppercase tracking-widest text-primary mb-6">Bantuan</h4>
-            <ul className="space-y-4 text-sm text-muted-foreground">
-              <li><Link href="#" className="hover:text-primary transition-colors">Kebijakan Privasi</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Syarat & Ketentuan</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Hubungi Kami</Link></li>
+            <h4 className="mb-4 font-headline text-sm font-bold uppercase tracking-wide text-foreground">Bantuan</h4>
+            <ul className="space-y-3 text-sm">
+              <li><Link href="#" className="text-link hover:opacity-80">Kebijakan Privasi</Link></li>
+              <li><Link href="#" className="text-link hover:opacity-80">Syarat &amp; Ketentuan</Link></li>
+              <li><Link href="#" className="text-link hover:opacity-80">Hubungi Kami</Link></li>
             </ul>
           </div>
         </div>
-        
-        <div className="mt-16 pt-8 border-t flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-muted-foreground">
+
+        <div className="mt-8 border-t border-border/70 pt-4 text-xs text-muted-foreground">
           <p>&copy; {new Date().getFullYear()} Muakeup. Crafted for your beauty by Professional MUAs.</p>
-          <div className="flex gap-6">
-            <span>Made with Love</span>
-            <span>Est. 2024</span>
-          </div>
         </div>
       </div>
     </footer>

@@ -80,14 +80,14 @@ export default function AdminPage() {
             <h1 className="text-3xl font-headline font-bold">Admin Panel</h1>
             <p className="text-muted-foreground">Kelola katalog produk Muakeup Anda.</p>
           </div>
-          <Button asChild className="rounded-full">
+          <Button asChild className="rounded-lg">
             <Link href="/admin/add">
               <Plus className="h-4 w-4 mr-2" /> Tambah Produk
             </Link>
           </Button>
         </div>
 
-        <div className="bg-white rounded-3xl shadow-sm border overflow-hidden">
+        <div className="bg-card rounded-lg shadow-sm border overflow-hidden">
           {isLoading ? (
             <div className="flex flex-col items-center justify-center py-20 gap-4">
               <Loader2 className="h-8 w-8 animate-spin text-primary" />
@@ -110,7 +110,7 @@ export default function AdminPage() {
                       <TableCell className="font-bold">{product.name}</TableCell>
                       <TableCell>{product.brand}</TableCell>
                       <TableCell>
-                        <span className="text-xs bg-secondary px-2 py-1 rounded-full">{product.category}</span>
+                        <span className="text-xs bg-secondary px-2 py-1 rounded-lg">{product.category}</span>
                       </TableCell>
                       <TableCell className="text-right">
                         <div className="flex justify-end gap-2">
@@ -154,12 +154,12 @@ export default function AdminPage() {
             </ScrollArea>
           ) : (
             <div className="text-center py-20 space-y-4">
-              <div className="bg-muted w-16 h-16 rounded-full flex items-center justify-center mx-auto">
+              <div className="bg-muted w-16 h-16 rounded-lg flex items-center justify-center mx-auto">
                 <Package className="h-8 w-8 text-muted-foreground" />
               </div>
               <h3 className="text-xl font-bold">Belum ada produk</h3>
               <p className="text-muted-foreground">Mulai tambahkan produk pertama Anda ke katalog.</p>
-              <Button asChild variant="outline" className="rounded-full">
+              <Button asChild variant="outline" className="rounded-lg">
                 <Link href="/admin/add">Tambah Produk</Link>
               </Button>
             </div>

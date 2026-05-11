@@ -15,7 +15,7 @@ export default function AddProductPage() {
           <p className="text-muted-foreground">Isi detail produk untuk menambahkannya ke katalog publik.</p>
         </header>
 
-        <div className="bg-white rounded-[2.5rem] shadow-sm border p-8 md:p-12">
+        <div className="bg-card rounded-lg shadow-sm border p-8 md:p-12">
           <ProductForm />
         </div>
       </div>

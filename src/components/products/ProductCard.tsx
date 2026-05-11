@@ -41,7 +41,7 @@ export function ProductCard({ product }: ProductCardProps) {
   }, [product]);
 
   return (
-    <Card className="group overflow-hidden border-none shadow-sm hover:shadow-xl transition-all duration-500 bg-white rounded-[2.5rem]">
+    <Card className="group overflow-hidden border-none shadow-sm hover:shadow-xl transition-all duration-500 bg-card rounded-lg">
       <div className="relative aspect-square overflow-hidden bg-muted">
         <Image
           src={product.imageUrl}
@@ -53,7 +53,7 @@ export function ProductCard({ product }: ProductCardProps) {
         {/* Match Score Badge */}
         {matchScore !== null && (
           <div className={cn(
-            "absolute top-4 left-4 px-4 py-1.5 rounded-full text-xs font-bold shadow-lg backdrop-blur-md border",
+            "absolute top-4 left-4 px-4 py-1.5 rounded-lg text-xs font-bold shadow-lg backdrop-blur-md border",
             matchScore >= 80 ? "bg-accent/90 text-white border-accent" : "bg-white/90 text-primary border-primary/20"
           )}>
             {matchScore}% Match
@@ -63,7 +63,7 @@ export function ProductCard({ product }: ProductCardProps) {
         <Button 
           variant="ghost" 
           size="icon" 
-          className="absolute top-4 right-4 rounded-full bg-white/20 backdrop-blur-md text-white hover:bg-white hover:text-primary transition-all opacity-0 group-hover:opacity-100"
+          className="absolute top-4 right-4 rounded-lg bg-card/60 backdrop-blur-md text-foreground hover:bg-card hover:text-link transition-all opacity-0 group-hover:opacity-100"
         >
           <Heart className="h-5 w-5" />
         </Button>
@@ -75,14 +75,14 @@ export function ProductCard({ product }: ProductCardProps) {
             <p className="text-[10px] font-bold uppercase tracking-widest text-primary/60">{product.brand}</p>
             <h3 className="text-xl font-headline font-bold leading-tight line-clamp-1">{product.name}</h3>
           </div>
-          <Badge variant="secondary" className="bg-secondary/50 text-secondary-foreground text-[10px] uppercase font-bold rounded-full">
+          <Badge variant="secondary" className="bg-secondary/50 text-secondary-foreground text-[10px] uppercase font-bold rounded-lg">
             {product.category}
           </Badge>
         </div>
       </CardHeader>
 
       <CardContent className="p-6 pt-4">
-        <div className="bg-secondary/20 p-4 rounded-2xl relative overflow-hidden">
+        <div className="bg-secondary/20 p-4 rounded-lg relative overflow-hidden">
           <div className="absolute top-1 right-1 opacity-10">
             <Star className="h-8 w-8 fill-primary" />
           </div>
@@ -97,7 +97,7 @@ export function ProductCard({ product }: ProductCardProps) {
 
       <CardFooter className="p-6 pt-0 flex items-center justify-between">
         <span className="text-lg font-bold text-primary">{product.priceEstimate}</span>
-        <Button size="sm" className="rounded-full shadow-md group-hover:px-6 transition-all" asChild>
+        <Button size="sm" className="shadow-md group-hover:px-6 transition-all" asChild>
           <Link href={`/product/${product.id}`}>
             Detail <ArrowRight className="h-4 w-4 ml-1 opacity-0 group-hover:opacity-100 transition-opacity" />
           </Link>

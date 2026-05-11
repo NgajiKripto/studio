@@ -82,9 +82,9 @@ export default function RecommendPage() {
                 return (
                   <div key={i} className="flex items-center">
                     <div className={cn(
-                      "w-10 h-10 rounded-full flex items-center justify-center font-bold transition-all duration-300 border-2",
+                      "w-10 h-10 rounded-lg flex items-center justify-center font-bold transition-all duration-300 border-2",
                       isActive ? "bg-primary text-white border-primary scale-110" : 
-                      isDone ? "bg-accent text-white border-accent" : "bg-white text-muted-foreground border-muted-foreground/20"
+                      isDone ? "bg-accent text-white border-accent" : "bg-card text-muted-foreground border-muted-foreground/20"
                     )}>
                       {isDone ? <CheckCircle2 className="h-5 w-5" /> : i}
                     </div>
@@ -96,7 +96,7 @@ export default function RecommendPage() {
           </div>
         )}
 
-        <div className="bg-white/50 backdrop-blur-md rounded-[2.5rem] shadow-sm border p-8 md:p-12">
+        <div className="bg-card/50 backdrop-blur-md rounded-lg shadow-sm border p-8 md:p-12">
           {step === "SKIN_TYPE" && (
             <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4">
               <div className="text-center">
@@ -174,7 +174,7 @@ export default function RecommendPage() {
                   >
                     <div className={cn(
                       "w-12 h-16 border-2 border-muted-foreground/30 mb-3",
-                      shape.value === 'ROUND' && "rounded-full",
+                      shape.value === 'ROUND' && "rounded-lg",
                       shape.value === 'OVAL' && "rounded-[40%]",
                       shape.value === 'SQUARE' && "rounded-sm",
                       shape.value === 'HEART' && "rounded-b-full rounded-t-[10%]",
@@ -204,7 +204,7 @@ export default function RecommendPage() {
               ) : results && results.recommendations.length > 0 ? (
                 <div className="space-y-12">
                   <div className="text-center">
-                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent text-white text-sm font-bold tracking-wide mb-4">
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-lg bg-accent text-white text-sm font-bold tracking-wide mb-4">
                       <Sparkles className="h-4 w-4" /> AI Personalized Selection
                     </div>
                     <h2 className="text-4xl md:text-5xl font-headline font-bold">Recommended for You</h2>
@@ -213,7 +213,7 @@ export default function RecommendPage() {
 
                   <div className="grid grid-cols-1 gap-12">
                     {results.recommendations.map((rec) => (
-                      <Card key={rec.id} className="overflow-hidden border-none shadow-xl bg-background rounded-3xl group">
+                      <Card key={rec.id} className="overflow-hidden border-none shadow-xl bg-background rounded-lg group">
                         <div className="grid grid-cols-1 md:grid-cols-5 h-full">
                           <div className="md:col-span-2 relative aspect-square">
                             <Image 
@@ -242,7 +242,7 @@ export default function RecommendPage() {
                                 <p className="text-sm text-muted-foreground">{rec.reasonsForRecommendation}</p>
                               </div>
                               <div className="pt-4">
-                                <Button className="rounded-full px-8 shadow-md" asChild>
+                                <Button className="rounded-lg px-8 shadow-md" asChild>
                                   <Link href={`/product/${rec.id}`}>View Details</Link>
                                 </Button>
                               </div>
@@ -254,7 +254,7 @@ export default function RecommendPage() {
                   </div>
 
                   <div className="text-center pt-8">
-                    <Button variant="outline" size="lg" className="rounded-full" onClick={() => setStep("SKIN_TYPE")}>
+                    <Button variant="outline" size="lg" className="rounded-lg" onClick={() => setStep("SKIN_TYPE")}>
                       Start Over
                     </Button>
                   </div>
@@ -263,7 +263,7 @@ export default function RecommendPage() {
                 <div className="text-center py-20 space-y-6">
                   <h2 className="text-2xl font-headline font-bold">No perfect matches found.</h2>
                   <p className="text-muted-foreground">Our MUA hasn't added products that perfectly match this specific profile yet. Try different criteria or browse our catalog.</p>
-                  <Button onClick={() => setStep("SKIN_TYPE")} className="rounded-full">Try Again</Button>
+                  <Button onClick={() => setStep("SKIN_TYPE")} className="rounded-lg">Try Again</Button>
                 </div>
               )}
             </div>
@@ -275,14 +275,14 @@ export default function RecommendPage() {
                 variant="ghost" 
                 onClick={handleBack} 
                 disabled={step === "SKIN_TYPE"}
-                className="rounded-full"
+                className="rounded-lg"
               >
                 <ArrowLeft className="h-4 w-4 mr-2" /> Back
               </Button>
               <Button 
                 onClick={handleNext} 
                 disabled={!isStepValid()}
-                className="rounded-full px-8"
+                className="rounded-lg px-8"
               >
                 {step === "FACE_SHAPE" ? "Get Recommendations" : "Continue"} <ArrowRight className="h-4 w-4 ml-2" />
               </Button>

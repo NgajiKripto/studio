@@ -52,7 +52,7 @@ export function ProductCard({ product }: ProductCardProps) {
       </CardContent>
       <CardFooter className="p-4 pt-0 flex justify-between items-center">
         <span className="font-bold text-primary">{product.priceEstimate}</span>
-        <Button variant="outline" size="sm" className="rounded-full border-primary/20 hover:border-primary hover:bg-primary/5 h-8 px-4" asChild>
+        <Button variant="outline" size="sm" className="border-primary/20 hover:border-primary hover:bg-primary/5 h-8 px-4" asChild>
           <Link href={product.affiliateUrl}>
             Buy Now
           </Link>

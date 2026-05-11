@@ -4,87 +4,70 @@ import Link from "next/link";
 import { Sparkles, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
+  const links = [
+    { href: "/", label: "Beranda" },
+    { href: "/products", label: "Katalog" },
+    { href: "/diagnostic", label: "Kuis Kulit" },
+    { href: "/recommend", label: "AI Picks" },
+  ];
+
   return (
-    <nav className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-md">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
-          <Link href="/" className="flex items-center space-x-2 group">
-            <div className="bg-primary p-1.5 rounded-lg group-hover:bg-accent transition-colors">
-              <Sparkles className="h-6 w-6 text-primary-foreground" />
+    <nav className="sticky top-0 z-50 w-full border-b border-border/70 bg-background/90 backdrop-blur-md">
+      <div className="container mx-auto px-4 py-4 sm:px-8">
+        <div className="flex items-center justify-between rounded-lg border border-border/50 bg-card/85 px-4 py-3 shadow-sm">
+          <Link href="/" className="flex items-center gap-2">
+            <div className="rounded-lg bg-primary p-2">
+              <Sparkles className="h-5 w-5 text-foreground" />
             </div>
-            <span className="font-headline text-2xl font-bold tracking-tight text-primary">
-              Muakeup
-            </span>
+            <span className="font-headline text-xl font-bold text-foreground">Muakeup</span>
           </Link>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8">
-            <Link href="/" className="text-sm font-medium hover:text-primary transition-colors">
-              Beranda
-            </Link>
-            <Link href="/products" className="text-sm font-medium hover:text-primary transition-colors">
-              Katalog
-            </Link>
-            <Link href="/diagnostic" className="text-sm font-medium flex items-center gap-1.5 text-accent hover:text-primary transition-colors">
-              Kuis Kulit
-            </Link>
-            <Link href="/recommend" className="text-sm font-medium hover:text-primary transition-colors">
-              AI Picks
-            </Link>
+          <div className="hidden items-center gap-8 md:flex">
+            {links.map((link) => (
+              <Link key={link.href} href={link.href} className="text-sm font-semibold text-link transition-opacity hover:opacity-80">
+                {link.label}
+              </Link>
+            ))}
+            <Button size="sm" asChild>
+              <Link href="/diagnostic">Mulai</Link>
+            </Button>
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-primary hover:bg-muted"
-            >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
-          </div>
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="inline-flex items-center justify-center rounded-lg border border-border/60 bg-card p-2 text-link md:hidden"
+          >
+            {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
       <div
         className={cn(
-          "md:hidden absolute w-full bg-background border-b transition-all duration-300 ease-in-out",
-          isOpen ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0 overflow-hidden"
+          "md:hidden transition-all duration-300 ease-in-out",
+          isOpen ? "max-h-96 opacity-100" : "max-h-0 overflow-hidden opacity-0"
         )}
       >
-        <div className="px-4 pt-2 pb-6 space-y-1">
-          <Link
-            href="/"
-            className="block px-3 py-2 rounded-md text-base font-medium hover:bg-muted"
-            onClick={() => setIsOpen(false)}
-          >
-            Beranda
-          </Link>
-          <Link
-            href="/products"
-            className="block px-3 py-2 rounded-md text-base font-medium hover:bg-muted"
-            onClick={() => setIsOpen(false)}
-          >
-            Katalog
-          </Link>
-          <Link
-            href="/diagnostic"
-            className="block px-3 py-2 rounded-md text-base font-medium text-accent hover:bg-muted"
-            onClick={() => setIsOpen(false)}
-          >
-            Kuis Kulit
-          </Link>
-          <Link
-            href="/recommend"
-            className="block px-3 py-2 rounded-md text-base font-medium hover:bg-muted"
-            onClick={() => setIsOpen(false)}
-          >
-            AI Recommendations
-          </Link>
+        <div className="container mx-auto px-4 pb-4 sm:px-8">
+          <div className="rounded-lg border border-border/60 bg-card p-4">
+            <div className="space-y-2">
+              {links.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="block rounded-lg px-3 py-2 text-sm font-semibold text-link hover:bg-primary/40"
+                  onClick={() => setIsOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </nav>
