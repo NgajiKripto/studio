@@ -18,11 +18,20 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   const { id } = await params;
   const product = await prisma.product.findUnique({ where: { id } });
 
-  if (!product) return { title: "Product Not Found" };
+  if (!product) return { title: "Produk Tidak Ditemukan" };
+
+  const description = product.muaVerdict
+    ? `${product.muaVerdict.substring(0, 150)}...`
+    : `Beli ${product.name} dari ${product.brand}. Rekomendasi makeup ${product.category} sesuai jenis kulit dan warna kulitmu.`;
 
   return {
-    title: `${product.name} by ${product.brand} - Muakeup`,
-    description: product.muaVerdict,
+    title: `${product.name} - ${product.brand} | Review & Rekomendasi`,
+    description,
+    openGraph: {
+      title: `${product.name} oleh ${product.brand} | Muakeup`,
+      description,
+      images: [{ url: product.imageUrl, alt: `Produk ${product.name} dari ${product.brand}` }],
+    },
   };
 }
 
@@ -61,7 +70,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
             <div className="relative aspect-square rounded-2xl overflow-hidden bg-muted/50 border border-border/50">
               <Image
                 src={product.imageUrl}
-                alt={product.name}
+                alt={`Produk ${product.name} dari ${product.brand} - makeup ${product.category} untuk kulit Indonesia`}
                 fill
                 className="object-cover"
                 priority
@@ -72,7 +81,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
                 <div key={i} className="relative aspect-square rounded-xl overflow-hidden bg-muted/50 border border-border/50 opacity-70 hover:opacity-100 transition-opacity cursor-pointer">
                   <Image
                     src={`https://picsum.photos/seed/detail-${id}-${i}/400/400`}
-                    alt="Product shot"
+                    alt={`${product.name} dari ${product.brand} - tampilan detail ${i}`}
                     fill
                     className="object-cover"
                   />

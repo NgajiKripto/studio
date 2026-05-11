@@ -1,11 +1,23 @@
 export const dynamic = 'force-dynamic';
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { prisma } from "@/lib/prisma";
 import { Button } from "@/components/ui/button";
 import { Marquee } from "@/components/ui/marquee";
 import BlurText from "@/components/ui/blur-text";
-import { Heart, ArrowRight, ChevronDown, Sparkles, Star, Droplets, Palette, Layers } from "lucide-react";
+import { Heart, ArrowRight, ChevronDown, Sparkles, Star, Droplets, Palette, Layers, AlertTriangle } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Muakeup | Temukan Makeup yang Memahamimu",
+  description:
+    "Bingung pilih foundation? Muakeup bantu kamu memilih makeup sesuai jenis kulit, undertone, dan bentuk wajah. Dapatkan rekomendasi personal dari MUA sekarang.",
+  openGraph: {
+    title: "Muakeup | Temukan Makeup yang Memahamimu",
+    description:
+      "Bingung pilih foundation? Muakeup bantu kamu memilih makeup sesuai jenis kulit, undertone, dan bentuk wajah.",
+  },
+};
 
 const communityTestimonials = [
   {
@@ -149,7 +161,7 @@ export default async function Home() {
                     <div key={i} className="w-8 h-8 rounded-full border-2 border-white overflow-hidden shadow-sm">
                       <Image
                         src={`https://picsum.photos/seed/user${i}/100/100`}
-                        alt={`User ${i}`}
+                        alt={`Pengguna Muakeup ${i}`}
                         width={32}
                         height={32}
                         className="object-cover"
@@ -177,7 +189,7 @@ export default async function Home() {
                 <div className="relative w-72 h-80 sm:w-80 sm:h-96 lg:w-[380px] lg:h-[480px] rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white/60">
                   <Image
                     src="https://picsum.photos/seed/beauty-hero/800/1000"
-                    alt="Beauty Portrait"
+                    alt="Wanita dengan makeup sempurna hasil rekomendasi Muakeup"
                     fill
                     priority
                     className="object-cover"
@@ -224,6 +236,100 @@ export default async function Home() {
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
           <div className="w-10 h-10 rounded-full glass-card flex items-center justify-center animate-bounce shadow-md">
             <ChevronDown className="h-5 w-5 text-secondary" />
+          </div>
+        </div>
+      </section>
+
+      {/* Problem Solving Section */}
+      <section className="relative py-24 lg:py-32">
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-white/30 to-background" />
+
+        <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-2xl mx-auto text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-pink-100 text-pink-700 text-xs font-semibold mb-4">
+              <AlertTriangle className="h-3 w-3" />
+              Masalah Umum
+            </div>
+            <h2 className="text-4xl md:text-5xl font-extrabold text-foreground mb-5 tracking-tight">
+              Kenapa Sering{" "}
+              <span className="gradient-text">Salah Pilih Makeup?</span>
+            </h2>
+            <p className="text-muted-foreground text-lg leading-relaxed">
+              Banyak orang kesulitan cara memilih foundation sesuai jenis kulit, menentukan shade warna kulit yang pas,
+              atau menemukan teknik contour untuk bentuk wajah mereka. Muakeup hadir untuk menyelesaikan itu semua.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+            {/* Problem 1 */}
+            <article className="glass-card rounded-3xl p-8 hover-lift group">
+              <div className="mb-6">
+                <div className="w-14 h-14 rounded-2xl bg-rose-100 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300">
+                  <span className="text-2xl" role="img" aria-label="Kulit berminyak">💧</span>
+                </div>
+                <h3 className="text-xl font-bold text-foreground mb-2">
+                  Kulit Berminyak vs Foundation Geser
+                </h3>
+              </div>
+              <p className="text-muted-foreground text-sm leading-relaxed mb-4">
+                Foundation luntur dalam hitungan jam? Kulit berminyak butuh formula khusus yang tahan lama.
+              </p>
+              <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-green-50 border border-green-200">
+                <Sparkles className="h-3.5 w-3.5 text-green-600" />
+                <span className="text-xs font-semibold text-green-700">Solusi: Filter Produk Berdasarkan Jenis Kulit</span>
+              </div>
+            </article>
+
+            {/* Problem 2 */}
+            <article className="glass-card rounded-3xl p-8 hover-lift group">
+              <div className="mb-6">
+                <div className="w-14 h-14 rounded-2xl bg-amber-100 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300">
+                  <span className="text-2xl" role="img" aria-label="Shade warna kulit">🎨</span>
+                </div>
+                <h3 className="text-xl font-bold text-foreground mb-2">
+                  Shade Terlalu Terang atau Gelap
+                </h3>
+              </div>
+              <p className="text-muted-foreground text-sm leading-relaxed mb-4">
+                Susah menentukan shade warna kulit yang tepat? Salah shade bikin wajah terlihat abu-abu atau terlalu oranye.
+              </p>
+              <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-green-50 border border-green-200">
+                <Sparkles className="h-3.5 w-3.5 text-green-600" />
+                <span className="text-xs font-semibold text-green-700">Solusi: Rekomendasi Sesuai Warna Kulit & Undertone</span>
+              </div>
+            </article>
+
+            {/* Problem 3 */}
+            <article className="glass-card rounded-3xl p-8 hover-lift group">
+              <div className="mb-6">
+                <div className="w-14 h-14 rounded-2xl bg-purple-100 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300">
+                  <span className="text-2xl" role="img" aria-label="Bentuk wajah untuk contour">✨</span>
+                </div>
+                <h3 className="text-xl font-bold text-foreground mb-2">
+                  Contour & Blush Tidak Pas
+                </h3>
+              </div>
+              <p className="text-muted-foreground text-sm leading-relaxed mb-4">
+                Teknik contour yang salah justru membuat wajah terlihat tidak proporsional. Setiap bentuk wajah untuk contour butuh pendekatan berbeda.
+              </p>
+              <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-green-50 border border-green-200">
+                <Sparkles className="h-3.5 w-3.5 text-green-600" />
+                <span className="text-xs font-semibold text-green-700">Solusi: Panduan Berdasarkan Bentuk Wajah</span>
+              </div>
+            </article>
+          </div>
+
+          {/* CTA below problem cards */}
+          <div className="mt-12 text-center">
+            <Button
+              size="lg"
+              className="rounded-full px-10 font-semibold gradient-bg text-white border-0 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 h-12"
+              asChild
+            >
+              <Link href="/diagnostic">
+                Coba Kuis <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
           </div>
         </div>
       </section>
@@ -350,7 +456,7 @@ export default async function Home() {
                   <div className="relative aspect-[4/5] overflow-hidden bg-gradient-to-br from-primary/10 to-secondary/10">
                     <Image
                       src={product.imageUrl}
-                      alt={product.name}
+                      alt={`Produk ${product.name} dari ${product.brand} - makeup ${product.category}`}
                       fill
                       className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                     />
@@ -427,30 +533,43 @@ export default async function Home() {
 
       {/* CTA Section */}
       <section className="py-24 lg:py-32 relative overflow-hidden">
-        <div className="absolute inset-0 gradient-bg opacity-80" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.3),transparent_70%)]" />
+        <div className="absolute inset-0 bg-gradient-to-br from-pink-100 via-rose-50 to-pink-200" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.4),transparent_70%)]" />
 
         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="max-w-2xl mx-auto space-y-6">
             <h2 className="text-4xl md:text-5xl font-extrabold text-foreground tracking-tight">
-              Ready to find your{" "}
-              <span className="underline decoration-secondary decoration-4 underline-offset-4">perfect match</span>?
+              Siap Temukan Makeup yang{" "}
+              <span className="gradient-text">Cocok Untukmu?</span>
             </h2>
             <p className="text-muted-foreground text-lg leading-relaxed">
-              Take our quick diagnostic quiz and discover makeup products personally curated for your unique skin.
+              Ikuti kuis singkat kami dan dapatkan rekomendasi produk makeup yang dipersonalisasi untuk kulit unikmu.
             </p>
-            <div className="pt-4">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
               <Button
                 size="lg"
-                className="rounded-full px-10 font-semibold bg-foreground text-white hover:bg-foreground/90 shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 h-13 text-base"
+                className="rounded-full px-10 font-semibold gradient-bg text-white border-0 shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 h-13 text-base w-full sm:w-auto"
                 asChild
               >
                 <Link href="/diagnostic">
                   <Sparkles className="h-4 w-4 mr-2" />
-                  Start Your Journey
+                  Mulai Kuis Kulitmu
+                </Link>
+              </Button>
+              <Button
+                variant="outline"
+                size="lg"
+                className="rounded-full px-10 font-semibold border-2 border-foreground/20 hover:bg-white/80 transition-all duration-300 h-13 text-base w-full sm:w-auto"
+                asChild
+              >
+                <Link href="/products">
+                  Lihat Semua Produk <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
             </div>
+            <p className="text-sm text-muted-foreground pt-2">
+              Rekomendasi dari MUA Profesional
+            </p>
           </div>
         </div>
       </section>
