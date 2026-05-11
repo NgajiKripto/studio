@@ -8,7 +8,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { SKIN_TYPES, SKIN_TONES, FACE_SHAPES, SkinType, SkinTone, FaceShape } from "@/lib/constants";
 import { PRODUCTS } from "@/lib/mock-data";
 import { aiPersonalizedProductRecommendations, AIPersonalizedProductRecommendationsOutput } from "@/ai/flows/ai-personalized-product-recommendations";
-import { Sparkles, ArrowRight, ArrowLeft, Loader2, Star, CheckCircle2 } from "lucide-react";
+import { ArrowRight, ArrowLeft, Loader2, Star, CheckCircle2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -40,7 +40,7 @@ export default function RecommendPage() {
           skinType: profile.skinType!,
           skinTone: profile.skinTone!,
           faceShape: profile.faceShape!,
-          allProducts: PRODUCTS as any, // Cast to match AI interface
+          allProducts: PRODUCTS as any,
         });
         setResults(response);
       } catch (error) {
@@ -68,27 +68,28 @@ export default function RecommendPage() {
   };
 
   return (
-    <main className="flex-grow py-12 md:py-20 bg-background">
-      <div className="container mx-auto px-4 max-w-4xl">
+    <main className="min-h-screen bg-background py-12 md:py-20">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl">
         {step !== "RESULTS" && (
           <div className="text-center mb-12 space-y-4">
-            <h1 className="text-4xl md:text-5xl font-headline font-bold text-primary">Your Beauty Profile</h1>
-            <p className="text-muted-foreground text-lg">Help us understand your features to find your perfect makeup matches.</p>
-            
-            <div className="flex justify-center items-center gap-4 mt-8">
+            <h1 className="font-headline text-4xl md:text-5xl font-bold text-foreground">Your Beauty Profile</h1>
+            <p className="text-muted-foreground text-lg">Help us understand your features to find your perfect matches.</p>
+
+            {/* Progress Steps */}
+            <div className="flex justify-center items-center gap-3 mt-8">
               {[1, 2, 3].map((i) => {
                 const isActive = (step === "SKIN_TYPE" && i === 1) || (step === "SKIN_TONE" && i === 2) || (step === "FACE_SHAPE" && i === 3);
                 const isDone = (step === "SKIN_TONE" && i < 2) || (step === "FACE_SHAPE" && i < 3);
                 return (
                   <div key={i} className="flex items-center">
                     <div className={cn(
-                      "w-10 h-10 rounded-lg flex items-center justify-center font-bold transition-all duration-300 border-2",
-                      isActive ? "bg-primary text-white border-primary scale-110" : 
-                      isDone ? "bg-accent text-white border-accent" : "bg-card text-muted-foreground border-muted-foreground/20"
+                      "w-9 h-9 rounded-full flex items-center justify-center text-sm font-semibold transition-all",
+                      isActive ? "bg-primary text-primary-foreground scale-110" :
+                      isDone ? "bg-primary/20 text-primary" : "bg-muted text-muted-foreground"
                     )}>
-                      {isDone ? <CheckCircle2 className="h-5 w-5" /> : i}
+                      {isDone ? <CheckCircle2 className="h-4 w-4" /> : i}
                     </div>
-                    {i < 3 && <div className={cn("w-12 h-0.5 mx-2", isDone ? "bg-accent" : "bg-muted")} />}
+                    {i < 3 && <div className={cn("w-10 h-0.5 mx-1.5", isDone ? "bg-primary/40" : "bg-muted")} />}
                   </div>
                 );
               })}
@@ -96,33 +97,33 @@ export default function RecommendPage() {
           </div>
         )}
 
-        <div className="bg-card/50 backdrop-blur-md rounded-lg shadow-sm border p-8 md:p-12">
+        <Card className="bg-white rounded-2xl shadow-lg border border-border/50 p-8 md:p-10">
           {step === "SKIN_TYPE" && (
-            <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4">
+            <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4">
               <div className="text-center">
-                <h2 className="text-2xl font-headline font-bold mb-2">How does your skin usually feel?</h2>
-                <p className="text-muted-foreground">This helps us recommend the right formulas for you.</p>
+                <h2 className="font-headline text-2xl font-bold mb-2">How does your skin usually feel?</h2>
+                <p className="text-muted-foreground text-sm">This helps us recommend the right formulas.</p>
               </div>
-              <RadioGroup 
-                value={profile.skinType || ""} 
+              <RadioGroup
+                value={profile.skinType || ""}
                 onValueChange={(v) => setProfile({ ...profile, skinType: v as SkinType })}
-                className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+                className="grid grid-cols-1 sm:grid-cols-2 gap-3"
               >
                 {SKIN_TYPES.map((type) => (
                   <Label
                     key={type.value}
                     htmlFor={type.value}
                     className={cn(
-                      "flex flex-col items-center justify-center p-6 rounded-2xl border-2 cursor-pointer hover:border-primary/50 transition-all text-center space-y-2",
-                      profile.skinType === type.value ? "border-primary bg-primary/5 shadow-inner" : "border-muted"
+                      "flex flex-col items-center justify-center p-5 rounded-xl border-2 cursor-pointer transition-all text-center space-y-1",
+                      profile.skinType === type.value ? "border-primary bg-primary/5" : "border-border hover:border-primary/30"
                     )}
                   >
                     <RadioGroupItem value={type.value} id={type.value} className="sr-only" />
-                    <span className="font-headline text-lg font-bold">{type.label}</span>
-                    <span className="text-xs text-muted-foreground italic">
+                    <span className="font-semibold">{type.label}</span>
+                    <span className="text-xs text-muted-foreground">
                       {type.value === 'OILY' && 'Shiny all over, visible pores'}
                       {type.value === 'DRY' && 'Feels tight, flaky or dull'}
-                      {type.value === 'NORMAL' && 'Balanced, clear, not sensitive'}
+                      {type.value === 'NORMAL' && 'Balanced, clear, comfortable'}
                       {type.value === 'COMBINATION' && 'Oily T-zone, dry cheeks'}
                       {type.value === 'SENSITIVE' && 'Prone to redness or irritation'}
                     </span>
@@ -133,10 +134,10 @@ export default function RecommendPage() {
           )}
 
           {step === "SKIN_TONE" && (
-            <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4">
+            <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4">
               <div className="text-center">
-                <h2 className="text-2xl font-headline font-bold mb-2">What is your skin tone & undertone?</h2>
-                <p className="text-muted-foreground">Knowing your tone ensures the perfect shade matching.</p>
+                <h2 className="font-headline text-2xl font-bold mb-2">What is your skin tone?</h2>
+                <p className="text-muted-foreground text-sm">Ensures perfect shade matching.</p>
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {SKIN_TONES.map((tone) => (
@@ -144,8 +145,8 @@ export default function RecommendPage() {
                     key={tone.value}
                     variant={profile.skinTone === tone.value ? "default" : "outline"}
                     className={cn(
-                      "h-auto py-3 px-2 rounded-xl text-[10px] sm:text-xs font-bold uppercase tracking-tight",
-                      profile.skinTone === tone.value && "shadow-lg scale-105"
+                      "h-auto py-3 rounded-xl text-xs font-semibold",
+                      profile.skinTone === tone.value && "shadow-md"
                     )}
                     onClick={() => setProfile({ ...profile, skinTone: tone.value })}
                   >
@@ -157,23 +158,23 @@ export default function RecommendPage() {
           )}
 
           {step === "FACE_SHAPE" && (
-            <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4">
+            <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4">
               <div className="text-center">
-                <h2 className="text-2xl font-headline font-bold mb-2">Which shape best describes your face?</h2>
-                <p className="text-muted-foreground">Helps with contouring and highlighting product picks.</p>
+                <h2 className="font-headline text-2xl font-bold mb-2">Which shape describes your face?</h2>
+                <p className="text-muted-foreground text-sm">Helps with contouring and product placement.</p>
               </div>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                 {FACE_SHAPES.map((shape) => (
-                  <div 
+                  <div
                     key={shape.value}
                     className={cn(
-                      "flex flex-col items-center p-4 rounded-2xl border-2 cursor-pointer transition-all",
-                      profile.faceShape === shape.value ? "border-primary bg-primary/5 shadow-inner" : "border-muted"
+                      "flex flex-col items-center p-4 rounded-xl border-2 cursor-pointer transition-all",
+                      profile.faceShape === shape.value ? "border-primary bg-primary/5" : "border-border hover:border-primary/30"
                     )}
                     onClick={() => setProfile({ ...profile, faceShape: shape.value })}
                   >
                     <div className={cn(
-                      "w-12 h-16 border-2 border-muted-foreground/30 mb-3",
+                      "w-10 h-14 border-2 border-muted-foreground/30 mb-2",
                       shape.value === 'ROUND' && "rounded-full",
                       shape.value === 'OVAL' && "rounded-[40%]",
                       shape.value === 'SQUARE' && "rounded-sm",
@@ -181,7 +182,7 @@ export default function RecommendPage() {
                       shape.value === 'DIAMOND' && "rotate-45 scale-75",
                       shape.value === 'OBLONG' && "rounded-[30%] scale-y-125"
                     )} />
-                    <span className="font-bold text-sm">{shape.label}</span>
+                    <span className="font-semibold text-sm">{shape.label}</span>
                   </div>
                 ))}
               </div>
@@ -191,104 +192,76 @@ export default function RecommendPage() {
           {step === "RESULTS" && (
             <div className="space-y-8 animate-in fade-in duration-700">
               {loading ? (
-                <div className="flex flex-col items-center justify-center py-20 space-y-6">
-                  <div className="relative">
-                    <Loader2 className="h-16 w-16 text-primary animate-spin" />
-                    <Sparkles className="h-6 w-6 text-accent absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse" />
-                  </div>
+                <div className="flex flex-col items-center justify-center py-16 space-y-4">
+                  <Loader2 className="h-12 w-12 text-primary animate-spin" />
                   <div className="text-center">
-                    <h2 className="text-2xl font-headline font-bold">Curating Your Beauty Picks...</h2>
-                    <p className="text-muted-foreground">Our AI is analyzing MUA verdicts and your unique profile.</p>
+                    <h2 className="font-headline text-2xl font-bold">Finding your matches...</h2>
+                    <p className="text-muted-foreground text-sm">Our AI is analyzing your profile.</p>
                   </div>
                 </div>
               ) : results && results.recommendations.length > 0 ? (
-                <div className="space-y-12">
+                <div className="space-y-8">
                   <div className="text-center">
-                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-lg bg-accent text-white text-sm font-bold tracking-wide mb-4">
-                      <Sparkles className="h-4 w-4" /> AI Personalized Selection
-                    </div>
-                    <h2 className="text-4xl md:text-5xl font-headline font-bold">Recommended for You</h2>
-                    <p className="text-muted-foreground mt-2">Based on your {profile.skinType?.toLowerCase()} skin, {profile.skinTone?.toLowerCase()} tone, and {profile.faceShape?.toLowerCase()} face shape.</p>
+                    <h2 className="font-headline text-3xl md:text-4xl font-bold mb-2">Recommended for You</h2>
+                    <p className="text-muted-foreground text-sm">Based on your profile.</p>
                   </div>
 
-                  <div className="grid grid-cols-1 gap-12">
+                  <div className="space-y-6">
                     {results.recommendations.map((rec) => (
-                      <Card key={rec.id} className="overflow-hidden border-none shadow-xl bg-background rounded-lg group">
-                        <div className="grid grid-cols-1 md:grid-cols-5 h-full">
-                          <div className="md:col-span-2 relative aspect-square">
-                            <Image 
-                              src={rec.imageUrl} 
-                              alt={rec.name} 
-                              fill 
-                              className="object-cover group-hover:scale-105 transition-transform duration-500" 
-                            />
-                          </div>
-                          <div className="md:col-span-3 p-8 flex flex-col justify-center">
-                            <div className="space-y-4">
-                              <div>
-                                <p className="text-xs font-bold uppercase tracking-widest text-primary">{rec.brand}</p>
-                                <h3 className="text-2xl font-headline font-bold">{rec.name}</h3>
-                              </div>
-                              <div className="bg-secondary/20 p-4 rounded-2xl">
-                                <p className="text-xs uppercase font-bold text-accent flex items-center gap-1.5 mb-2">
-                                  <Star className="h-4 w-4 fill-accent" /> Expert MUA Verdict
-                                </p>
-                                <p className="text-sm italic text-foreground/80 leading-relaxed">
-                                  "{rec.muaVerdict}"
-                                </p>
-                              </div>
-                              <div className="space-y-2">
-                                <p className="text-sm font-bold text-primary">Why we picked this for you:</p>
-                                <p className="text-sm text-muted-foreground">{rec.reasonsForRecommendation}</p>
-                              </div>
-                              <div className="pt-4">
-                                <Button className="rounded-lg px-8 shadow-md" asChild>
-                                  <Link href={`/product/${rec.id}`}>View Details</Link>
-                                </Button>
-                              </div>
-                            </div>
-                          </div>
+                      <div key={rec.id} className="flex gap-4 p-4 rounded-2xl bg-secondary/30 border border-border/50">
+                        <div className="relative w-24 h-24 rounded-xl overflow-hidden shrink-0">
+                          <Image src={rec.imageUrl} alt={rec.name} fill className="object-cover" />
                         </div>
-                      </Card>
+                        <div className="flex-grow space-y-2">
+                          <div>
+                            <p className="text-xs text-muted-foreground uppercase tracking-wider">{rec.brand}</p>
+                            <h3 className="font-semibold text-foreground">{rec.name}</h3>
+                          </div>
+                          <p className="text-xs text-muted-foreground line-clamp-2">{rec.reasonsForRecommendation}</p>
+                          <Button size="sm" variant="outline" className="rounded-full text-xs h-7" asChild>
+                            <Link href={`/product/${rec.id}`}>View Details</Link>
+                          </Button>
+                        </div>
+                      </div>
                     ))}
                   </div>
 
-                  <div className="text-center pt-8">
-                    <Button variant="outline" size="lg" className="rounded-lg" onClick={() => setStep("SKIN_TYPE")}>
+                  <div className="text-center pt-4">
+                    <Button variant="outline" className="rounded-full" onClick={() => setStep("SKIN_TYPE")}>
                       Start Over
                     </Button>
                   </div>
                 </div>
               ) : (
-                <div className="text-center py-20 space-y-6">
-                  <h2 className="text-2xl font-headline font-bold">No perfect matches found.</h2>
-                  <p className="text-muted-foreground">Our MUA hasn't added products that perfectly match this specific profile yet. Try different criteria or browse our catalog.</p>
-                  <Button onClick={() => setStep("SKIN_TYPE")} className="rounded-lg">Try Again</Button>
+                <div className="text-center py-16 space-y-4">
+                  <h2 className="font-headline text-2xl font-bold">No matches found</h2>
+                  <p className="text-muted-foreground text-sm">Try different criteria or browse our catalog.</p>
+                  <Button onClick={() => setStep("SKIN_TYPE")} className="rounded-full">Try Again</Button>
                 </div>
               )}
             </div>
           )}
 
           {step !== "RESULTS" && (
-            <div className="flex justify-between items-center mt-12 pt-8 border-t">
-              <Button 
-                variant="ghost" 
-                onClick={handleBack} 
+            <div className="flex justify-between items-center mt-10 pt-6 border-t border-border">
+              <Button
+                variant="ghost"
+                onClick={handleBack}
                 disabled={step === "SKIN_TYPE"}
-                className="rounded-lg"
+                className="rounded-full"
               >
                 <ArrowLeft className="h-4 w-4 mr-2" /> Back
               </Button>
-              <Button 
-                onClick={handleNext} 
+              <Button
+                onClick={handleNext}
                 disabled={!isStepValid()}
-                className="rounded-lg px-8"
+                className="rounded-full px-6"
               >
-                {step === "FACE_SHAPE" ? "Get Recommendations" : "Continue"} <ArrowRight className="h-4 w-4 ml-2" />
+                {step === "FACE_SHAPE" ? "Get Results" : "Continue"} <ArrowRight className="h-4 w-4 ml-2" />
               </Button>
             </div>
           )}
-        </div>
+        </Card>
       </div>
     </main>
   );

@@ -18,14 +18,12 @@ interface ProductsPageProps {
 
 export default async function ProductsPage({ searchParams }: ProductsPageProps) {
   const params = await searchParams;
-  
-  // Parse filters from URL
+
   const selectedSkinTypes = params.skin_types ? (params.skin_types.split(",") as SkinType[]) : [];
   const selectedSkinTones = params.skin_tones ? (params.skin_tones.split(",") as SkinTone[]) : [];
   const selectedFaceShapes = params.face_shapes ? (params.face_shapes.split(",") as FaceShape[]) : [];
   const searchQuery = params.q || "";
 
-  // Build Prisma Query
   const whereClause: any = {
     AND: [
       searchQuery ? {
@@ -61,16 +59,16 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
 
   return (
     <main className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-8">
-        <header className="mb-8">
-          <h1 className="text-4xl font-headline font-bold mb-2">Beauty Catalog</h1>
-          <p className="text-muted-foreground">Temukan produk terbaik yang dikurasi khusus untuk profil unikmu.</p>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <header className="mb-10">
+          <h1 className="font-headline text-4xl md:text-5xl font-bold text-foreground mb-3">Beauty Catalog</h1>
+          <p className="text-muted-foreground text-lg">Discover products curated for your unique beauty profile.</p>
         </header>
 
         <ProfileBanner />
 
-        <div className="flex flex-col lg:flex-row gap-8 mt-8">
-          {/* Sidebar Filter - Desktop */}
+        <div className="flex flex-col lg:flex-row gap-10 mt-10">
+          {/* Sidebar */}
           <aside className="hidden lg:block w-72 shrink-0">
             <div className="sticky top-24">
               <ProductFilters />
@@ -80,10 +78,9 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
           {/* Main Content */}
           <div className="flex-grow">
             <div className="flex items-center justify-between mb-6">
-              <p className="text-sm font-medium">
-                Menampilkan <span className="text-primary font-bold">{products.length}</span> produk
+              <p className="text-sm text-muted-foreground">
+                Showing <span className="font-semibold text-foreground">{products.length}</span> products
               </p>
-              {/* Mobile Filter Trigger is handled inside ProductFilters component */}
               <div className="lg:hidden">
                 <ProductFilters isMobile />
               </div>
@@ -97,9 +94,9 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                   ))}
                 </div>
               ) : (
-                <div className="text-center py-20 bg-card/80 rounded-lg border-2 border-dashed border-border">
-                  <h3 className="text-xl font-headline font-bold mb-2">Tidak ada produk ditemukan</h3>
-                  <p className="text-muted-foreground">Coba sesuaikan filter atau kata kunci pencarian Anda.</p>
+                <div className="text-center py-20 bg-white rounded-2xl border border-border/50">
+                  <h3 className="font-headline text-xl font-bold mb-2">No products found</h3>
+                  <p className="text-muted-foreground text-sm">Try adjusting your filters or search terms.</p>
                 </div>
               )}
             </Suspense>

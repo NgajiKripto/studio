@@ -5,8 +5,8 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: 'Muakeup - Rekomendasi Makeup Personal dari MUA',
-  description: 'Temukan produk makeup yang paling cocok untuk jenis kulit, warna kulit, dan bentuk wajahmu dengan kurasi profesional MUA.',
+  title: 'Muakeup - Personalized Beauty for Every Skin',
+  description: 'Discover your perfect match with our Triple Skin Diagnostic. We analyze your skin type, tone, and face shape to curate a personalized makeup catalog just for you.',
 };
 
 export default function RootLayout({
