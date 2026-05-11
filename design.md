@@ -2,125 +2,127 @@
   "colorScheme": "light",
   "fonts": [
     {
-      "family": "Figtree",
-      "role": "body"
+      "family": "-apple-system",
+      "count": 81
+    },
+    {
+      "family": "sans-serif",
+      "count": 81
+    },
+    {
+      "family": "Font Med",
+      "count": 37
+    },
+    {
+      "family": "Font",
+      "count": 18
+    },
+    {
+      "family": "Font Bold",
+      "count": 18
+    },
+    {
+      "family": "Gonz",
+      "count": 8
+    },
+    {
+      "family": "Manrope",
+      "count": 1
     }
   ],
   "colors": {
-    "primary": "#FED338",
-    "secondary": "#5C38FD",
-    "accent": "#FED338",
-    "background": "#FFFFFF",
+    "primary": "#FFDBFD",
+    "secondary": "#8494FF",
+    "accent": "#8494FF",
+    "background": "#C9BEFF",
     "textPrimary": "#000000",
-    "link": "#0000EE"
+    "link": "#8494FF"
   },
   "typography": {
     "fontFamilies": {
-      "primary": "Figtree",
-      "heading": "Figtree"
+      "primary": "Manrope",
+      "heading": "Font Med"
     },
     "fontStacks": {
-      "heading": [
-        "sans-serif"
-      ],
       "body": [
+        "Manrope"
+      ],
+      "heading": [
+        "Font Med",
+        "-apple-system",
         "sans-serif"
       ],
       "paragraph": [
-        "Figtree",
+        "Font Med",
+        "-apple-system",
         "sans-serif"
       ]
     },
     "fontSizes": {
-      "h1": "12px",
-      "h2": "12px",
-      "body": "13px"
+      "h1": "71.4067px",
+      "h2": "31.372px",
+      "body": "7.84px"
     }
   },
   "spacing": {
-    "baseUnit": 10,
-    "borderRadius": "25px"
+    "baseUnit": 4,
+    "borderRadius": "10px"
   },
-  "components": {
-    "buttonPrimary": {
-      "background": "#FED338",
-      "textColor": "#000000",
-      "borderRadius": "50px",
-      "borderRadiusCorners": {
-        "topLeft": "50px",
-        "topRight": "50px",
-        "bottomRight": "50px",
-        "bottomLeft": "50px"
-      },
-      "shadow": "none"
-    },
-    "buttonSecondary": {
-      "background": "#5C38FD",
-      "textColor": "#FFFFFF",
-      "borderRadius": "50px",
-      "borderRadiusCorners": {
-        "topLeft": "50px",
-        "topRight": "50px",
-        "bottomRight": "50px",
-        "bottomLeft": "50px"
-      },
-      "shadow": "none"
-    }
-  },
+  "components": {},
   "images": {
-    "logo": "https://placehold.co/508x148/FED338/000000?text=Gamycle",
-    "favicon": "https://gamycle.app/favicon.ico",
-    "ogImage": "https://gamycle.app/og-image.png",
-    "logoHref": "/",
-    "logoAlt": "Gamycle Logo"
+    "favicon": "https://www.heybjorn.com/img/icon-favicon.svg",
+    "ogImage": "https://d5cjn70moglf8.cloudfront.net/img/social-share.png"
   },
   "__llm_logo_reasoning": {
-    "selectedIndex": 0,
-    "reasoning": "Selected #0 because it is visible, medium-sized, and links to the homepage, aligning with the brand 'Gamycle'.",
-    "confidence": 0.85,
+    "selectedIndex": -1,
+    "reasoning": "LLM failed",
+    "confidence": 0,
+    "rejected": true,
     "source": "llm"
   },
   "__llm_button_reasoning": {
     "primary": {
-      "index": 0,
-      "text": "Tawarkan Barter",
-      "reasoning": "Button #0 'Tawarkan Barter' is the primary CTA due to its vibrant brand color (#FED338) and action-oriented text, making it the most prominent call-to-action for posting toy barter offers."
+      "index": -1,
+      "text": "N/A",
+      "reasoning": "LLM failed"
     },
     "secondary": {
-      "index": 4,
-      "text": "Cara Kerja",
-      "reasoning": "Button #4 'Cara Kerja' is selected as secondary due to its distinct color group (#5C38FD) and informative nature, complementing the primary CTA."
+      "index": -1,
+      "text": "N/A",
+      "reasoning": "LLM failed"
     },
-    "confidence": 0.95
+    "confidence": 0
   },
   "personality": {
-    "tone": "modern",
-    "energy": "high",
-    "targetAudience": "anak muda dan pasangan pasutri muda yang ingin menyalurkan mainan bekas melalui barter atau sukarela"
+    "tone": "professional",
+    "energy": "medium",
+    "targetAudience": "unknown"
   },
   "designSystem": {
-    "framework": "custom",
+    "framework": "unknown",
     "componentLibrary": ""
   },
   "confidence": {
-    "buttons": 0.95,
-    "colors": 0.9,
-    "overall": 0.925
+    "buttons": 0,
+    "colors": 0,
+    "overall": 0
   },
   "__llm_metadata": {
     "logoSelection": {
       "llmCalled": true,
-      "llmSucceeded": true,
-      "finalSource": "llm",
+      "llmSucceeded": false,
+      "finalSource": "fallback",
+      "error": "LLM failed",
       "rawLogoSelection": {
-        "selectedLogoIndex": 0,
-        "selectedLogoReasoning": "Selected #0 because it is visible, medium-sized, and links to the homepage, aligning with the brand 'Gamycle'.",
-        "confidence": 0.85
+        "selectedLogoIndex": -1,
+        "selectedLogoReasoning": "LLM failed",
+        "confidence": 0
       }
     },
     "buttonClassification": {
       "llmCalled": true,
-      "llmSucceeded": true
+      "llmSucceeded": false,
+      "error": "LLM call failed or returned fallback values"
     }
   }
 }
