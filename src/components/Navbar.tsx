@@ -1,13 +1,22 @@
 "use client";
 
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { Menu, X, Sparkles } from "lucide-react";
+import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const links = [
     { href: "/diagnostic", label: "Diagnostic" },
@@ -17,21 +26,33 @@ export function Navbar() {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 w-full bg-card/80 backdrop-blur-md border-b border-border/50">
+    <nav
+      className={cn(
+        "sticky top-0 z-50 w-full transition-all duration-500",
+        scrolled
+          ? "bg-white/70 backdrop-blur-2xl border-b border-white/40 shadow-sm"
+          : "bg-transparent"
+      )}
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-16 lg:h-18">
           {/* Logo */}
-          <Link href="/" className="flex items-center">
-            <span className="font-headline text-2xl font-bold text-foreground">Muakeup</span>
+          <Link href="/" className="flex items-center gap-2 group">
+            <div className="w-8 h-8 rounded-xl gradient-bg flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow">
+              <Sparkles className="h-4 w-4 text-white" />
+            </div>
+            <span className="text-xl font-bold text-foreground tracking-tight">
+              Muakeup
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-1">
             {links.map((link) => (
               <Link
                 key={link.label}
                 href={link.href}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                className="relative px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-full hover:bg-white/50"
               >
                 {link.label}
               </Link>
@@ -42,17 +63,20 @@ export function Navbar() {
           <div className="hidden md:block">
             <Button
               size="sm"
-              className="rounded-full px-6 bg-primary text-primary-foreground hover:bg-primary/90 font-semibold"
+              className="rounded-full px-6 font-semibold gradient-bg text-white border-0 shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
               asChild
             >
-              <Link href="/diagnostic">Get Started</Link>
+              <Link href="/diagnostic">
+                <Sparkles className="h-3.5 w-3.5 mr-1.5" />
+                Get Started
+              </Link>
             </Button>
           </div>
 
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="inline-flex items-center justify-center p-2 rounded-lg text-muted-foreground hover:text-foreground md:hidden"
+            className="inline-flex items-center justify-center p-2.5 rounded-xl text-muted-foreground hover:text-foreground hover:bg-white/50 md:hidden transition-colors"
           >
             {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -62,24 +86,29 @@ export function Navbar() {
       {/* Mobile Menu */}
       <div
         className={cn(
-          "md:hidden transition-all duration-300 ease-in-out overflow-hidden bg-card border-b border-border/50",
-          isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0 border-none"
+          "md:hidden transition-all duration-400 ease-in-out overflow-hidden",
+          isOpen
+            ? "max-h-96 opacity-100 bg-white/90 backdrop-blur-2xl border-b border-white/40"
+            : "max-h-0 opacity-0 border-none"
         )}
       >
-        <div className="container mx-auto px-4 py-4 space-y-2">
+        <div className="container mx-auto px-4 py-4 space-y-1">
           {links.map((link) => (
             <Link
               key={link.label}
               href={link.href}
-              className="block px-4 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-colors"
+              className="block px-4 py-3 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-white/60 rounded-xl transition-colors"
               onClick={() => setIsOpen(false)}
             >
               {link.label}
             </Link>
           ))}
-          <div className="pt-2">
-            <Button className="w-full rounded-full" asChild>
-              <Link href="/diagnostic" onClick={() => setIsOpen(false)}>Get Started</Link>
+          <div className="pt-3 px-4">
+            <Button className="w-full rounded-full gradient-bg text-white border-0 shadow-md" asChild>
+              <Link href="/diagnostic" onClick={() => setIsOpen(false)}>
+                <Sparkles className="h-3.5 w-3.5 mr-1.5" />
+                Get Started
+              </Link>
             </Button>
           </div>
         </div>
