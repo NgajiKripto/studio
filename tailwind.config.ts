@@ -12,7 +12,7 @@ export default {
     extend: {
       fontFamily: {
         body: ['Manrope', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
-        headline: ['Playfair Display', 'Georgia', 'serif'],
+        headline: ['Manrope', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
       },
       colors: {
         background: 'hsl(var(--background))',
