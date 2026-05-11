@@ -9,24 +9,28 @@ import { Heart, ArrowRight, ChevronDown, Sparkles, Star, Droplets, Palette, Laye
 
 const communityTestimonials = [
   {
+    id: "emma-wilson",
     name: "Emma Wilson",
     title: "Product Designer, TechCorp",
     image: "https://picsum.photos/seed/community-emma/100/100",
     body: "This design system has transformed our workflow. The components are intuitive and well-documented.",
   },
   {
+    id: "lucas-chen",
     name: "Lucas Chen",
     title: "Frontend Developer, WebFlow",
     image: "https://picsum.photos/seed/community-lucas/100/100",
     body: "The components are well-structured and customizable. They've significantly reduced our development time.",
   },
   {
+    id: "sophia-martinez",
     name: "Sophia Martinez",
     title: "UI/UX Lead, DesignHub",
     image: "https://picsum.photos/seed/community-sophia/100/100",
     body: "Every component feels polished and professional. It's become our go-to resource for all projects.",
   },
   {
+    id: "oliver-thompson",
     name: "Oliver Thompson",
     title: "Creative Director, StudioX",
     image: "https://picsum.photos/seed/community-oliver/100/100",
@@ -408,13 +412,13 @@ export default async function Home() {
             <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-background to-transparent" />
             <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-background to-transparent" />
             <Marquee pauseOnHover className="[--duration:42s] py-2">
-              {communityTestimonials.map((item, index) => (
-                <TestimonialCard key={`community-left-${index}`} item={item} />
+              {communityTestimonials.map((item) => (
+                <TestimonialCard key={`community-left-${item.id}`} item={item} />
               ))}
             </Marquee>
             <Marquee reverse pauseOnHover className="[--duration:48s] py-2 mt-4">
-              {communityTestimonials.map((item, index) => (
-                <TestimonialCard key={`community-right-${index}`} item={item} />
+              {communityTestimonials.map((item) => (
+                <TestimonialCard key={`community-right-${item.id}`} item={item} />
               ))}
             </Marquee>
           </div>

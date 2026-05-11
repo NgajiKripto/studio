@@ -23,7 +23,7 @@ export function Marquee({
     >
       {Array.from({ length: repeat }).map((_, index) => (
         <div
-          key={index}
+          key={`marquee-repeat-${reverse ? "reverse" : "forward"}-${repeat}-${index}`}
           className={cn(
             "flex min-w-max shrink-0 items-stretch [gap:var(--gap)] animate-marquee",
             reverse && "animate-marquee-reverse",
