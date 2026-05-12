@@ -4,6 +4,25 @@ This is a NextJS starter in Firebase Studio.
 
 To get started, take a look at src/app/page.tsx.
 
+## Menjalankan secara local
+
+1. Install dependency:
+   - `npm install`
+2. Buat env file local:
+   - `cp .env.example .env.local`
+3. Isi minimal environment variable:
+   - `DATABASE_URL` (PostgreSQL)
+   - `NEXTAUTH_SECRET`
+   - `NEXTAUTH_URL=http://localhost:9002`
+   - `GOOGLE_CLIENT_ID`
+   - `GOOGLE_CLIENT_SECRET`
+4. Jalankan aplikasi:
+   - `npm run dev`
+
+Catatan:
+- Dev server berjalan di `http://localhost:9002`.
+- Jika `DATABASE_URL` belum diisi, halaman utama tetap bisa dibuka untuk pengecekan UI dasar.
+
 ## Admin Panel Security
 
 Admin panel sekarang diproteksi dengan kombinasi:

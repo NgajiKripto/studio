@@ -15,17 +15,19 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const featuredProducts = await prisma.product.findMany({
-    take: 4,
-    include: {
-      skinTypes: true,
-      skinTones: true,
-      faceShapes: true,
-    },
-    orderBy: {
-      name: 'asc'
-    }
-  });
+  const featuredProducts = process.env.DATABASE_URL
+    ? await prisma.product.findMany({
+        take: 4,
+        include: {
+          skinTypes: true,
+          skinTones: true,
+          faceShapes: true,
+        },
+        orderBy: {
+          name: 'asc'
+        }
+      })
+    : [];
 
   return <HomeContent featuredProducts={featuredProducts} />;
 }
