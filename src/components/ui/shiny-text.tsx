@@ -10,21 +10,26 @@ type ShinyTextProps = {
   disabled?: boolean;
   speed?: number;
   className?: string;
+  baseColor?: string;
   color?: string;
   shineColor?: string;
-  spread?: number;
+  spread?: number; // Gradient angle in degrees.
   yoyo?: boolean;
   pauseOnHover?: boolean;
   direction?: "left" | "right";
   delay?: number;
 };
 
+const BACKGROUND_START_PERCENT = 150;
+const BACKGROUND_STEP = 2;
+
 export function ShinyText({
   text,
   disabled = false,
   speed = 2,
   className = "",
-  color = "#b5b5b5",
+  baseColor = "#b5b5b5",
+  color,
   shineColor = "#ffffff",
   spread = 120,
   yoyo = false,
@@ -92,7 +97,8 @@ export function ShinyText({
     progress.set(direction === "left" ? 0 : 100);
   }, [direction, progress]);
 
-  const backgroundPosition = useTransform(progress, (p) => `${150 - p * 2}% center`);
+  const resolvedBaseColor = color ?? baseColor;
+  const backgroundPosition = useTransform(progress, (p) => `${BACKGROUND_START_PERCENT - p * BACKGROUND_STEP}% center`);
 
   const handleMouseEnter = useCallback(() => {
     if (pauseOnHover) setIsPaused(true);
@@ -112,7 +118,7 @@ export function ShinyText({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       style={{
-        backgroundImage: `linear-gradient(${spread}deg, ${color} 0%, ${color} 35%, ${shineColor} 50%, ${color} 65%, ${color} 100%)`,
+        backgroundImage: `linear-gradient(${spread}deg, ${resolvedBaseColor} 0%, ${resolvedBaseColor} 35%, ${shineColor} 50%, ${resolvedBaseColor} 65%, ${resolvedBaseColor} 100%)`,
         backgroundSize: "200% auto",
         backgroundPosition,
         WebkitBackgroundClip: "text",
