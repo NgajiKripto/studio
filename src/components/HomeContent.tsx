@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Marquee } from "@/components/ui/marquee";
+import { ShinyText } from "@/components/ui/shiny-text";
 import BlurText from "@/components/ui/blur-text";
 import { Heart, ArrowRight, ChevronDown, Sparkles, Star, Droplets, Palette, Layers, AlertTriangle } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
@@ -108,7 +109,14 @@ export function HomeContent({ featuredProducts }: { featuredProducts: ProductDat
                 <Button size="lg" className="rounded-full px-8 font-semibold gradient-bg text-white border-0 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 h-12" asChild>
                   <Link href="/diagnostic">
                     <Sparkles className="h-4 w-4 mr-2" />
-                    {t.home.startQuiz}
+                    <ShinyText
+                      text={t.home.startQuiz}
+                      color="rgba(255,255,255,0.88)"
+                      shineColor="#ffffff"
+                      spread={110}
+                      speed={2.2}
+                      delay={0.4}
+                    />
                   </Link>
                 </Button>
                 <Button variant="outline" size="lg" className="rounded-full px-8 font-semibold glass-card hover:bg-white/80 transition-all duration-300 h-12" asChild>
@@ -424,7 +432,14 @@ export function HomeContent({ featuredProducts }: { featuredProducts: ProductDat
               <Button size="lg" className="rounded-full px-10 font-semibold gradient-bg text-white border-0 shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 h-13 text-base w-full sm:w-auto" asChild>
                 <Link href="/diagnostic">
                   <Sparkles className="h-4 w-4 mr-2" />
-                  {t.home.startQuiz}
+                  <ShinyText
+                    text={t.home.startQuiz}
+                    color="rgba(255,255,255,0.88)"
+                    shineColor="#ffffff"
+                    spread={110}
+                    speed={2.2}
+                    delay={0.4}
+                  />
                 </Link>
               </Button>
               <Button variant="outline" size="lg" className="rounded-full px-10 font-semibold border-2 border-foreground/20 hover:bg-white/80 transition-all duration-300 h-13 text-base w-full sm:w-auto" asChild>
