@@ -6,29 +6,29 @@
 
 @layer base {
   :root {
-    --background: 252 100% 87%;
+    --background: 330 60% 95%;
     --foreground: 0 0% 0%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 0%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 0%;
-    --primary: 302 100% 93%;
+    --primary: 320 80% 90%;
     --primary-foreground: 0 0% 0%;
     --secondary: 232 100% 76%;
     --secondary-foreground: 0 0% 100%;
-    --muted: 260 60% 92%;
+    --muted: 330 30% 92%;
     --muted-foreground: 240 5% 40%;
     --accent: 232 100% 76%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-    --border: 252 40% 82%;
-    --input: 252 40% 82%;
+    --border: 330 30% 85%;
+    --input: 330 30% 85%;
     --ring: 232 100% 76%;
     --radius: 10px;
-    --chart-1: 302 100% 93%;
+    --chart-1: 320 80% 90%;
     --chart-2: 232 100% 76%;
-    --chart-3: 252 100% 87%;
+    --chart-3: 330 60% 95%;
     --chart-4: 200 60% 55%;
     --chart-5: 330 40% 50%;
   }
@@ -60,7 +60,7 @@
   }
 
   .gradient-bg-soft {
-    background: linear-gradient(135deg, rgba(255,219,253,0.3) 0%, rgba(201,190,255,0.3) 50%, rgba(132,148,255,0.2) 100%);
+    background: linear-gradient(180deg, rgba(253,220,233,0.4) 0%, rgba(252,231,243,0.3) 50%, rgba(253,220,233,0.2) 100%);
   }
 
   .glass-card {
