@@ -15,17 +15,27 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const featuredProducts = await prisma.product.findMany({
-    take: 4,
-    include: {
-      skinTypes: true,
-      skinTones: true,
-      faceShapes: true,
-    },
-    orderBy: {
-      name: 'asc'
+  let featuredProducts: Awaited<ReturnType<typeof prisma.product.findMany>> = [];
+
+  if (process.env.DATABASE_URL) {
+    try {
+      featuredProducts = await prisma.product.findMany({
+        take: 4,
+        include: {
+          skinTypes: true,
+          skinTones: true,
+          faceShapes: true,
+        },
+        orderBy: {
+          name: 'asc'
+        }
+      });
+    } catch (error) {
+      if (process.env.NODE_ENV !== "production") {
+        console.error("Failed to load featured products for homepage:", error);
+      }
     }
-  });
+  }
 
   return <HomeContent featuredProducts={featuredProducts} />;
 }
