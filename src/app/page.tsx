@@ -34,7 +34,6 @@ export default async function Home() {
       if (process.env.NODE_ENV !== "production") {
         console.error("Failed to load featured products for homepage:", error);
       }
-      featuredProducts = [];
     }
   }
 

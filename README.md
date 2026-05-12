@@ -8,20 +8,20 @@ To get started, take a look at src/app/page.tsx.
 
 1. Install dependency:
    - `npm install`
-2. Buat env file local:
+2. Create a local env file:
    - `cp .env.example .env.local`
-3. Isi minimal environment variable:
+3. Set minimum environment variables:
    - `DATABASE_URL` (PostgreSQL)
    - `NEXTAUTH_SECRET`
    - `NEXTAUTH_URL=http://localhost:9002`
    - `GOOGLE_CLIENT_ID`
    - `GOOGLE_CLIENT_SECRET`
-4. Jalankan aplikasi:
+4. Run the application:
    - `npm run dev`
 
-Catatan:
-- Dev server berjalan di `http://localhost:9002`.
-- Jika `DATABASE_URL` belum diisi, halaman utama tetap bisa dibuka untuk pengecekan UI dasar.
+Notes:
+- Dev server runs on `http://localhost:9002`.
+- If `DATABASE_URL` is not set, the homepage can still be opened for basic UI checks.
 
 ## Admin Panel Security
 
