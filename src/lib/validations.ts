@@ -54,17 +54,10 @@ export const productSchema = z.object({
 export const affiliateClickSchema = z.object({
   ref: z.string().min(1).max(100),
   product: z.string().min(1).max(100),
-  url: z
-    .string()
-    .url()
-    .refine((url) => url.startsWith("https"), {
-      message: "url must start with https",
-    })
-    .optional(),
 });
 
 export const dashboardProductsSchema = z.object({
-  productIds: z.array(z.string()).max(20),
+  productIds: z.array(z.string().min(1).max(100)).max(20),
 });
 
 export const skinTwinsSchema = z.object({

@@ -9,7 +9,6 @@ export async function GET(request: NextRequest) {
     const rawParams = {
       ref: searchParams.get("ref") || undefined,
       product: searchParams.get("product") || undefined,
-      url: searchParams.get("url") || undefined,
     };
 
     const result = affiliateClickSchema.safeParse(rawParams);
@@ -47,21 +46,21 @@ export async function GET(request: NextRequest) {
       const ip = forwarded?.split(",")[0]?.trim() || request.headers.get("x-real-ip") || "unknown";
       const referrer = request.headers.get("referer") || null;
 
-      // Record the click
-      await prisma.affiliateClick.create({
-        data: {
-          userId: user.id,
-          productId,
-          visitorIp: ip,
-          referrer,
-        },
-      });
-
-      // Increment saldo (Rp 500 per click as example commission)
-      await prisma.user.update({
-        where: { id: user.id },
-        data: { saldo: { increment: 500 } },
-      });
+      // Use a transaction to ensure click record and saldo increment are atomic
+      await prisma.$transaction([
+        prisma.affiliateClick.create({
+          data: {
+            userId: user.id,
+            productId,
+            visitorIp: ip,
+            referrer,
+          },
+        }),
+        prisma.user.update({
+          where: { id: user.id },
+          data: { saldo: { increment: 500 } },
+        }),
+      ]);
     }
 
     // Redirect to the database-stored affiliate URL (not user-supplied)

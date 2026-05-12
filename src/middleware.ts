@@ -13,7 +13,10 @@ const securityHeaders = {
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Check /admin/* routes: require admin session cookie
+  // Check /admin/* routes: require admin session cookie.
+  // NOTE: This is a UX-level redirect only (presence check, not signature verification).
+  // Full HMAC signature verification happens server-side in the admin layout.tsx before
+  // any content is rendered, so a forged cookie cannot access actual admin data.
   if (pathname.startsWith("/admin")) {
     const adminSession = request.cookies.get(ADMIN_SESSION_COOKIE_NAME);
     if (!adminSession?.value) {
