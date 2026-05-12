@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ConfettiButton } from "@/components/ui/confetti-button";
 import { Card } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
 import {
@@ -18,19 +19,33 @@ import { cn } from "@/lib/utils";
 import { SkinType, SkinTone, FaceShape } from "@/lib/constants";
 import { useLanguage } from "@/lib/i18n";
 
-type Step = 1 | 2 | 3 | 4;
+type Step = 1 | 2 | 3 | 4 | 5;
+
+type Activity = "OUTDOOR" | "INDOOR";
 
 interface DiagnosticProfile {
   skinType: SkinType;
   skinTone: SkinTone;
   faceShape: FaceShape;
+  activity: Activity;
+  consentGiven: boolean;
+}
+
+function getOrCreateSessionId(): string {
+  const key = "muakeup_session_id";
+  let sessionId = localStorage.getItem(key);
+  if (!sessionId) {
+    sessionId = crypto.randomUUID();
+    localStorage.setItem(key, sessionId);
+  }
+  return sessionId;
 }
 
 export function DiagnosticQuiz() {
   const router = useRouter();
   const { t } = useLanguage();
   const [step, setStep] = useState<Step>(1);
-  const [progress, setProgress] = useState(33);
+  const [progress, setProgress] = useState(25);
 
   const [skinType, setSkinType] = useState<SkinType | null>(null);
 
@@ -41,10 +56,12 @@ export function DiagnosticQuiz() {
   const [skinDepth, setSkinDepth] = useState<"FAIR" | "LIGHT" | "MEDIUM" | "TAN" | "DEEP" | null>(null);
 
   const [faceShape, setFaceShape] = useState<FaceShape | null>(null);
+  const [activity, setActivity] = useState<Activity | null>(null);
+  const [consentGiven, setConsentGiven] = useState(false);
   const [results, setResults] = useState<DiagnosticProfile | null>(null);
 
   useEffect(() => {
-    setProgress((step / 3) * 100);
+    setProgress((step / 4) * 100);
   }, [step]);
 
   const calculateUndertone = () => {
@@ -57,8 +74,8 @@ export function DiagnosticQuiz() {
     return "NEUTRAL";
   };
 
-  const handleFinish = () => {
-    if (!skinType || !skinDepth || !faceShape) return;
+  const handleFinish = async () => {
+    if (!skinType || !skinDepth || !faceShape || !activity) return;
 
     const undertone = calculateUndertone();
     const finalSkinTone = `${skinDepth}_${undertone}` as SkinTone;
@@ -67,11 +84,35 @@ export function DiagnosticQuiz() {
       skinType,
       skinTone: finalSkinTone,
       faceShape,
+      activity,
+      consentGiven,
     };
 
     setResults(profile);
     localStorage.setItem("muakeup_profile", JSON.stringify(profile));
-    setStep(4);
+    setStep(5);
+
+    // If user consented, save to database
+    if (consentGiven) {
+      try {
+        const sessionId = getOrCreateSessionId();
+        await fetch("/api/quiz-result", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            sessionId,
+            skinType: profile.skinType,
+            skinTone: profile.skinTone,
+            faceShape: profile.faceShape,
+            activity: profile.activity,
+            consentGiven: true,
+          }),
+        });
+      } catch (error) {
+        // Silently fail - don't block user experience
+        console.error("Failed to save quiz result:", error);
+      }
+    }
   };
 
   const goToCatalog = () => {
@@ -240,6 +281,68 @@ export function DiagnosticQuiz() {
     </div>
   );
 
+  const renderStep4 = () => (
+    <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <div className="text-center space-y-2">
+        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{t.diagnostic.step4of4}</p>
+        <h2 className="font-headline text-2xl md:text-3xl font-bold text-foreground">{t.diagnostic.activityTitle}</h2>
+        <p className="text-muted-foreground text-sm">{t.diagnostic.activityInstruction}</p>
+      </div>
+
+      <div className="grid grid-cols-1 gap-3">
+        <div
+          onClick={() => setActivity("OUTDOOR")}
+          className={cn(
+            "p-4 rounded-xl border-2 transition-all cursor-pointer hover:border-primary/50",
+            activity === "OUTDOOR" ? "border-primary bg-primary/5" : "border-border bg-card"
+          )}
+        >
+          <div className="flex justify-between items-center">
+            <div>
+              <h3 className="font-semibold text-foreground">{t.diagnostic.activityOutdoor}</h3>
+              <p className="text-sm text-muted-foreground">{t.diagnostic.activityOutdoorDesc}</p>
+            </div>
+            {activity === "OUTDOOR" && <CheckCircle2 className="text-primary h-5 w-5" />}
+          </div>
+        </div>
+
+        <div
+          onClick={() => setActivity("INDOOR")}
+          className={cn(
+            "p-4 rounded-xl border-2 transition-all cursor-pointer hover:border-primary/50",
+            activity === "INDOOR" ? "border-primary bg-primary/5" : "border-border bg-card"
+          )}
+        >
+          <div className="flex justify-between items-center">
+            <div>
+              <h3 className="font-semibold text-foreground">{t.diagnostic.activityIndoor}</h3>
+              <p className="text-sm text-muted-foreground">{t.diagnostic.activityIndoorDesc}</p>
+            </div>
+            {activity === "INDOOR" && <CheckCircle2 className="text-primary h-5 w-5" />}
+          </div>
+        </div>
+      </div>
+
+      {/* Consent Checkbox */}
+      <div className="pt-4 border-t border-border">
+        <div className="flex items-start space-x-3">
+          <Checkbox
+            id="consent"
+            checked={consentGiven}
+            onCheckedChange={(checked) => setConsentGiven(checked === true)}
+            className="mt-0.5"
+          />
+          <Label
+            htmlFor="consent"
+            className="text-sm text-muted-foreground leading-relaxed cursor-pointer"
+          >
+            {t.diagnostic.consentLabel}
+          </Label>
+        </div>
+      </div>
+    </div>
+  );
+
   const renderResults = () => {
     if (!results) return null;
     return (
@@ -282,13 +385,31 @@ export function DiagnosticQuiz() {
               <h3 className="font-headline text-xl font-bold text-foreground">{results.faceShape}</h3>
             </div>
           </div>
+
+          <div className="p-5 rounded-xl bg-secondary/50 border border-border/50 flex items-center gap-4">
+            <div className="w-12 h-12 rounded-xl bg-card flex items-center justify-center shadow-sm">
+              <span className="text-lg">🌤️</span>
+            </div>
+            <div>
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{t.diagnostic.activity}</p>
+              <h3 className="font-headline text-xl font-bold text-foreground">
+                {results.activity === "OUTDOOR" ? t.diagnostic.activityOutdoor : t.diagnostic.activityIndoor}
+              </h3>
+            </div>
+          </div>
         </div>
+
+        {results.consentGiven && (
+          <p className="text-xs text-center text-muted-foreground">
+            ✓ {t.diagnostic.consentLabel}
+          </p>
+        )}
 
         <div className="space-y-3 pt-4">
           <ConfettiButton size="lg" className="w-full rounded-full font-semibold" onClick={goToCatalog}>
             {t.diagnostic.viewMatchingProducts} <ArrowRight className="ml-2 h-4 w-4" />
           </ConfettiButton>
-          <Button variant="ghost" className="w-full text-muted-foreground" onClick={() => setStep(1)}>
+          <Button variant="ghost" className="w-full text-muted-foreground" onClick={() => { setStep(1); setResults(null); }}>
             <RotateCcw className="mr-2 h-4 w-4" /> {t.diagnostic.retakeQuiz}
           </Button>
         </div>
@@ -300,22 +421,24 @@ export function DiagnosticQuiz() {
     if (step === 1) return !skinType;
     if (step === 2) return !skinDepth || !undertoneAnswers.jewelry || !undertoneAnswers.veins;
     if (step === 3) return !faceShape;
+    if (step === 4) return !activity;
     return false;
   };
 
   return (
     <Card className="w-full max-w-xl mx-auto overflow-hidden border border-border/50 shadow-lg bg-card rounded-2xl">
       <div className="px-8 pt-8">
-        {step < 4 && <Progress value={progress} className="h-1.5 bg-muted rounded-full" />}
+        {step < 5 && <Progress value={progress} className="h-1.5 bg-muted rounded-full" />}
       </div>
 
       <div className="p-8">
         {step === 1 && renderStep1()}
         {step === 2 && renderStep2()}
         {step === 3 && renderStep3()}
-        {step === 4 && renderResults()}
+        {step === 4 && renderStep4()}
+        {step === 5 && renderResults()}
 
-        {step < 4 && (
+        {step < 5 && (
           <div className="flex justify-between items-center mt-10 pt-6 border-t border-border">
             <Button
               variant="ghost"
@@ -327,11 +450,11 @@ export function DiagnosticQuiz() {
             </Button>
 
             <Button
-              onClick={() => step === 3 ? handleFinish() : setStep((s) => (s + 1) as Step)}
+              onClick={() => step === 4 ? handleFinish() : setStep((s) => (s + 1) as Step)}
               disabled={isNextDisabled()}
               className="rounded-full px-6"
             >
-              {step === 3 ? t.diagnostic.seeResults : t.diagnostic.continue_} <ArrowRight className="h-4 w-4 ml-2" />
+              {step === 4 ? t.diagnostic.seeResults : t.diagnostic.continue_} <ArrowRight className="h-4 w-4 ml-2" />
             </Button>
           </div>
         )}

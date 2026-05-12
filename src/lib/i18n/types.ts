@@ -122,6 +122,16 @@ export interface Dictionary {
     heart: string;
     diamond: string;
     oblong: string;
+    // Step 4 - Activity
+    step4of4: string;
+    activityTitle: string;
+    activityInstruction: string;
+    activityOutdoor: string;
+    activityOutdoorDesc: string;
+    activityIndoor: string;
+    activityIndoorDesc: string;
+    // Consent
+    consentLabel: string;
     // Results
     profileReady: string;
     personalizedProfile: string;
@@ -130,6 +140,7 @@ export interface Dictionary {
     back: string;
     continue_: string;
     seeResults: string;
+    activity: string;
   };
   // Products page
   products: {
