@@ -1,20 +1,27 @@
 export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { skinTwinsSchema } from "@/lib/validations";
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const skinType = searchParams.get("skinType");
-    const skinTone = searchParams.get("skinTone");
-    const faceShape = searchParams.get("faceShape");
+    const rawParams = {
+      skinType: searchParams.get("skinType") || undefined,
+      skinTone: searchParams.get("skinTone") || undefined,
+      faceShape: searchParams.get("faceShape") || undefined,
+    };
 
-    if (!skinType || !skinTone || !faceShape) {
+    const result = skinTwinsSchema.safeParse(rawParams);
+
+    if (!result.success) {
       return NextResponse.json(
-        { error: "Missing parameters: skinType, skinTone, faceShape" },
+        { error: "Validation failed", details: result.error.flatten().fieldErrors },
         { status: 400 }
       );
     }
+
+    const { skinType, skinTone, faceShape } = result.data;
 
     // Find premium users with matching skin profile
     const twins = await prisma.user.findMany({
@@ -39,7 +46,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ twins });
   } catch (error) {
-    console.error("Error fetching skin twins:", error);
+    console.error("Error fetching skin twins:", error instanceof Error ? error.message : "Unknown error");
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

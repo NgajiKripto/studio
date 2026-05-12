@@ -6,6 +6,7 @@ import {
   getAdminSessionTokenFromRequest,
   isAdminAuthorizedRequest,
 } from "@/lib/admin-security";
+import { productSchema } from "@/lib/validations";
 
 export async function GET(
   req: NextRequest,
@@ -28,6 +29,7 @@ export async function GET(
 
     return NextResponse.json(product);
   } catch (error) {
+    console.error("Product fetch failed:", error instanceof Error ? error.message : "Unknown error");
     return NextResponse.json({ error: 'Failed to fetch product' }, { status: 500 });
   }
 }
@@ -42,13 +44,23 @@ export async function PUT(
   }
 
   const { id } = await params;
+
+  if (!id || typeof id !== "string") {
+    return NextResponse.json({ error: "Invalid product ID" }, { status: 400 });
+  }
+
   try {
     const body = await req.json();
-    const { 
-      name, brand, category, description, priceEstimate, 
-      affiliateUrl, imageUrl, muaVerdict, 
-      skinTypes, skinTones, faceShapes 
-    } = body;
+    const result = productSchema.safeParse(body);
+
+    if (!result.success) {
+      return NextResponse.json(
+        { error: "Validation failed", details: result.error.flatten().fieldErrors },
+        { status: 400 }
+      );
+    }
+
+    const { name, brand, category, description, priceEstimate, affiliateUrl, imageUrl, muaVerdict, skinTypes, skinTones, faceShapes } = result.data;
 
     // We handle updates by deleting old relations and creating new ones in a transaction
     const product = await prisma.$transaction(async (tx) => {
@@ -70,13 +82,13 @@ export async function PUT(
           imageUrl,
           muaVerdict,
           skinTypes: {
-            create: skinTypes.map((type: string) => ({ skinType: type })),
+            create: skinTypes.map((type) => ({ skinType: type })),
           },
           skinTones: {
-            create: skinTones.map((tone: string) => ({ skinTone: tone })),
+            create: skinTones.map((tone) => ({ skinTone: tone })),
           },
           faceShapes: {
-            create: faceShapes.map((shape: string) => ({ faceShape: shape })),
+            create: faceShapes.map((shape) => ({ faceShape: shape })),
           },
         },
       });
@@ -84,7 +96,7 @@ export async function PUT(
 
     return NextResponse.json(product);
   } catch (error) {
-    console.error(error);
+    console.error("Product operation failed:", error instanceof Error ? error.message : "Unknown error");
     return NextResponse.json({ error: 'Failed to update product' }, { status: 500 });
   }
 }
@@ -107,6 +119,7 @@ export async function DELETE(
     });
     return NextResponse.json({ success: true });
   } catch (error) {
+    console.error("Product deletion failed:", error instanceof Error ? error.message : "Unknown error");
     return NextResponse.json({ error: 'Failed to delete product' }, { status: 500 });
   }
 }

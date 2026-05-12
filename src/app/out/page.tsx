@@ -32,8 +32,7 @@ export default async function OutPage({ searchParams }: OutPageProps) {
     redirect("/products");
   }
 
-  // Logic: In a real app, you'd record a click event to analytics here
-  console.log(`[CLICK TRACKING] User redirecting to ${product.brand} - ${product.name}`);
+  // Click tracking handled server-side without logging PII
 
   // Security: only allow absolute http(s) URLs to block javascript:/data: URL redirects.
   if (!isSafeAffiliateUrl(product.affiliateUrl)) {

@@ -40,6 +40,10 @@ next-env.d.ts
 .genkit/*
 .env*
 
+# prisma
+prisma/*.db
+prisma/*.db-journal
+
 # firebase
 firebase-debug.log
 firestore-debug.log

@@ -8,6 +8,7 @@ import {
   isDeviceAllowed,
   secureCompare,
 } from "@/lib/admin-security";
+import { adminAccessSchema } from "@/lib/validations";
 
 export async function POST(req: NextRequest) {
   if (!process.env.ADMIN_ACCESS_KEY || !process.env.ADMIN_SESSION_SECRET) {
@@ -23,11 +24,16 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json();
-    const providedKey = body?.accessKey;
+    const result = adminAccessSchema.safeParse(body);
+
+    if (!result.success) {
+      return NextResponse.json({ error: "Akses ditolak." }, { status: 403 });
+    }
+
+    const { accessKey: providedKey } = result.data;
 
     const expectedKey = process.env.ADMIN_ACCESS_KEY;
     if (
-      typeof providedKey !== "string" ||
       !expectedKey ||
       !secureCompare(providedKey, expectedKey)
     ) {
