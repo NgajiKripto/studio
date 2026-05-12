@@ -76,6 +76,13 @@ function TestimonialCard({ item }: { item: (typeof communityTestimonials)[number
 
 export function HomeContent({ featuredProducts }: { featuredProducts: ProductData[] }) {
   const { t } = useLanguage();
+  const startQuizShineProps = {
+    color: "rgba(255,255,255,0.88)",
+    shineColor: "#ffffff",
+    spread: 110,
+    speed: 2.2,
+    delay: 0.4,
+  } as const;
 
   return (
     <main className="flex flex-col">
@@ -111,11 +118,7 @@ export function HomeContent({ featuredProducts }: { featuredProducts: ProductDat
                     <Sparkles className="h-4 w-4 mr-2" />
                     <ShinyText
                       text={t.home.startQuiz}
-                      color="rgba(255,255,255,0.88)"
-                      shineColor="#ffffff"
-                      spread={110}
-                      speed={2.2}
-                      delay={0.4}
+                      {...startQuizShineProps}
                     />
                   </Link>
                 </Button>
@@ -434,11 +437,7 @@ export function HomeContent({ featuredProducts }: { featuredProducts: ProductDat
                   <Sparkles className="h-4 w-4 mr-2" />
                   <ShinyText
                     text={t.home.startQuiz}
-                    color="rgba(255,255,255,0.88)"
-                    shineColor="#ffffff"
-                    spread={110}
-                    speed={2.2}
-                    delay={0.4}
+                    {...startQuizShineProps}
                   />
                 </Link>
               </Button>
