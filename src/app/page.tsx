@@ -91,9 +91,9 @@ export default async function Home() {
       <section className="relative min-h-[90vh] flex items-center overflow-hidden">
         {/* Animated Background Blobs */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-primary/30 rounded-full blur-3xl animate-float" />
-          <div className="absolute -bottom-40 -left-40 w-[600px] h-[600px] bg-secondary/20 rounded-full blur-3xl animate-float-delayed" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-background/50 rounded-full blur-3xl" />
+          <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-pink-200/40 rounded-full blur-3xl animate-float" />
+          <div className="absolute -bottom-40 -left-40 w-[600px] h-[600px] bg-pink-100/30 rounded-full blur-3xl animate-float-delayed" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-rose-50/50 rounded-full blur-3xl" />
         </div>
 
         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
@@ -242,7 +242,7 @@ export default async function Home() {
 
       {/* Problem Solving Section */}
       <section className="relative py-24 lg:py-32">
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-white/30 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-b from-pink-50 via-rose-50/60 to-pink-50" />
 
         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mx-auto text-center mb-16">
@@ -336,7 +336,7 @@ export default async function Home() {
 
       {/* Triple Skin Diagnostic Section */}
       <section className="relative py-24 lg:py-32">
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-white/30 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-b from-pink-50 via-rose-50/60 to-pink-50" />
 
         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mx-auto text-center mb-16">
@@ -423,8 +423,8 @@ export default async function Home() {
 
       {/* Featured Catalog Section */}
       <section className="py-24 lg:py-32 relative">
-        <div className="absolute inset-0 gradient-bg-soft" />
-        <div className="absolute top-20 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
+        <div className="absolute inset-0 bg-gradient-to-b from-pink-50 via-rose-50/60 to-pink-50" />
+        <div className="absolute top-20 right-0 w-96 h-96 bg-pink-200/20 rounded-full blur-3xl" />
 
         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-12 gap-4">
@@ -499,8 +499,9 @@ export default async function Home() {
 
       {/* Testimonials Section */}
       <section className="py-24 lg:py-32 relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-80 h-80 bg-secondary/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />
+        <div className="absolute inset-0 bg-gradient-to-b from-pink-50 via-rose-50/60 to-pink-50" />
+        <div className="absolute top-0 left-0 w-80 h-80 bg-pink-200/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-0 w-64 h-64 bg-pink-300/10 rounded-full blur-3xl" />
 
         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mx-auto text-center mb-16">
@@ -533,7 +534,7 @@ export default async function Home() {
 
       {/* CTA Section */}
       <section className="py-24 lg:py-32 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-pink-100 via-rose-50 to-pink-200" />
+        <div className="absolute inset-0 bg-gradient-to-br from-pink-100 via-rose-50 to-pink-100" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.4),transparent_70%)]" />
 
         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 text-center">

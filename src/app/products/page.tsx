@@ -73,8 +73,8 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
   return (
     <main className="min-h-screen relative">
       {/* Background decoration */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl -z-10" />
-      <div className="absolute bottom-40 left-0 w-80 h-80 bg-secondary/10 rounded-full blur-3xl -z-10" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-pink-200/20 rounded-full blur-3xl -z-10" />
+      <div className="absolute bottom-40 left-0 w-80 h-80 bg-pink-100/20 rounded-full blur-3xl -z-10" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <header className="mb-10">
