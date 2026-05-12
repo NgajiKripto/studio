@@ -15,8 +15,11 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const featuredProducts = process.env.DATABASE_URL
-    ? await prisma.product.findMany({
+  let featuredProducts: Awaited<ReturnType<typeof prisma.product.findMany>> = [];
+
+  if (process.env.DATABASE_URL) {
+    try {
+      featuredProducts = await prisma.product.findMany({
         take: 4,
         include: {
           skinTypes: true,
@@ -26,8 +29,11 @@ export default async function Home() {
         orderBy: {
           name: 'asc'
         }
-      })
-    : [];
+      });
+    } catch {
+      featuredProducts = [];
+    }
+  }
 
   return <HomeContent featuredProducts={featuredProducts} />;
 }
