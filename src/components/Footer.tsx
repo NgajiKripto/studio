@@ -92,8 +92,8 @@ export function Footer() {
           </div>
 
           {/* Bottom Bar */}
-          <div className="mt-12 pt-6 border-t border-border/30 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p className="text-xs text-muted-foreground">
+          <div className="mt-12 pt-6 border-t border-border/30 flex flex-col items-center gap-4">
+            <p className="text-xs text-muted-foreground text-center">
               &copy; {new Date().getFullYear()} Muakeup. {t.footer.allRightsReserved}
             </p>
             <div className="flex items-center gap-4">
