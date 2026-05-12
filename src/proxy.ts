@@ -10,7 +10,7 @@ const securityHeaders = {
   "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
 };
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Check /admin/* routes: require admin session cookie.
