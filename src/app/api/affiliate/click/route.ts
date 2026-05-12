@@ -1,19 +1,37 @@
 export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { affiliateClickSchema } from "@/lib/validations";
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const ref = searchParams.get("ref");
-    const productId = searchParams.get("product");
-    const targetUrl = searchParams.get("url");
+    const rawParams = {
+      ref: searchParams.get("ref") || undefined,
+      product: searchParams.get("product") || undefined,
+    };
 
-    if (!ref || !productId || !targetUrl) {
+    const result = affiliateClickSchema.safeParse(rawParams);
+
+    if (!result.success) {
       return NextResponse.json(
-        { error: "Missing required parameters: ref, product, url" },
+        { error: "Validation failed", details: result.error.flatten().fieldErrors },
         { status: 400 }
       );
+    }
+
+    const { ref, product: productId } = result.data;
+
+    // Look up the product from the database to get the real affiliate URL
+    const product = await prisma.product.findUnique({
+      where: { id: productId },
+      select: { affiliateUrl: true },
+    });
+
+    if (!product || !product.affiliateUrl) {
+      // Product not found in DB, redirect to products page
+      const url = new URL("/products", request.url);
+      return NextResponse.redirect(url.toString(), 302);
     }
 
     // Find the user by affiliate code
@@ -28,36 +46,30 @@ export async function GET(request: NextRequest) {
       const ip = forwarded?.split(",")[0]?.trim() || request.headers.get("x-real-ip") || "unknown";
       const referrer = request.headers.get("referer") || null;
 
-      // Record the click
-      await prisma.affiliateClick.create({
-        data: {
-          userId: user.id,
-          productId,
-          visitorIp: ip,
-          referrer,
-        },
-      });
-
-      // Increment saldo (Rp 500 per click as example commission)
-      await prisma.user.update({
-        where: { id: user.id },
-        data: { saldo: { increment: 500 } },
-      });
+      // Use a transaction to ensure click record and saldo increment are atomic
+      await prisma.$transaction([
+        prisma.affiliateClick.create({
+          data: {
+            userId: user.id,
+            productId,
+            visitorIp: ip,
+            referrer,
+          },
+        }),
+        prisma.user.update({
+          where: { id: user.id },
+          data: { saldo: { increment: 500 } },
+        }),
+      ]);
     }
 
-    // Redirect to the actual product URL with affiliate ref parameter
-    const finalUrl = new URL(targetUrl);
+    // Redirect to the database-stored affiliate URL (not user-supplied)
+    const finalUrl = new URL(product.affiliateUrl);
     finalUrl.searchParams.set("ref", ref);
 
     return NextResponse.redirect(finalUrl.toString(), 302);
   } catch (error) {
-    console.error("Affiliate click tracking error:", error);
-
-    // Fallback: if there's an error, still try to redirect
-    const targetUrl = new URL(request.url).searchParams.get("url");
-    if (targetUrl) {
-      return NextResponse.redirect(targetUrl, 302);
-    }
+    console.error("Affiliate click tracking error:", error instanceof Error ? error.message : "Unknown error");
 
     return NextResponse.json(
       { error: "Internal server error" },

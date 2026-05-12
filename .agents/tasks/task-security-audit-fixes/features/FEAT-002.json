@@ -1,0 +1,40 @@
+{
+  "id": "FEAT-002",
+  "type": "fix",
+  "description": "Implement all critical/high security fixes: add middleware.ts for route protection with security headers, add Zod input validation to all API routes, fix SSRF in affiliate click route, fix IDOR issues, add .gitignore entries for sensitive files, add error boundaries, and harden next.config.ts with security headers.",
+  "status": "completed",
+  "steps": [
+    "STEP 1 - Create src/middleware.ts: Add Next.js middleware that (a) sets security headers (X-Frame-Options: DENY, X-Content-Type-Options: nosniff, Referrer-Policy: strict-origin-when-cross-origin, Permissions-Policy, Strict-Transport-Security) on all responses, (b) protects /admin/* routes by checking the admin session cookie using the same logic as admin-security.ts (redirect to /akses-admin if invalid), (c) protects /dashboard route requiring NextAuth session (redirect to /api/auth/signin if no next-auth.session-token cookie), (d) adds rate-limit headers (informational). Export a config.matcher that covers relevant paths.",
+    "STEP 2 - Add security headers to next.config.ts: Add a headers() async function to nextConfig that returns security headers for all routes (Content-Security-Policy with sensible defaults for a Next.js app, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy). Remove the allowedDevOrigins entry (it exposes internal dev infrastructure info).",
+    "STEP 3 - Create src/lib/validations.ts: Define Zod schemas for all API route inputs: (a) productCreateSchema and productUpdateSchema for name, brand, category, description, priceEstimate, affiliateUrl (must be valid https URL), imageUrl (must be valid URL), muaVerdict, skinTypes (array of valid enum values), skinTones (array of valid enum values), faceShapes (array of valid enum values); (b) affiliateClickSchema for ref (string), product (cuid), url (valid https URL - no javascript: or data: URLs); (c) dashboardProductsSchema for productIds (array of cuid strings); (d) skinTwinsSchema for skinType, skinTone, faceShape (all must be valid enum values from the Prisma schema).",
+    "STEP 4 - Apply Zod validation to src/app/api/products/route.ts POST: Parse body with productCreateSchema, return 400 with validation errors if invalid.",
+    "STEP 5 - Apply Zod validation to src/app/api/products/[id]/route.ts PUT: Parse body with productUpdateSchema, return 400 with validation errors if invalid. Also validate the id param is a non-empty string.",
+    "STEP 6 - Fix SSRF vulnerability in src/app/api/affiliate/click/route.ts: (a) Validate all params with affiliateClickSchema (ref must be non-empty string, product must be cuid, url must be https URL). (b) Instead of redirecting to the user-supplied 'url' parameter directly, look up the product's actual affiliateUrl from the database and redirect to THAT instead. The user-supplied 'url' param should be ignored or only used as a fallback IF it matches the database URL. This prevents open redirect/SSRF attacks. (c) Remove the fallback that redirects to user-supplied URL on error.",
+    "STEP 7 - Apply Zod validation to src/app/api/dashboard/products/route.ts: Validate productIds is an array of valid cuid strings with a maximum length (e.g., 20 items).",
+    "STEP 8 - Apply Zod validation to src/app/api/skin-twins/route.ts: Validate skinType, skinTone, faceShape against valid enum values using skinTwinsSchema.",
+    "STEP 9 - Fix .gitignore: Add entries for prisma/dev.db, prisma/*.db, prisma/*.db-journal, .env, .env.local, .env.production to .gitignore. Note: the file already has .env* which covers .env files, so only add the prisma database entries.",
+    "STEP 10 - Add error boundaries: Create src/app/error.tsx (root error boundary) and src/app/admin/error.tsx that catch runtime errors and display user-friendly error messages without leaking stack traces. Follow Next.js 14 error.tsx conventions (must be client components with error and reset props).",
+    "STEP 11 - Harden src/app/api/admin/access/route.ts: Add rate-limit awareness comment and ensure the error response for invalid key is identical in timing and content to prevent enumeration (already uses secureCompare which is good). Add validation that accessKey is a non-empty string with max length 256.",
+    "STEP 12 - Fix information leakage: In src/app/api/products/[id]/route.ts, src/app/api/products/route.ts, and src/app/api/affiliate/click/route.ts, replace console.error(error) with a sanitized log that does not leak the full error object to server logs in production. Use a structured logging approach that logs error.message only.",
+    "STEP 13 - Remove console.log from src/app/out/page.tsx that logs user click tracking data to stdout."
+  ],
+  "acceptance_criteria": [
+    "src/middleware.ts exists and exports middleware function + config.matcher",
+    "next.config.ts includes security headers and removes allowedDevOrigins",
+    "src/lib/validations.ts exists with Zod schemas for all API inputs",
+    "All API routes (products POST, products/[id] PUT, affiliate/click, dashboard/products, skin-twins) validate input with Zod and return 400 on invalid input",
+    "Affiliate click route uses database lookup instead of user-supplied URL for redirect",
+    ".gitignore includes prisma/*.db entries",
+    "src/app/error.tsx and src/app/admin/error.tsx exist as client components",
+    "No console.error(error) with full error objects in API routes",
+    "npm run build succeeds after all changes"
+  ],
+  "verification": [
+    "Run npm run build in /projects/sandbox/Muakeup and confirm it exits with code 0",
+    "Confirm src/middleware.ts exists and contains security headers logic",
+    "Confirm src/lib/validations.ts exists with proper Zod schemas",
+    "Confirm src/app/error.tsx exists as a 'use client' component"
+  ],
+  "blocked_reason": null,
+  "findings": "All 13 steps implemented successfully. Build passes (exit 0). Next.js 16 shows a deprecation warning about middleware being replaced by 'proxy' convention, but middleware still works correctly. The prisma/dev.db static generation fallback warning is expected (no DB available at build time). Used bun-based prisma generate from FEAT-001 findings was not needed since prisma client was already generated."
+}

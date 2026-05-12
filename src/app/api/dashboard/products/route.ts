@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { dashboardProductsSchema } from "@/lib/validations";
 
 export async function PUT(request: NextRequest) {
   try {
@@ -13,15 +14,16 @@ export async function PUT(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { productIds } = body as { productIds: string[] };
+    const result = dashboardProductsSchema.safeParse(body);
 
-    if (!Array.isArray(productIds)) {
+    if (!result.success) {
       return NextResponse.json(
-        { error: "productIds must be an array" },
+        { error: "Validation failed", details: result.error.flatten().fieldErrors },
         { status: 400 }
       );
     }
 
+    const { productIds } = result.data;
     const userId = session.user.id;
 
     // Verify user is premium
@@ -52,7 +54,7 @@ export async function PUT(request: NextRequest) {
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("Error updating recommended products:", error);
+    console.error("Error updating recommended products:", error instanceof Error ? error.message : "Unknown error");
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
