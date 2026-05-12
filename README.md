@@ -6,7 +6,7 @@ To get started, take a look at src/app/page.tsx.
 
 ## Running Locally
 
-1. Install dependency:
+1. Install dependencies:
    - `npm install`
 2. Create a local env file:
    - `cp .env.example .env.local`
