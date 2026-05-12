@@ -90,9 +90,9 @@ export const en: Dictionary = {
     title: "Discover Your Skin Profile",
     description:
       "Smart analysis based on professional MUA standards to find products that truly complement you.",
-    step1of3: "Step 1 of 3",
-    step2of3: "Step 2 of 3",
-    step3of3: "Step 3 of 3",
+    step1of3: "Step 1 of 4",
+    step2of3: "Step 2 of 4",
+    step3of3: "Step 3 of 4",
     whatSkinType: "What's your skin type?",
     skinTypeInstruction:
       "After washing your face and waiting 30 minutes without products, how does your skin feel?",
@@ -133,6 +133,15 @@ export const en: Dictionary = {
     back: "Back",
     continue_: "Continue",
     seeResults: "See Results",
+    step4of4: "Step 4 of 4",
+    activityTitle: "Daily Environment",
+    activityInstruction: "Which best describes your daily activity?",
+    activityOutdoor: "Mostly outdoors",
+    activityOutdoorDesc: "Exposed to sunlight, pollution, alternating AC/heat",
+    activityIndoor: "Mostly indoors",
+    activityIndoorDesc: "Air-conditioned, minimal direct sunlight exposure",
+    consentLabel: "I agree that my profile data may be used anonymously for research and product recommendations.",
+    activity: "Activity",
   },
   products: {
     badge: "Personalized For You",

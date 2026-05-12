@@ -90,9 +90,9 @@ export const id: Dictionary = {
     title: "Temukan Profil Kulitmu",
     description:
       "Analisis cerdas berdasarkan standar MUA profesional untuk menemukan produk yang benar-benar cocok untukmu.",
-    step1of3: "Langkah 1 dari 3",
-    step2of3: "Langkah 2 dari 3",
-    step3of3: "Langkah 3 dari 3",
+    step1of3: "Langkah 1 dari 4",
+    step2of3: "Langkah 2 dari 4",
+    step3of3: "Langkah 3 dari 4",
     whatSkinType: "Apa jenis kulitmu?",
     skinTypeInstruction:
       "Setelah mencuci muka dan menunggu 30 menit tanpa produk, bagaimana rasanya kulitmu?",
@@ -133,6 +133,15 @@ export const id: Dictionary = {
     back: "Kembali",
     continue_: "Lanjut",
     seeResults: "Lihat Hasil",
+    step4of4: "Langkah 4 dari 4",
+    activityTitle: "Lingkungan Harian",
+    activityInstruction: "Mana yang lebih sering menggambarkan aktivitasmu?",
+    activityOutdoor: "Lebih sering di luar ruangan",
+    activityOutdoorDesc: "Terpapar sinar matahari, polusi, AC/panas bergantian",
+    activityIndoor: "Lebih sering di dalam ruangan",
+    activityIndoorDesc: "AC, minim paparan sinar matahari langsung",
+    consentLabel: "Saya setuju data profil saya digunakan secara anonim untuk riset dan rekomendasi produk.",
+    activity: "Aktivitas",
   },
   products: {
     badge: "Dipersonalisasi Untukmu",

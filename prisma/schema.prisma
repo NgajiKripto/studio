@@ -158,6 +158,22 @@ model Product {
   updatedAt       DateTime           @updatedAt
 }
 
+// ==================== QUIZ RESULT MODEL ====================
+
+model QuizResult {
+  id           String   @id @default(cuid())
+  sessionId    String
+  skinType     String
+  skinTone     String
+  faceShape    String
+  activity     String   @default("INDOOR")
+  consentGiven Boolean  @default(false)
+  createdAt    DateTime @default(now())
+
+  @@index([consentGiven])
+  @@index([createdAt])
+}
+
 model ProductSkinType {
   id        String  @id @default(cuid())
   productId String
