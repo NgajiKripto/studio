@@ -20,10 +20,11 @@ type ShinyTextProps = {
   delay?: number;
 };
 
+/** Converts public speed/delay input (seconds) into milliseconds for frame math. */
 const MS_PER_SECOND = 1000;
-// Start gradient highlight outside the right side before entering text.
+/** Starts highlight off-screen on the right before it sweeps across the text. */
 const BACKGROUND_START_PERCENT = 150;
-// Map progress 0..100 to position shift 0..200 so shine exits left side fully.
+/** Maps progress 0..100 to a 0..200 shift so highlight exits fully to the left. */
 const BACKGROUND_STEP = 2;
 
 export function ShinyText({
@@ -100,7 +101,7 @@ export function ShinyText({
     progress.set(direction === "left" ? 0 : 100);
   }, [direction, progress]);
 
-  const resolvedBaseColor = color ?? baseColor;
+  const resolvedColor = color ?? baseColor;
   const backgroundPosition = useTransform(progress, (p) => `${BACKGROUND_START_PERCENT - p * BACKGROUND_STEP}% center`);
 
   const handleMouseEnter = useCallback(() => {
@@ -121,7 +122,7 @@ export function ShinyText({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       style={{
-        backgroundImage: `linear-gradient(${spread}deg, ${resolvedBaseColor} 0%, ${resolvedBaseColor} 35%, ${shineColor} 50%, ${resolvedBaseColor} 65%, ${resolvedBaseColor} 100%)`,
+        backgroundImage: `linear-gradient(${spread}deg, ${resolvedColor} 0%, ${resolvedColor} 35%, ${shineColor} 50%, ${resolvedColor} 65%, ${resolvedColor} 100%)`,
         backgroundSize: "200% auto",
         backgroundPosition,
         WebkitBackgroundClip: "text",
