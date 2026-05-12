@@ -1,7 +1,12 @@
+"use client";
+
 import Link from "next/link";
 import { Sparkles, Heart } from "lucide-react";
+import { useLanguage } from "@/lib/i18n";
 
 export function Footer() {
+  const { t } = useLanguage();
+
   return (
     <footer className="relative overflow-hidden">
       {/* Background gradient decoration */}
@@ -23,40 +28,34 @@ export function Footer() {
                 </span>
               </Link>
               <p className="text-sm text-muted-foreground max-w-sm leading-relaxed">
-                Personalized beauty for every skin. Discover your perfect match with our
-                Triple Skin Diagnostic and find makeup that truly celebrates you.
+                {t.footer.description}
               </p>
               <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                <span>Made with</span>
+                <span>{t.footer.madeWith}</span>
                 <Heart className="h-3 w-3 text-pink-400 fill-pink-400" />
-                <span>for beauty enthusiasts</span>
+                <span>{t.footer.forBeautyEnthusiasts}</span>
               </div>
             </div>
 
             {/* Quick Links */}
             <div className="space-y-4">
               <h3 className="font-semibold text-sm text-foreground uppercase tracking-wider">
-                Explore
+                {t.footer.explore}
               </h3>
               <ul className="space-y-2.5">
                 <li>
                   <Link href="/diagnostic" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                    Skin Diagnostic
+                    {t.footer.skinDiagnostic}
                   </Link>
                 </li>
                 <li>
                   <Link href="/products" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                    Beauty Catalog
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/circle" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                    Glow Circle
+                    {t.footer.beautyCatalog}
                   </Link>
                 </li>
                 <li>
                   <Link href="/recommend" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                    Recommendations
+                    {t.footer.recommendations}
                   </Link>
                 </li>
               </ul>
@@ -65,27 +64,27 @@ export function Footer() {
             {/* Legal */}
             <div className="space-y-4">
               <h3 className="font-semibold text-sm text-foreground uppercase tracking-wider">
-                Company
+                {t.footer.company}
               </h3>
               <ul className="space-y-2.5">
                 <li>
                   <Link href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                    About Us
+                    {t.footer.aboutUs}
                   </Link>
                 </li>
                 <li>
                   <Link href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                    Privacy Policy
+                    {t.footer.privacyPolicy}
                   </Link>
                 </li>
                 <li>
                   <Link href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                    Terms of Service
+                    {t.footer.termsOfService}
                   </Link>
                 </li>
                 <li>
                   <Link href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                    Contact Us
+                    {t.footer.contactUs}
                   </Link>
                 </li>
               </ul>
@@ -95,7 +94,7 @@ export function Footer() {
           {/* Bottom Bar */}
           <div className="mt-12 pt-6 border-t border-border/30 flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-xs text-muted-foreground">
-              &copy; {new Date().getFullYear()} Muakeup. All rights reserved.
+              &copy; {new Date().getFullYear()} Muakeup. {t.footer.allRightsReserved}
             </p>
             <div className="flex items-center gap-4">
               <span className="text-xs text-muted-foreground px-3 py-1 rounded-full bg-white/50 border border-white/40">

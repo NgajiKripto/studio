@@ -6,8 +6,10 @@ import { ProductFilters } from "@/components/products/ProductFilters";
 import { ProductCard } from "@/components/products/ProductCard";
 import { ProfileBanner } from "@/components/products/ProfileBanner";
 import { ProductSkeleton } from "@/components/products/ProductSkeleton";
+import { ProductsHeader } from "@/components/products/ProductsHeader";
+import { ProductsCount } from "@/components/products/ProductsCount";
+import { ProductsEmpty } from "@/components/products/ProductsEmpty";
 import { SkinType, SkinTone, FaceShape } from "@/lib/constants";
-import { Sparkles } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Katalog Produk Makeup - Rekomendasi Sesuai Jenis Kulit",
@@ -72,40 +74,23 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
 
   return (
     <main className="min-h-screen relative">
-      {/* Background decoration */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-pink-200/20 rounded-full blur-3xl -z-10" />
       <div className="absolute bottom-40 left-0 w-80 h-80 bg-pink-100/20 rounded-full blur-3xl -z-10" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <header className="mb-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary/10 text-secondary text-xs font-semibold mb-4">
-            <Sparkles className="h-3 w-3" />
-            Personalized For You
-          </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold text-foreground mb-3 tracking-tight">
-            Katalog Produk Makeup
-          </h1>
-          <p className="text-muted-foreground text-lg">
-            Temukan produk makeup terbaik yang dikurasi sesuai profil kecantikan unikmu.
-          </p>
-        </header>
-
+        <ProductsHeader />
         <ProfileBanner />
 
         <div className="flex flex-col lg:flex-row gap-10 mt-10">
-          {/* Sidebar */}
           <aside className="hidden lg:block w-72 shrink-0">
             <div className="sticky top-24 glass-card rounded-2xl p-6 shadow-lg">
               <ProductFilters />
             </div>
           </aside>
 
-          {/* Main Content */}
           <div className="flex-grow">
             <div className="flex items-center justify-between mb-6">
-              <p className="text-sm text-muted-foreground">
-                Showing <span className="font-bold text-foreground">{products.length}</span> products
-              </p>
+              <ProductsCount count={products.length} />
               <div className="lg:hidden">
                 <ProductFilters isMobile />
               </div>
@@ -114,18 +99,12 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
             <Suspense fallback={<ProductSkeleton />}>
               {products.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-                  {products.map((product) => (
+                  {products.map((product: any) => (
                     <ProductCard key={product.id} product={product} />
                   ))}
                 </div>
               ) : (
-                <div className="text-center py-20 glass-card rounded-3xl">
-                  <div className="w-16 h-16 rounded-full gradient-bg-soft flex items-center justify-center mx-auto mb-4">
-                    <Sparkles className="h-6 w-6 text-secondary" />
-                  </div>
-                  <h3 className="text-xl font-bold mb-2">No products found</h3>
-                  <p className="text-muted-foreground text-sm">Try adjusting your filters or search terms.</p>
-                </div>
+                <ProductsEmpty />
               )}
             </Suspense>
           </div>

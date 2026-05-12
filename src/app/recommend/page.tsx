@@ -12,10 +12,12 @@ import { ArrowRight, ArrowLeft, Loader2, Star, CheckCircle2 } from "lucide-react
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/lib/i18n";
 
 type Step = "SKIN_TYPE" | "SKIN_TONE" | "FACE_SHAPE" | "RESULTS";
 
 export default function RecommendPage() {
+  const { t } = useLanguage();
   const [step, setStep] = useState<Step>("SKIN_TYPE");
   const [profile, setProfile] = useState<{
     skinType: SkinType | null;
@@ -72,10 +74,9 @@ export default function RecommendPage() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl">
         {step !== "RESULTS" && (
           <div className="text-center mb-12 space-y-4">
-            <h1 className="font-headline text-4xl md:text-5xl font-bold text-foreground">Your Beauty Profile</h1>
-            <p className="text-muted-foreground text-lg">Help us understand your features to find your perfect matches.</p>
+            <h1 className="font-headline text-4xl md:text-5xl font-bold text-foreground">{t.recommend.title}</h1>
+            <p className="text-muted-foreground text-lg">{t.recommend.description}</p>
 
-            {/* Progress Steps */}
             <div className="flex justify-center items-center gap-3 mt-8">
               {[1, 2, 3].map((i) => {
                 const isActive = (step === "SKIN_TYPE" && i === 1) || (step === "SKIN_TONE" && i === 2) || (step === "FACE_SHAPE" && i === 3);
@@ -101,8 +102,8 @@ export default function RecommendPage() {
           {step === "SKIN_TYPE" && (
             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4">
               <div className="text-center">
-                <h2 className="font-headline text-2xl font-bold mb-2">How does your skin usually feel?</h2>
-                <p className="text-muted-foreground text-sm">This helps us recommend the right formulas.</p>
+                <h2 className="font-headline text-2xl font-bold mb-2">{t.recommend.howSkinFeel}</h2>
+                <p className="text-muted-foreground text-sm">{t.recommend.skinFeelDesc}</p>
               </div>
               <RadioGroup
                 value={profile.skinType || ""}
@@ -120,13 +121,6 @@ export default function RecommendPage() {
                   >
                     <RadioGroupItem value={type.value} id={type.value} className="sr-only" />
                     <span className="font-semibold">{type.label}</span>
-                    <span className="text-xs text-muted-foreground">
-                      {type.value === 'OILY' && 'Shiny all over, visible pores'}
-                      {type.value === 'DRY' && 'Feels tight, flaky or dull'}
-                      {type.value === 'NORMAL' && 'Balanced, clear, comfortable'}
-                      {type.value === 'COMBINATION' && 'Oily T-zone, dry cheeks'}
-                      {type.value === 'SENSITIVE' && 'Prone to redness or irritation'}
-                    </span>
                   </Label>
                 ))}
               </RadioGroup>
@@ -136,8 +130,8 @@ export default function RecommendPage() {
           {step === "SKIN_TONE" && (
             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4">
               <div className="text-center">
-                <h2 className="font-headline text-2xl font-bold mb-2">What is your skin tone?</h2>
-                <p className="text-muted-foreground text-sm">Ensures perfect shade matching.</p>
+                <h2 className="font-headline text-2xl font-bold mb-2">{t.recommend.whatSkinTone}</h2>
+                <p className="text-muted-foreground text-sm">{t.recommend.skinToneDesc}</p>
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {SKIN_TONES.map((tone) => (
@@ -160,8 +154,8 @@ export default function RecommendPage() {
           {step === "FACE_SHAPE" && (
             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4">
               <div className="text-center">
-                <h2 className="font-headline text-2xl font-bold mb-2">Which shape describes your face?</h2>
-                <p className="text-muted-foreground text-sm">Helps with contouring and product placement.</p>
+                <h2 className="font-headline text-2xl font-bold mb-2">{t.recommend.whatFaceShape}</h2>
+                <p className="text-muted-foreground text-sm">{t.recommend.faceShapeDesc}</p>
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                 {FACE_SHAPES.map((shape) => (
@@ -195,15 +189,15 @@ export default function RecommendPage() {
                 <div className="flex flex-col items-center justify-center py-16 space-y-4">
                   <Loader2 className="h-12 w-12 text-primary animate-spin" />
                   <div className="text-center">
-                    <h2 className="font-headline text-2xl font-bold">Finding your matches...</h2>
-                    <p className="text-muted-foreground text-sm">Our AI is analyzing your profile.</p>
+                    <h2 className="font-headline text-2xl font-bold">{t.recommend.findingMatches}</h2>
+                    <p className="text-muted-foreground text-sm">{t.recommend.aiAnalyzing}</p>
                   </div>
                 </div>
               ) : results && results.recommendations.length > 0 ? (
                 <div className="space-y-8">
                   <div className="text-center">
-                    <h2 className="font-headline text-3xl md:text-4xl font-bold mb-2">Recommended for You</h2>
-                    <p className="text-muted-foreground text-sm">Based on your profile.</p>
+                    <h2 className="font-headline text-3xl md:text-4xl font-bold mb-2">{t.recommend.recommendedForYou}</h2>
+                    <p className="text-muted-foreground text-sm">{t.recommend.basedOnProfile}</p>
                   </div>
 
                   <div className="space-y-6">
@@ -219,7 +213,7 @@ export default function RecommendPage() {
                           </div>
                           <p className="text-xs text-muted-foreground line-clamp-2">{rec.reasonsForRecommendation}</p>
                           <Button size="sm" variant="outline" className="rounded-full text-xs h-7" asChild>
-                            <Link href={`/product/${rec.id}`}>View Details</Link>
+                            <Link href={`/product/${rec.id}`}>{t.recommend.viewDetails}</Link>
                           </Button>
                         </div>
                       </div>
@@ -228,15 +222,15 @@ export default function RecommendPage() {
 
                   <div className="text-center pt-4">
                     <Button variant="outline" className="rounded-full" onClick={() => setStep("SKIN_TYPE")}>
-                      Start Over
+                      {t.recommend.startOver}
                     </Button>
                   </div>
                 </div>
               ) : (
                 <div className="text-center py-16 space-y-4">
-                  <h2 className="font-headline text-2xl font-bold">No matches found</h2>
-                  <p className="text-muted-foreground text-sm">Try different criteria or browse our catalog.</p>
-                  <Button onClick={() => setStep("SKIN_TYPE")} className="rounded-full">Try Again</Button>
+                  <h2 className="font-headline text-2xl font-bold">{t.recommend.noMatches}</h2>
+                  <p className="text-muted-foreground text-sm">{t.recommend.noMatchesDesc}</p>
+                  <Button onClick={() => setStep("SKIN_TYPE")} className="rounded-full">{t.recommend.tryAgain}</Button>
                 </div>
               )}
             </div>
@@ -250,14 +244,14 @@ export default function RecommendPage() {
                 disabled={step === "SKIN_TYPE"}
                 className="rounded-full"
               >
-                <ArrowLeft className="h-4 w-4 mr-2" /> Back
+                <ArrowLeft className="h-4 w-4 mr-2" /> {t.recommend.back}
               </Button>
               <Button
                 onClick={handleNext}
                 disabled={!isStepValid()}
                 className="rounded-full px-6"
               >
-                {step === "FACE_SHAPE" ? "Get Results" : "Continue"} <ArrowRight className="h-4 w-4 ml-2" />
+                {step === "FACE_SHAPE" ? t.recommend.getResults : t.recommend.continue_} <ArrowRight className="h-4 w-4 ml-2" />
               </Button>
             </div>
           )}

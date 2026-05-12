@@ -1,14 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { Menu, X, Sparkles } from "lucide-react";
+import { Menu, X, Sparkles, Globe } from "lucide-react";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/lib/i18n";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { locale, t, setLocale } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,11 +21,14 @@ export function Navbar() {
   }, []);
 
   const links = [
-    { href: "/diagnostic", label: "Diagnostic" },
-    { href: "/products", label: "Catalog" },
-    { href: "/circle", label: "Glow Circle" },
-    { href: "/dashboard", label: "Dashboard" },
+    { href: "/diagnostic", label: t.nav.diagnostic },
+    { href: "/products", label: t.nav.catalog },
+    { href: "/dashboard", label: t.nav.dashboard },
   ];
+
+  const toggleLocale = () => {
+    setLocale(locale === "id" ? "en" : "id");
+  };
 
   return (
     <nav
@@ -50,7 +55,7 @@ export function Navbar() {
           <div className="hidden md:flex items-center gap-1">
             {links.map((link) => (
               <Link
-                key={link.label}
+                key={link.href}
                 href={link.href}
                 className="relative px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-full hover:bg-white/50"
               >
@@ -59,8 +64,18 @@ export function Navbar() {
             ))}
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden md:block">
+          {/* Right side: Language Switcher + CTA */}
+          <div className="hidden md:flex items-center gap-2">
+            {/* Language Switcher */}
+            <button
+              onClick={toggleLocale}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold text-muted-foreground hover:text-foreground hover:bg-white/50 border border-border/50 transition-all"
+              title={locale === "id" ? "Switch to English" : "Ganti ke Bahasa Indonesia"}
+            >
+              <Globe className="h-3.5 w-3.5" />
+              {locale === "id" ? "EN" : "ID"}
+            </button>
+
             <Button
               size="sm"
               className="rounded-full px-6 font-semibold gradient-bg text-white border-0 shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
@@ -68,18 +83,29 @@ export function Navbar() {
             >
               <Link href="/diagnostic">
                 <Sparkles className="h-3.5 w-3.5 mr-1.5" />
-                Get Started
+                {t.nav.getStarted}
               </Link>
             </Button>
           </div>
 
           {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="inline-flex items-center justify-center p-2.5 rounded-xl text-muted-foreground hover:text-foreground hover:bg-white/50 md:hidden transition-colors"
-          >
-            {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
+          <div className="flex items-center gap-2 md:hidden">
+            {/* Mobile Language Switcher */}
+            <button
+              onClick={toggleLocale}
+              className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-muted-foreground hover:text-foreground hover:bg-white/50 border border-border/50 transition-all"
+            >
+              <Globe className="h-3.5 w-3.5" />
+              {locale === "id" ? "EN" : "ID"}
+            </button>
+
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="inline-flex items-center justify-center p-2.5 rounded-xl text-muted-foreground hover:text-foreground hover:bg-white/50 transition-colors"
+            >
+              {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -95,7 +121,7 @@ export function Navbar() {
         <div className="container mx-auto px-4 py-4 space-y-1">
           {links.map((link) => (
             <Link
-              key={link.label}
+              key={link.href}
               href={link.href}
               className="block px-4 py-3 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-white/60 rounded-xl transition-colors"
               onClick={() => setIsOpen(false)}
@@ -107,7 +133,7 @@ export function Navbar() {
             <Button className="w-full rounded-full gradient-bg text-white border-0 shadow-md" asChild>
               <Link href="/diagnostic" onClick={() => setIsOpen(false)}>
                 <Sparkles className="h-3.5 w-3.5 mr-1.5" />
-                Get Started
+                {t.nav.getStarted}
               </Link>
             </Button>
           </div>

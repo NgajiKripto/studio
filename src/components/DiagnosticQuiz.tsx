@@ -15,8 +15,8 @@ import {
   Check,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { SKIN_TYPES, SKIN_TONES, FACE_SHAPES, SkinType, SkinTone, FaceShape } from "@/lib/constants";
-import { SkinTwinRecommendation } from "@/components/SkinTwinRecommendation";
+import { SkinType, SkinTone, FaceShape } from "@/lib/constants";
+import { useLanguage } from "@/lib/i18n";
 
 type Step = 1 | 2 | 3 | 4;
 
@@ -28,6 +28,7 @@ interface DiagnosticProfile {
 
 export function DiagnosticQuiz() {
   const router = useRouter();
+  const { t } = useLanguage();
   const [step, setStep] = useState<Step>(1);
   const [progress, setProgress] = useState(33);
 
@@ -86,18 +87,18 @@ export function DiagnosticQuiz() {
   const renderStep1 = () => (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="text-center space-y-2">
-        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Step 1 of 3</p>
-        <h2 className="font-headline text-2xl md:text-3xl font-bold text-foreground">What&apos;s your skin type?</h2>
-        <p className="text-muted-foreground text-sm">After washing your face and waiting 30 minutes without products, how does your skin feel?</p>
+        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{t.diagnostic.step1of3}</p>
+        <h2 className="font-headline text-2xl md:text-3xl font-bold text-foreground">{t.diagnostic.whatSkinType}</h2>
+        <p className="text-muted-foreground text-sm">{t.diagnostic.skinTypeInstruction}</p>
       </div>
 
       <div className="grid grid-cols-1 gap-3">
         {[
-          { id: "OILY", label: "Oily", desc: "Shiny all over, visible pores" },
-          { id: "DRY", label: "Dry", desc: "Feels tight, flaky or dull" },
-          { id: "COMBINATION", label: "Combination", desc: "Oily T-zone, dry cheeks" },
-          { id: "NORMAL", label: "Normal", desc: "Balanced and comfortable" },
-          { id: "SENSITIVE", label: "Sensitive", desc: "Prone to redness or irritation" },
+          { id: "OILY", label: t.diagnostic.oily, desc: t.diagnostic.oilyDesc },
+          { id: "DRY", label: t.diagnostic.dry, desc: t.diagnostic.dryDesc },
+          { id: "COMBINATION", label: t.diagnostic.combination, desc: t.diagnostic.combinationDesc },
+          { id: "NORMAL", label: t.diagnostic.normal, desc: t.diagnostic.normalDesc },
+          { id: "SENSITIVE", label: t.diagnostic.sensitive, desc: t.diagnostic.sensitiveDesc },
         ].map((type) => (
           <div
             key={type.id}
@@ -123,19 +124,19 @@ export function DiagnosticQuiz() {
   const renderStep2 = () => (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="text-center space-y-2">
-        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Step 2 of 3</p>
-        <h2 className="font-headline text-2xl md:text-3xl font-bold text-foreground">Skin Tone & Undertone</h2>
-        <p className="text-muted-foreground text-sm">Let&apos;s determine the colors that complement you best.</p>
+        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{t.diagnostic.step2of3}</p>
+        <h2 className="font-headline text-2xl md:text-3xl font-bold text-foreground">{t.diagnostic.skinToneUndertone}</h2>
+        <p className="text-muted-foreground text-sm">{t.diagnostic.skinToneInstruction}</p>
       </div>
 
       <div className="space-y-6">
         <div className="space-y-3">
-          <Label className="text-sm font-semibold">Which jewelry looks better on you?</Label>
+          <Label className="text-sm font-semibold">{t.diagnostic.jewelryQuestion}</Label>
           <div className="grid grid-cols-3 gap-3">
             {[
-              { val: "WARM", label: "Gold" },
-              { val: "COOL", label: "Silver" },
-              { val: "NEUTRAL", label: "Both" }
+              { val: "WARM", label: t.diagnostic.gold },
+              { val: "COOL", label: t.diagnostic.silver },
+              { val: "NEUTRAL", label: t.diagnostic.both }
             ].map(opt => (
               <Button
                 key={opt.val}
@@ -150,12 +151,12 @@ export function DiagnosticQuiz() {
         </div>
 
         <div className="space-y-3">
-          <Label className="text-sm font-semibold">What color are your wrist veins?</Label>
+          <Label className="text-sm font-semibold">{t.diagnostic.veinQuestion}</Label>
           <div className="grid grid-cols-3 gap-3">
             {[
-              { val: "WARM", label: "Green" },
-              { val: "COOL", label: "Blue/Purple" },
-              { val: "NEUTRAL", label: "Mixed" }
+              { val: "WARM", label: t.diagnostic.green },
+              { val: "COOL", label: t.diagnostic.bluePurple },
+              { val: "NEUTRAL", label: t.diagnostic.mixed }
             ].map(opt => (
               <Button
                 key={opt.val}
@@ -170,7 +171,7 @@ export function DiagnosticQuiz() {
         </div>
 
         <div className="space-y-3 pt-4 border-t border-border">
-          <Label className="text-sm font-semibold">Select your skin depth:</Label>
+          <Label className="text-sm font-semibold">{t.diagnostic.selectSkinDepth}</Label>
           <div className="flex justify-center gap-4">
             {[
               { id: "FAIR", color: "bg-[#F9E4D4]" },
@@ -201,19 +202,19 @@ export function DiagnosticQuiz() {
   const renderStep3 = () => (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="text-center space-y-2">
-        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Step 3 of 3</p>
-        <h2 className="font-headline text-2xl md:text-3xl font-bold text-foreground">Face Shape</h2>
-        <p className="text-muted-foreground text-sm">Look in the mirror, pull your hair back, and compare.</p>
+        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{t.diagnostic.step3of3}</p>
+        <h2 className="font-headline text-2xl md:text-3xl font-bold text-foreground">{t.diagnostic.faceShapeTitle}</h2>
+        <p className="text-muted-foreground text-sm">{t.diagnostic.faceShapeInstruction}</p>
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
         {[
-          { id: "OVAL", label: "Oval" },
-          { id: "ROUND", label: "Round" },
-          { id: "SQUARE", label: "Square" },
-          { id: "HEART", label: "Heart" },
-          { id: "DIAMOND", label: "Diamond" },
-          { id: "OBLONG", label: "Oblong" },
+          { id: "OVAL", label: t.diagnostic.oval },
+          { id: "ROUND", label: t.diagnostic.round },
+          { id: "SQUARE", label: t.diagnostic.square },
+          { id: "HEART", label: t.diagnostic.heart },
+          { id: "DIAMOND", label: t.diagnostic.diamond },
+          { id: "OBLONG", label: t.diagnostic.oblong },
         ].map((shape) => (
           <div
             key={shape.id}
@@ -247,8 +248,8 @@ export function DiagnosticQuiz() {
           <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
             <Check className="text-primary h-8 w-8" />
           </div>
-          <h2 className="font-headline text-3xl font-bold text-foreground">Your Profile is Ready!</h2>
-          <p className="text-muted-foreground">Here&apos;s your personalized beauty profile.</p>
+          <h2 className="font-headline text-3xl font-bold text-foreground">{t.diagnostic.profileReady}</h2>
+          <p className="text-muted-foreground">{t.diagnostic.personalizedProfile}</p>
         </div>
 
         <div className="grid grid-cols-1 gap-4">
@@ -257,7 +258,7 @@ export function DiagnosticQuiz() {
               <span className="text-lg">💧</span>
             </div>
             <div>
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Skin Type</p>
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{t.home.skinType}</p>
               <h3 className="font-headline text-xl font-bold text-foreground">{results.skinType}</h3>
             </div>
           </div>
@@ -267,7 +268,7 @@ export function DiagnosticQuiz() {
               <span className="text-lg">🎨</span>
             </div>
             <div>
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Skin Tone</p>
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{t.home.skinTone}</p>
               <h3 className="font-headline text-xl font-bold text-foreground">{results.skinTone.replace('_', ' ')}</h3>
             </div>
           </div>
@@ -277,25 +278,18 @@ export function DiagnosticQuiz() {
               <span className="text-lg">💎</span>
             </div>
             <div>
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Face Shape</p>
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{t.home.faceShape}</p>
               <h3 className="font-headline text-xl font-bold text-foreground">{results.faceShape}</h3>
             </div>
           </div>
         </div>
 
-        {/* Skin Twin Recommendation */}
-        <SkinTwinRecommendation
-          skinType={results.skinType}
-          skinTone={results.skinTone}
-          faceShape={results.faceShape}
-        />
-
         <div className="space-y-3 pt-4">
           <ConfettiButton size="lg" className="w-full rounded-full font-semibold" onClick={goToCatalog}>
-            View Matching Products <ArrowRight className="ml-2 h-4 w-4" />
+            {t.diagnostic.viewMatchingProducts} <ArrowRight className="ml-2 h-4 w-4" />
           </ConfettiButton>
           <Button variant="ghost" className="w-full text-muted-foreground" onClick={() => setStep(1)}>
-            <RotateCcw className="mr-2 h-4 w-4" /> Retake Quiz
+            <RotateCcw className="mr-2 h-4 w-4" /> {t.diagnostic.retakeQuiz}
           </Button>
         </div>
       </div>
@@ -329,7 +323,7 @@ export function DiagnosticQuiz() {
               disabled={step === 1}
               className="rounded-full"
             >
-              <ArrowLeft className="h-4 w-4 mr-2" /> Back
+              <ArrowLeft className="h-4 w-4 mr-2" /> {t.diagnostic.back}
             </Button>
 
             <Button
@@ -337,7 +331,7 @@ export function DiagnosticQuiz() {
               disabled={isNextDisabled()}
               className="rounded-full px-6"
             >
-              {step === 3 ? "See Results" : "Continue"} <ArrowRight className="h-4 w-4 ml-2" />
+              {step === 3 ? t.diagnostic.seeResults : t.diagnostic.continue_} <ArrowRight className="h-4 w-4 ml-2" />
             </Button>
           </div>
         )}
