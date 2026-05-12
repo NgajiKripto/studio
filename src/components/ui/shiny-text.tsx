@@ -13,13 +13,14 @@ type ShinyTextProps = {
   baseColor?: string;
   color?: string;
   shineColor?: string;
-  spread?: number; // Angle (deg) for linear-gradient direction that drives shine sweep orientation.
+  spread?: number; // Angle in degrees for linear-gradient that creates the shine effect.
   yoyo?: boolean;
   pauseOnHover?: boolean;
   direction?: "left" | "right";
   delay?: number;
 };
 
+const MS_PER_SECOND = 1000;
 // Start gradient highlight outside the right side before entering text.
 const BACKGROUND_START_PERCENT = 150;
 // Map progress 0..100 to position shift 0..200 so shine exits left side fully.
@@ -45,8 +46,8 @@ export function ShinyText({
   const lastTimeRef = useRef<number | null>(null);
   const directionRef = useRef(direction === "left" ? 1 : -1);
 
-  const animationDuration = speed * 1000;
-  const delayDuration = delay * 1000;
+  const animationDuration = speed * MS_PER_SECOND;
+  const delayDuration = delay * MS_PER_SECOND;
 
   useAnimationFrame((time) => {
     if (disabled || isPaused) {
