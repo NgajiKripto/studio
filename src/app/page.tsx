@@ -114,7 +114,13 @@ export default async function Home() {
                   direction="top"
                 />
                 <br />
-                <span className="inline text-foreground">understands you.</span>
+                <BlurText
+                  text="understands you."
+                  delay={100}
+                  className="inline text-foreground"
+                  animateBy="words"
+                  direction="top"
+                />
               </h1>
 
               <p className="text-muted-foreground text-lg max-w-lg leading-relaxed">
