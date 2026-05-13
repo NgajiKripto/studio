@@ -35,7 +35,7 @@ export function Navbar() {
       className={cn(
         "sticky top-0 z-50 w-full transition-all duration-500",
         scrolled
-          ? "bg-white/70 backdrop-blur-2xl border-b-2 border-foreground/80 shadow-[0_3px_0px_0px_rgba(132,148,255,0.3)]"
+          ? "bg-white/70 backdrop-blur-2xl border-b border-white/40 shadow-sm"
           : "bg-transparent"
       )}
     >
@@ -43,7 +43,7 @@ export function Navbar() {
         <div className="flex items-center justify-between h-16 lg:h-18">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 rounded-xl gradient-bg flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow border-2 border-foreground/80">
+            <div className="w-8 h-8 rounded-xl gradient-bg flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow">
               <Sparkles className="h-4 w-4 text-white" />
             </div>
             <span className="text-xl font-bold text-foreground tracking-tight">
@@ -69,7 +69,7 @@ export function Navbar() {
             {/* Language Switcher */}
             <button
               onClick={toggleLocale}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold text-muted-foreground hover:text-foreground hover:bg-white/50 border-2 border-foreground/80 shadow-[2px_2px_0px_0px_rgba(132,148,255,0.3)] hover:shadow-[3px_3px_0px_0px_rgba(132,148,255,0.4)] hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all duration-200"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold text-muted-foreground hover:text-foreground hover:bg-white/50 border border-border/50 transition-all"
               title={locale === "id" ? "Switch to English" : "Ganti ke Bahasa Indonesia"}
             >
               <Globe className="h-3.5 w-3.5" />
@@ -93,7 +93,7 @@ export function Navbar() {
             {/* Mobile Language Switcher */}
             <button
               onClick={toggleLocale}
-              className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-muted-foreground hover:text-foreground hover:bg-white/50 border-2 border-foreground/80 shadow-[2px_2px_0px_0px_rgba(132,148,255,0.3)] transition-all duration-200"
+              className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-muted-foreground hover:text-foreground hover:bg-white/50 border border-border/50 transition-all"
             >
               <Globe className="h-3.5 w-3.5" />
               {locale === "id" ? "EN" : "ID"}
@@ -114,7 +114,7 @@ export function Navbar() {
         className={cn(
           "md:hidden transition-all duration-400 ease-in-out overflow-hidden",
           isOpen
-            ? "max-h-96 opacity-100 bg-white/90 backdrop-blur-2xl border-b-2 border-foreground/80"
+            ? "max-h-96 opacity-100 bg-white/90 backdrop-blur-2xl border-b border-white/40"
             : "max-h-0 opacity-0 border-none"
         )}
       >
