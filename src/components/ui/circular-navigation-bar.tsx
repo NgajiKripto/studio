@@ -8,8 +8,7 @@ import { X } from "lucide-react";
 interface NavItem {
   name: string;
   icon: React.ComponentType<{ className?: string }>;
-  href?: string;
-  onClick?: () => void;
+  href: string;
 }
 
 interface CircularNavigationProps {
@@ -58,12 +57,6 @@ export default function CircularNavigation({
                 const Icon = item.icon;
                 const angle = (360 / navItems.length) * index;
 
-                const commonClass = `flex flex-col items-center justify-center w-20 h-20 aspect-square rounded-full transition-colors duration-200 no-decoration cursor-pointer ${
-                  hoveredItem === item.name
-                    ? "bg-white text-black"
-                    : "text-white"
-                }`;
-
                 return (
                   <div
                     key={item.name}
@@ -72,41 +65,25 @@ export default function CircularNavigation({
                       transform: `rotate(${angle}deg) translate(150px) rotate(-${angle}deg)`,
                     }}
                   >
-                    {item.href ? (
-                      <Link
-                        href={item.href}
-                        className={commonClass}
-                        onMouseEnter={() => setHoveredItem(item.name)}
-                        onMouseLeave={() => setHoveredItem(null)}
-                        onClick={toggleMenu}
+                    <Link
+                      href={item.href}
+                      className={`flex flex-col items-center justify-center w-20 h-20 aspect-square rounded-full transition-colors duration-200 no-decoration ${
+                        hoveredItem === item.name
+                          ? "bg-white text-black"
+                          : "text-white"
+                      }`}
+                      onMouseEnter={() => setHoveredItem(item.name)}
+                      onMouseLeave={() => setHoveredItem(null)}
+                      onClick={toggleMenu}
+                    >
+                      <Icon className="w-6 h-6 mb-1" />
+                      <span
+                        className="text-xs font-medium"
+                        style={{ textDecoration: "none" }}
                       >
-                        <Icon className="w-6 h-6 mb-1" />
-                        <span
-                          className="text-xs font-medium"
-                          style={{ textDecoration: "none" }}
-                        >
-                          {item.name}
-                        </span>
-                      </Link>
-                    ) : (
-                      <button
-                        className={commonClass}
-                        onMouseEnter={() => setHoveredItem(item.name)}
-                        onMouseLeave={() => setHoveredItem(null)}
-                        onClick={() => {
-                          item.onClick?.();
-                          toggleMenu();
-                        }}
-                      >
-                        <Icon className="w-6 h-6 mb-1" />
-                        <span
-                          className="text-xs font-medium"
-                          style={{ textDecoration: "none" }}
-                        >
-                          {item.name}
-                        </span>
-                      </button>
-                    )}
+                        {item.name}
+                      </span>
+                    </Link>
                   </div>
                 );
               })}
