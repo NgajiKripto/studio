@@ -62,7 +62,7 @@ function TestimonialCard({ item }: { item: (typeof communityTestimonials)[number
       </div>
       <p className="text-muted-foreground text-sm leading-relaxed mb-6">&quot;{item.body}&quot;</p>
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full overflow-hidden ring-2 ring-primary/30">
+        <div className="w-10 h-10 rounded-full overflow-hidden ring-2 ring-foreground/80">
           <Image src={item.image} alt={item.name} width={40} height={40} className="object-cover" />
         </div>
         <div>
@@ -150,13 +150,13 @@ export function HomeContent({ featuredProducts }: { featuredProducts: ProductDat
 
             <div className="relative flex justify-center lg:justify-end">
               <div className="relative">
-                <div className="relative w-72 h-80 sm:w-80 sm:h-96 lg:w-[380px] lg:h-[480px] rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white/60">
+                <div className="relative w-72 h-80 sm:w-80 sm:h-96 lg:w-[380px] lg:h-[480px] rounded-[2.5rem] overflow-hidden shadow-[5px_5px_0px_0px_rgba(132,148,255,0.5)] border-2 border-foreground/80">
                   <Image src="https://picsum.photos/seed/beauty-hero/800/1000" alt="Beauty hero" fill priority className="object-cover" data-ai-hint="beauty portrait" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent" />
                 </div>
-                <div className="absolute -top-4 -left-8 glass-card-strong rounded-2xl px-4 py-3 animate-float shadow-xl">
+                <div className="absolute -top-4 -left-8 glass-card-strong rounded-2xl px-4 py-3 animate-float shadow-[3px_3px_0px_0px_rgba(132,148,255,0.5)]">
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full gradient-bg flex items-center justify-center">
+                    <div className="w-8 h-8 rounded-full gradient-bg flex items-center justify-center border-2 border-foreground/80">
                       <Droplets className="h-4 w-4 text-white" />
                     </div>
                     <div>
@@ -165,9 +165,9 @@ export function HomeContent({ featuredProducts }: { featuredProducts: ProductDat
                     </div>
                   </div>
                 </div>
-                <div className="absolute -bottom-4 -right-6 glass-card-strong rounded-2xl px-4 py-3 animate-float-delayed shadow-xl">
+                <div className="absolute -bottom-4 -right-6 glass-card-strong rounded-2xl px-4 py-3 animate-float-delayed shadow-[3px_3px_0px_0px_rgba(132,148,255,0.5)]">
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center">
+                    <div className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center border-2 border-foreground/80">
                       <Palette className="h-4 w-4 text-white" />
                     </div>
                     <div>
@@ -195,7 +195,7 @@ export function HomeContent({ featuredProducts }: { featuredProducts: ProductDat
         <div className="absolute inset-0 bg-gradient-to-b from-pink-50 via-rose-50/60 to-pink-50" />
         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mx-auto text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-pink-100 text-pink-700 text-xs font-semibold mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-pink-100 text-pink-700 text-xs font-semibold mb-4 border-2 border-foreground/80 shadow-[2px_2px_0px_0px_rgba(132,148,255,0.3)]">
               <AlertTriangle className="h-3 w-3" />
               {t.home.commonProblem}
             </div>
@@ -214,7 +214,7 @@ export function HomeContent({ featuredProducts }: { featuredProducts: ProductDat
                 <h3 className="text-xl font-bold text-foreground mb-2">{t.home.problem1Title}</h3>
               </div>
               <p className="text-muted-foreground text-sm leading-relaxed mb-4">{t.home.problem1Desc}</p>
-              <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-green-50 border border-green-200">
+              <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-green-50 border-2 border-foreground/60">
                 <Sparkles className="h-3.5 w-3.5 text-green-600" />
                 <span className="text-xs font-semibold text-green-700">{t.home.problem1Solution}</span>
               </div>
@@ -228,7 +228,7 @@ export function HomeContent({ featuredProducts }: { featuredProducts: ProductDat
                 <h3 className="text-xl font-bold text-foreground mb-2">{t.home.problem2Title}</h3>
               </div>
               <p className="text-muted-foreground text-sm leading-relaxed mb-4">{t.home.problem2Desc}</p>
-              <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-green-50 border border-green-200">
+              <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-green-50 border-2 border-foreground/60">
                 <Sparkles className="h-3.5 w-3.5 text-green-600" />
                 <span className="text-xs font-semibold text-green-700">{t.home.problem2Solution}</span>
               </div>
@@ -242,7 +242,7 @@ export function HomeContent({ featuredProducts }: { featuredProducts: ProductDat
                 <h3 className="text-xl font-bold text-foreground mb-2">{t.home.problem3Title}</h3>
               </div>
               <p className="text-muted-foreground text-sm leading-relaxed mb-4">{t.home.problem3Desc}</p>
-              <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-green-50 border border-green-200">
+              <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-green-50 border-2 border-foreground/60">
                 <Sparkles className="h-3.5 w-3.5 text-green-600" />
                 <span className="text-xs font-semibold text-green-700">{t.home.problem3Solution}</span>
               </div>
@@ -264,7 +264,7 @@ export function HomeContent({ featuredProducts }: { featuredProducts: ProductDat
         <div className="absolute inset-0 bg-gradient-to-b from-pink-50 via-rose-50/60 to-pink-50" />
         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mx-auto text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary/10 text-secondary text-xs font-semibold mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary/10 text-secondary text-xs font-semibold mb-4 border-2 border-foreground/80 shadow-[2px_2px_0px_0px_rgba(132,148,255,0.3)]">
               <Layers className="h-3 w-3" />
               {t.home.howItWorks}
             </div>
@@ -278,7 +278,7 @@ export function HomeContent({ featuredProducts }: { featuredProducts: ProductDat
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
             <div className="glass-card rounded-3xl p-8 hover-lift group">
               <div className="mb-6">
-                <div className="w-14 h-14 rounded-2xl gradient-bg flex items-center justify-center mb-5 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                <div className="w-14 h-14 rounded-2xl gradient-bg flex items-center justify-center mb-5 shadow-[3px_3px_0px_0px_rgba(0,0,0,0.15)] border-2 border-foreground/80 group-hover:scale-110 transition-transform duration-300">
                   <Droplets className="w-6 h-6 text-white" />
                 </div>
                 <div className="flex items-center gap-2 mb-3">
@@ -292,7 +292,7 @@ export function HomeContent({ featuredProducts }: { featuredProducts: ProductDat
 
             <div className="glass-card rounded-3xl p-8 hover-lift group">
               <div className="mb-6">
-                <div className="w-14 h-14 rounded-2xl bg-secondary flex items-center justify-center mb-5 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                <div className="w-14 h-14 rounded-2xl bg-secondary flex items-center justify-center mb-5 shadow-[3px_3px_0px_0px_rgba(0,0,0,0.15)] border-2 border-foreground/80 group-hover:scale-110 transition-transform duration-300">
                   <Palette className="w-6 h-6 text-white" />
                 </div>
                 <div className="flex items-center gap-2 mb-3">
@@ -306,7 +306,7 @@ export function HomeContent({ featuredProducts }: { featuredProducts: ProductDat
 
             <div className="glass-card rounded-3xl p-8 hover-lift group">
               <div className="mb-6">
-                <div className="w-14 h-14 rounded-2xl bg-foreground flex items-center justify-center mb-5 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                <div className="w-14 h-14 rounded-2xl bg-foreground flex items-center justify-center mb-5 shadow-[3px_3px_0px_0px_rgba(132,148,255,0.4)] border-2 border-foreground/80 group-hover:scale-110 transition-transform duration-300">
                   <Layers className="w-6 h-6 text-white" />
                 </div>
                 <div className="flex items-center gap-2 mb-3">
@@ -336,7 +336,7 @@ export function HomeContent({ featuredProducts }: { featuredProducts: ProductDat
         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-12 gap-4">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/20 text-foreground text-xs font-semibold mb-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/20 text-foreground text-xs font-semibold mb-4 border-2 border-foreground/80 shadow-[2px_2px_0px_0px_rgba(132,148,255,0.3)]">
                 <Star className="h-3 w-3 text-secondary" />
                 {t.home.curatedForYou}
               </div>
@@ -356,11 +356,11 @@ export function HomeContent({ featuredProducts }: { featuredProducts: ProductDat
                   <div className="relative aspect-[4/5] overflow-hidden bg-gradient-to-br from-primary/10 to-secondary/10">
                     <Image src={product.imageUrl} alt={product.name} fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <button className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center shadow-md hover:bg-white hover:scale-110 transition-all">
+                    <button className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center border-2 border-foreground/80 shadow-[2px_2px_0px_0px_rgba(132,148,255,0.3)] hover:shadow-[3px_3px_0px_0px_rgba(132,148,255,0.4)] transition-all">
                       <Heart className="h-4 w-4 text-muted-foreground" />
                     </button>
                     <div className="absolute top-3 left-3">
-                      <span className="px-2.5 py-1 rounded-full bg-white/80 backdrop-blur-md text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">{product.category}</span>
+                      <span className="px-2.5 py-1 rounded-full bg-white/80 backdrop-blur-md text-[10px] font-semibold uppercase tracking-wider text-muted-foreground border border-foreground/60 shadow-[1px_1px_0px_0px_rgba(132,148,255,0.3)]">{product.category}</span>
                     </div>
                   </div>
                   <div className="p-4 space-y-1.5">
@@ -393,7 +393,7 @@ export function HomeContent({ featuredProducts }: { featuredProducts: ProductDat
         <div className="absolute bottom-0 right-0 w-64 h-64 bg-pink-300/10 rounded-full blur-3xl" />
         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mx-auto text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/20 text-foreground text-xs font-semibold mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/20 text-foreground text-xs font-semibold mb-4 border-2 border-foreground/80 shadow-[2px_2px_0px_0px_rgba(132,148,255,0.3)]">
               <Heart className="h-3 w-3 text-pink-400 fill-pink-400" />
               {t.home.testimonials}
             </div>
