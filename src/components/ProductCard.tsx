@@ -35,7 +35,7 @@ export function ProductCard({ product }: ProductCardProps) {
               e.preventDefault();
               setIsLiked(!isLiked);
             }}
-            className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center shadow-md hover:bg-white hover:scale-110 transition-all duration-200"
+            className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center border-2 border-foreground/80 shadow-[2px_2px_0px_0px_rgba(132,148,255,0.3)] hover:shadow-[3px_3px_0px_0px_rgba(132,148,255,0.4)] hover:translate-x-[-1px] hover:translate-y-[-1px] active:shadow-none active:translate-x-[1px] active:translate-y-[1px] transition-all duration-200"
           >
             <Heart
               className={`h-4 w-4 transition-colors ${
@@ -46,14 +46,14 @@ export function ProductCard({ product }: ProductCardProps) {
 
           {/* Quick View */}
           <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
-            <div className="w-9 h-9 rounded-full gradient-bg flex items-center justify-center shadow-lg">
+            <div className="w-9 h-9 rounded-full gradient-bg flex items-center justify-center border-2 border-foreground/80 shadow-[2px_2px_0px_0px_rgba(132,148,255,0.4)]">
               <ArrowUpRight className="h-4 w-4 text-white" />
             </div>
           </div>
 
           {/* Category Badge */}
           <div className="absolute top-3 left-3">
-            <span className="px-2.5 py-1 rounded-full bg-white/80 backdrop-blur-md text-[10px] font-semibold uppercase tracking-wider text-muted-foreground shadow-sm">
+            <span className="px-2.5 py-1 rounded-full bg-white/80 backdrop-blur-md text-[10px] font-semibold uppercase tracking-wider text-muted-foreground border border-foreground/60 shadow-[1px_1px_0px_0px_rgba(132,148,255,0.3)]">
               {product.category}
             </span>
           </div>
