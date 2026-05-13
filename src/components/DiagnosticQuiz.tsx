@@ -145,10 +145,8 @@ export function DiagnosticQuiz() {
             key={type.id}
             onClick={() => setSkinType(type.id as SkinType)}
             className={cn(
-              "p-4 rounded-xl border-2 transition-all cursor-pointer",
-              skinType === type.id 
-                ? "border-foreground/80 bg-primary/5 shadow-[3px_3px_0px_0px_rgba(132,148,255,0.5)]" 
-                : "border-foreground/60 bg-card hover:border-foreground/80 hover:shadow-[2px_2px_0px_0px_rgba(132,148,255,0.3)]"
+              "p-4 rounded-xl border-2 transition-all cursor-pointer hover:border-primary/50",
+              skinType === type.id ? "border-primary bg-primary/5" : "border-border bg-card"
             )}
           >
             <div className="flex justify-between items-center">
@@ -264,9 +262,7 @@ export function DiagnosticQuiz() {
             onClick={() => setFaceShape(shape.id as FaceShape)}
             className={cn(
               "flex flex-col items-center p-5 rounded-2xl border-2 transition-all cursor-pointer",
-              faceShape === shape.id 
-                ? "border-foreground/80 bg-primary/5 shadow-[3px_3px_0px_0px_rgba(132,148,255,0.5)]" 
-                : "border-foreground/60 bg-card hover:border-foreground/80 hover:shadow-[2px_2px_0px_0px_rgba(132,148,255,0.3)]"
+              faceShape === shape.id ? "border-primary bg-primary/5" : "border-border bg-card hover:border-primary/30"
             )}
           >
             <div className={cn(
@@ -297,10 +293,8 @@ export function DiagnosticQuiz() {
         <div
           onClick={() => setActivity("OUTDOOR")}
           className={cn(
-            "p-4 rounded-xl border-2 transition-all cursor-pointer",
-            activity === "OUTDOOR" 
-              ? "border-foreground/80 bg-primary/5 shadow-[3px_3px_0px_0px_rgba(132,148,255,0.5)]" 
-              : "border-foreground/60 bg-card hover:border-foreground/80 hover:shadow-[2px_2px_0px_0px_rgba(132,148,255,0.3)]"
+            "p-4 rounded-xl border-2 transition-all cursor-pointer hover:border-primary/50",
+            activity === "OUTDOOR" ? "border-primary bg-primary/5" : "border-border bg-card"
           )}
         >
           <div className="flex justify-between items-center">
@@ -315,10 +309,8 @@ export function DiagnosticQuiz() {
         <div
           onClick={() => setActivity("INDOOR")}
           className={cn(
-            "p-4 rounded-xl border-2 transition-all cursor-pointer",
-            activity === "INDOOR" 
-              ? "border-foreground/80 bg-primary/5 shadow-[3px_3px_0px_0px_rgba(132,148,255,0.5)]" 
-              : "border-foreground/60 bg-card hover:border-foreground/80 hover:shadow-[2px_2px_0px_0px_rgba(132,148,255,0.3)]"
+            "p-4 rounded-xl border-2 transition-all cursor-pointer hover:border-primary/50",
+            activity === "INDOOR" ? "border-primary bg-primary/5" : "border-border bg-card"
           )}
         >
           <div className="flex justify-between items-center">
@@ -364,8 +356,8 @@ export function DiagnosticQuiz() {
         </div>
 
         <div className="grid grid-cols-1 gap-4">
-          <div className="p-5 rounded-xl bg-secondary/50 border-2 border-foreground/80 shadow-[2px_2px_0px_0px_rgba(132,148,255,0.35)] flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-card flex items-center justify-center border-2 border-foreground/60 shadow-sm">
+          <div className="p-5 rounded-xl bg-secondary/50 border border-border/50 flex items-center gap-4">
+            <div className="w-12 h-12 rounded-xl bg-card flex items-center justify-center shadow-sm">
               <span className="text-lg">💧</span>
             </div>
             <div>
@@ -374,8 +366,8 @@ export function DiagnosticQuiz() {
             </div>
           </div>
 
-          <div className="p-5 rounded-xl bg-secondary/50 border-2 border-foreground/80 shadow-[2px_2px_0px_0px_rgba(132,148,255,0.35)] flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-card flex items-center justify-center border-2 border-foreground/60 shadow-sm">
+          <div className="p-5 rounded-xl bg-secondary/50 border border-border/50 flex items-center gap-4">
+            <div className="w-12 h-12 rounded-xl bg-card flex items-center justify-center shadow-sm">
               <span className="text-lg">🎨</span>
             </div>
             <div>
@@ -384,8 +376,8 @@ export function DiagnosticQuiz() {
             </div>
           </div>
 
-          <div className="p-5 rounded-xl bg-secondary/50 border-2 border-foreground/80 shadow-[2px_2px_0px_0px_rgba(132,148,255,0.35)] flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-card flex items-center justify-center border-2 border-foreground/60 shadow-sm">
+          <div className="p-5 rounded-xl bg-secondary/50 border border-border/50 flex items-center gap-4">
+            <div className="w-12 h-12 rounded-xl bg-card flex items-center justify-center shadow-sm">
               <span className="text-lg">💎</span>
             </div>
             <div>
@@ -394,8 +386,8 @@ export function DiagnosticQuiz() {
             </div>
           </div>
 
-          <div className="p-5 rounded-xl bg-secondary/50 border-2 border-foreground/80 shadow-[2px_2px_0px_0px_rgba(132,148,255,0.35)] flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-card flex items-center justify-center border-2 border-foreground/60 shadow-sm">
+          <div className="p-5 rounded-xl bg-secondary/50 border border-border/50 flex items-center gap-4">
+            <div className="w-12 h-12 rounded-xl bg-card flex items-center justify-center shadow-sm">
               <span className="text-lg">🌤️</span>
             </div>
             <div>
