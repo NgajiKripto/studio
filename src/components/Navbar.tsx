@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Menu, Sparkles, Globe, Home, Search, LayoutDashboard, ShoppingBag } from "lucide-react";
+import { Menu, Sparkles, Globe, Home, Search, ShoppingBag } from "lucide-react";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -27,16 +27,16 @@ export function Navbar() {
     { href: "/dashboard", label: t.nav.dashboard },
   ];
 
+  const toggleLocale = () => {
+    setLocale(locale === "id" ? "en" : "id");
+  };
+
   const navItems = [
     { name: "Home", icon: Home, href: "/" },
     { name: t.nav.diagnostic, icon: Search, href: "/diagnostic" },
     { name: t.nav.catalog, icon: ShoppingBag, href: "/products" },
-    { name: t.nav.dashboard, icon: LayoutDashboard, href: "/dashboard" },
+    { name: locale === "id" ? "English" : "Indonesia", icon: Globe, onClick: toggleLocale },
   ];
-
-  const toggleLocale = () => {
-    setLocale(locale === "id" ? "en" : "id");
-  };
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
