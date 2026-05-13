@@ -8,6 +8,7 @@ import { ShinyText } from "@/components/ui/shiny-text";
 import BlurText from "@/components/ui/blur-text";
 import { Heart, ArrowRight, ChevronDown, Sparkles, Star, Droplets, Palette, Layers, AlertTriangle } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
+import Stack from "@/components/ui/Stack";
 
 interface ProductData {
   id: string;
@@ -150,11 +151,22 @@ export function HomeContent({ featuredProducts }: { featuredProducts: ProductDat
 
             <div className="relative flex justify-center lg:justify-end">
               <div className="relative">
-                <div className="relative w-72 h-80 sm:w-80 sm:h-96 lg:w-[380px] lg:h-[480px] rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white/60">
-                  <Image src="https://picsum.photos/seed/beauty-hero/800/1000" alt="Beauty hero" fill priority className="object-cover" data-ai-hint="beauty portrait" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent" />
-                </div>
-                <div className="absolute -top-4 -left-8 glass-card-strong rounded-2xl px-4 py-3 animate-float shadow-xl">
+                <Stack
+                  cards={[
+                    <img key="1" src="https://picsum.photos/seed/beauty-hero/800/1000" alt="Beauty portrait" className="card-image" />,
+                    <img key="2" src="https://picsum.photos/seed/makeup-look/800/1000" alt="Makeup look" className="card-image" />,
+                    <img key="3" src="https://picsum.photos/seed/skincare-glow/800/1000" alt="Skincare glow" className="card-image" />,
+                    <img key="4" src="https://picsum.photos/seed/beauty-routine/800/1000" alt="Beauty routine" className="card-image" />,
+                  ]}
+                  sendToBackOnClick
+                  autoplay
+                  autoplayDelay={4000}
+                  pauseOnHover
+                  mobileClickOnly
+                  randomRotation
+                  animationConfig={{ stiffness: 260, damping: 20 }}
+                />
+                <div className="absolute -top-4 -left-8 glass-card-strong rounded-2xl px-4 py-3 animate-float shadow-xl z-10">
                   <div className="flex items-center gap-2">
                     <div className="w-8 h-8 rounded-full gradient-bg flex items-center justify-center">
                       <Droplets className="h-4 w-4 text-white" />
@@ -165,7 +177,7 @@ export function HomeContent({ featuredProducts }: { featuredProducts: ProductDat
                     </div>
                   </div>
                 </div>
-                <div className="absolute -bottom-4 -right-6 glass-card-strong rounded-2xl px-4 py-3 animate-float-delayed shadow-xl">
+                <div className="absolute -bottom-4 -right-6 glass-card-strong rounded-2xl px-4 py-3 animate-float-delayed shadow-xl z-10">
                   <div className="flex items-center gap-2">
                     <div className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center">
                       <Palette className="h-4 w-4 text-white" />
