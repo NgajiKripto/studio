@@ -44,7 +44,6 @@ export default function RootLayout({
   return (
     <html lang="id">
       <head>
-        <meta name="theme-color" content="#C9BEFF" />
         <link rel="dns-prefetch" href="https://picsum.photos" />
         <link rel="dns-prefetch" href="https://images.unsplash.com" />
         <script
@@ -61,7 +60,7 @@ export default function RootLayout({
         </a>
         <LanguageProvider>
           <Navbar />
-          <div className="flex-grow" id="main-content">
+          <div className="flex-grow" id="main-content" role="main">
             {children}
           </div>
           <Footer />

@@ -146,6 +146,8 @@ export function DiagnosticQuiz() {
           <div
             key={type.id}
             onClick={() => setSkinType(type.id as SkinType)}
+            onKeyDown={(e) => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); setSkinType(type.id as SkinType); } }}
+            tabIndex={0}
             role="radio"
             aria-checked={skinType === type.id}
             className={cn(
@@ -264,6 +266,8 @@ export function DiagnosticQuiz() {
           <div
             key={shape.id}
             onClick={() => setFaceShape(shape.id as FaceShape)}
+            onKeyDown={(e) => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); setFaceShape(shape.id as FaceShape); } }}
+            tabIndex={0}
             role="radio"
             aria-checked={faceShape === shape.id}
             className={cn(
@@ -298,6 +302,8 @@ export function DiagnosticQuiz() {
       <div className="grid grid-cols-1 gap-3" role="radiogroup" aria-label="Activity options">
         <div
           onClick={() => setActivity("OUTDOOR")}
+          onKeyDown={(e) => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); setActivity("OUTDOOR"); } }}
+          tabIndex={0}
           role="radio"
           aria-checked={activity === "OUTDOOR"}
           className={cn(
@@ -316,6 +322,8 @@ export function DiagnosticQuiz() {
 
         <div
           onClick={() => setActivity("INDOOR")}
+          onKeyDown={(e) => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); setActivity("INDOOR"); } }}
+          tabIndex={0}
           role="radio"
           aria-checked={activity === "INDOOR"}
           className={cn(

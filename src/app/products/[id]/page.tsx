@@ -69,11 +69,13 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
             brand: { "@type": "Brand", name: product.brand },
             image: product.imageUrl,
             description: product.description || `${product.name} by ${product.brand}`,
-            offers: {
-              "@type": "Offer",
-              price: product.priceEstimate.replace(/[^0-9]/g, ""),
-              priceCurrency: "IDR",
-            },
+            ...(/^\D*(\d[\d.]*)\D*$/.test(product.priceEstimate) ? {
+              offers: {
+                "@type": "Offer",
+                price: product.priceEstimate.replace(/[^0-9]/g, ""),
+                priceCurrency: "IDR",
+              },
+            } : {}),
           }),
         }}
       />
@@ -84,7 +86,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
           {/* Image */}
-          <div className="space-y-4" aria-label="Product image gallery">
+          <div className="space-y-4" role="region" aria-label="Product image gallery">
             <div className="relative aspect-square rounded-2xl overflow-hidden bg-muted/50 border border-border/50">
               <Image
                 src={product.imageUrl}
