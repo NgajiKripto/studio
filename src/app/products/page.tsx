@@ -10,6 +10,7 @@ import { ProductsHeader } from "@/components/products/ProductsHeader";
 import { ProductsCount } from "@/components/products/ProductsCount";
 import { ProductsEmpty } from "@/components/products/ProductsEmpty";
 import { SkinType, SkinTone, FaceShape } from "@/lib/constants";
+import type { ProductWithRelations } from "@/lib/types";
 
 export const metadata: Metadata = {
   title: "Katalog Produk Makeup - Rekomendasi Sesuai Jenis Kulit",
@@ -39,13 +40,13 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
   const selectedFaceShapes = params.face_shapes ? (params.face_shapes.split(",") as FaceShape[]) : [];
   const searchQuery = params.q || "";
 
-  const whereClause: any = {
+  const whereClause = {
     AND: [
       searchQuery ? {
         OR: [
-          { name: { contains: searchQuery, mode: 'insensitive' } },
-          { brand: { contains: searchQuery, mode: 'insensitive' } },
-          { category: { contains: searchQuery, mode: 'insensitive' } },
+          { name: { contains: searchQuery, mode: 'insensitive' as const } },
+          { brand: { contains: searchQuery, mode: 'insensitive' as const } },
+          { category: { contains: searchQuery, mode: 'insensitive' as const } },
         ]
       } : {},
       selectedSkinTypes.length > 0 ? {
@@ -73,7 +74,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
   });
 
   return (
-    <main className="min-h-screen relative">
+    <main className="min-h-screen relative" aria-label="Product catalog">
       <div className="absolute top-0 right-0 w-96 h-96 bg-pink-200/20 rounded-full blur-3xl -z-10" />
       <div className="absolute bottom-40 left-0 w-80 h-80 bg-pink-100/20 rounded-full blur-3xl -z-10" />
 
@@ -82,7 +83,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
         <ProfileBanner />
 
         <div className="flex flex-col lg:flex-row gap-10 mt-10">
-          <aside className="hidden lg:block w-72 shrink-0">
+          <aside className="hidden lg:block w-72 shrink-0" aria-label="Filter products">
             <div className="sticky top-24 glass-card rounded-2xl p-6 shadow-lg">
               <ProductFilters />
             </div>
@@ -90,7 +91,9 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
 
           <div className="flex-grow">
             <div className="flex items-center justify-between mb-6">
-              <ProductsCount count={products.length} />
+              <div aria-live="polite" aria-atomic="true">
+                <ProductsCount count={products.length} />
+              </div>
               <div className="lg:hidden">
                 <ProductFilters isMobile />
               </div>
@@ -99,7 +102,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
             <Suspense fallback={<ProductSkeleton />}>
               {products.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-                  {products.map((product: any) => (
+                  {(products as ProductWithRelations[]).map((product) => (
                     <ProductCard key={product.id} product={product} />
                   ))}
                 </div>

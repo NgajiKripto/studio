@@ -1,5 +1,8 @@
 "use client";
 
+import { useEffect, useRef } from "react";
+import { Button } from "@/components/ui/button";
+
 export default function Error({
   error,
   reset,
@@ -7,18 +10,31 @@ export default function Error({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  const headingRef = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    headingRef.current?.focus();
+  }, []);
+
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center p-4">
-      <h2 className="text-2xl font-bold mb-4">Something went wrong</h2>
+    <div
+      className="flex min-h-screen flex-col items-center justify-center p-4"
+      role="alert"
+      aria-live="assertive"
+    >
+      <h2
+        ref={headingRef}
+        tabIndex={-1}
+        className="text-2xl font-bold mb-4 outline-none"
+      >
+        Something went wrong
+      </h2>
       <p className="text-muted-foreground mb-6">
         An unexpected error occurred. Please try again.
       </p>
-      <button
-        onClick={reset}
-        className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:opacity-90"
-      >
+      <Button onClick={reset}>
         Try again
-      </button>
+      </Button>
     </div>
   );
 }

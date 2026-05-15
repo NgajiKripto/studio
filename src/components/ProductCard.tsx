@@ -35,6 +35,8 @@ export function ProductCard({ product }: ProductCardProps) {
               e.preventDefault();
               setIsLiked(!isLiked);
             }}
+            aria-label={isLiked ? "Remove from favorites" : "Add to favorites"}
+            aria-pressed={isLiked}
             className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center shadow-md hover:bg-white hover:scale-110 transition-all duration-200"
           >
             <Heart

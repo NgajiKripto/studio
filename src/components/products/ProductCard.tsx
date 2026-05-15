@@ -5,9 +5,10 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Heart } from "lucide-react";
 import { cn } from "@/lib/utils";
+import type { ProductWithRelations } from "@/lib/types";
 
 interface ProductCardProps {
-  product: any;
+  product: ProductWithRelations;
 }
 
 export function ProductCard({ product }: ProductCardProps) {
@@ -20,9 +21,9 @@ export function ProductCard({ product }: ProductCardProps) {
         const profile = JSON.parse(savedProfile);
         let score = 0;
 
-        const skinTypeMatch = product.skinTypes.some((t: any) => t.skinType === profile.skinType);
-        const skinToneMatch = product.skinTones.some((t: any) => t.skinTone === profile.skinTone);
-        const faceShapeMatch = product.faceShapes.some((t: any) => t.faceShape === profile.faceShape);
+        const skinTypeMatch = product.skinTypes.some((t) => t.skinType === profile.skinType);
+        const skinToneMatch = product.skinTones.some((t) => t.skinTone === profile.skinTone);
+        const faceShapeMatch = product.faceShapes.some((t) => t.faceShape === profile.faceShape);
 
         if (skinTypeMatch) score += 40;
         if (skinToneMatch) score += 40;
@@ -40,7 +41,7 @@ export function ProductCard({ product }: ProductCardProps) {
       <div className="bg-muted/50 rounded-2xl overflow-hidden aspect-[4/5] relative mb-4">
         <Image
           src={product.imageUrl}
-          alt={product.name}
+          alt={`${product.name} by ${product.brand}`}
           fill
           className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
@@ -57,7 +58,10 @@ export function ProductCard({ product }: ProductCardProps) {
           </div>
         )}
 
-        <button className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-sm hover:bg-white transition-colors opacity-0 group-hover:opacity-100">
+        <button
+          aria-label={`Add ${product.name} to favorites`}
+          className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-sm hover:bg-white transition-colors opacity-0 group-hover:opacity-100"
+        >
           <Heart className="h-4 w-4 text-muted-foreground" />
         </button>
       </div>
