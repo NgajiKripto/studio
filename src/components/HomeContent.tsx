@@ -6,9 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Marquee } from "@/components/ui/marquee";
 import { ShinyText } from "@/components/ui/shiny-text";
 import BlurText from "@/components/ui/blur-text";
-import { Heart, ArrowRight, ChevronDown, Sparkles, Star, Droplets, Palette, Layers, AlertTriangle } from "lucide-react";
+import { ArrowRight, ChevronDown, Sparkles, Star, Droplets, Palette, Layers, ArrowUpRight } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
-import Stack from "@/components/ui/Stack";
 import { motion } from "motion/react";
 
 interface ProductData {
@@ -25,253 +24,257 @@ interface ProductData {
 
 const communityTestimonials = [
   {
-    id: "emma-wilson",
-    name: "Emma Wilson",
-    title: "Product Designer, TechCorp",
-    image: "https://picsum.photos/seed/community-emma/100/100",
-    body: "This design system has transformed our workflow. The components are intuitive and well-documented.",
+    id: "rina-pratiwi",
+    name: "Rina Pratiwi",
+    title: "Beauty Enthusiast",
+    image: "https://picsum.photos/seed/community-rina/100/100",
+    body: "Akhirnya nemu foundation yang beneran cocok sama jenis kulit aku. Gak geser lagi seharian!",
   },
   {
-    id: "lucas-chen",
-    name: "Lucas Chen",
-    title: "Frontend Developer, WebFlow",
-    image: "https://picsum.photos/seed/community-lucas/100/100",
-    body: "The components are well-structured and customizable. They've significantly reduced our development time.",
+    id: "maya-sari",
+    name: "Maya Sari",
+    title: "Content Creator",
+    image: "https://picsum.photos/seed/community-maya/100/100",
+    body: "Triple Skin Diagnostic-nya akurat banget. Shade yang direkomendasikan perfect match sama kulitku.",
   },
   {
-    id: "sophia-martinez",
-    name: "Sophia Martinez",
-    title: "UI/UX Lead, DesignHub",
-    image: "https://picsum.photos/seed/community-sophia/100/100",
-    body: "Every component feels polished and professional. It's become our go-to resource for all projects.",
+    id: "anisa-dewi",
+    name: "Anisa Dewi",
+    title: "MUA Professional",
+    image: "https://picsum.photos/seed/community-anisa/100/100",
+    body: "Sebagai MUA, aku appreciate banget sistem rekomendasi ini. Membantu client-ku nemuin produk yang pas.",
   },
   {
-    id: "oliver-thompson",
-    name: "Oliver Thompson",
-    title: "Creative Director, StudioX",
-    image: "https://picsum.photos/seed/community-oliver/100/100",
-    body: "This design system brings consistency and efficiency to our creative process. Beautiful and functional.",
+    id: "dian-kusuma",
+    name: "Dian Kusuma",
+    title: "Skincare Lover",
+    image: "https://picsum.photos/seed/community-dian/100/100",
+    body: "Dari dulu selalu salah pilih shade. Sekarang berkat Muakeup, makeup shopping jadi jauh lebih mudah.",
   },
 ];
 
 function TestimonialCard({ item }: { item: (typeof communityTestimonials)[number] }) {
   return (
-    <article className="glass-card rounded-3xl p-6 w-[320px] md:w-[360px] hover-lift">
+    <article className="editorial-card rounded-2xl p-6 w-[300px] md:w-[340px]">
       <div className="flex items-center gap-1 mb-4">
         {[1, 2, 3, 4, 5].map((index) => (
-          <Star key={index} className="h-4 w-4 text-amber-400 fill-amber-400" />
+          <Star key={index} className="h-3.5 w-3.5 text-primary fill-primary" />
         ))}
       </div>
-      <p className="text-muted-foreground text-sm leading-relaxed mb-6">&quot;{item.body}&quot;</p>
+      <p className="text-muted-foreground text-sm leading-relaxed mb-6 font-body italic">
+        &ldquo;{item.body}&rdquo;
+      </p>
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full overflow-hidden ring-2 ring-primary/30">
-          <Image src={item.image} alt={item.name} width={40} height={40} className="object-cover" />
+        <div className="w-9 h-9 rounded-full overflow-hidden ring-1 ring-border">
+          <Image src={item.image} alt={item.name} width={36} height={36} className="object-cover" />
         </div>
         <div>
-          <p className="font-semibold text-sm text-foreground">{item.name}</p>
-          <p className="text-xs text-muted-foreground">{item.title}</p>
+          <p className="font-medium text-sm text-foreground font-body">{item.name}</p>
+          <p className="text-xs text-muted-foreground font-body">{item.title}</p>
         </div>
       </div>
     </article>
   );
 }
 
+
+
 export function HomeContent({ featuredProducts }: { featuredProducts: ProductData[] }) {
   const { t } = useLanguage();
-  const startQuizShineProps = {
-    color: "rgba(255,255,255,0.88)",
-    shineColor: "#ffffff",
-    spread: 110,
-    speed: 2.2,
-    delay: 0.4,
-  } as const;
 
   return (
     <main className="flex flex-col">
-      {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center overflow-hidden" role="region" aria-labelledby="hero-heading">
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-pink-200/40 rounded-full blur-3xl animate-float" aria-hidden="true" />
-          <div className="absolute -bottom-40 -left-40 w-[600px] h-[600px] bg-pink-100/30 rounded-full blur-3xl animate-float-delayed" aria-hidden="true" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-rose-50/50 rounded-full blur-3xl" aria-hidden="true" />
+      {/* Hero Section — Editorial, dramatic */}
+      <section className="relative min-h-[92vh] flex items-center overflow-hidden noise-texture" role="region" aria-labelledby="hero-heading">
+        {/* Subtle organic shapes */}
+        <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
+          <div className="absolute top-20 right-[10%] w-[400px] h-[400px] bg-primary/8 rounded-full blur-[100px] animate-float" />
+          <div className="absolute bottom-20 left-[5%] w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] animate-float-delayed" />
+          <div className="absolute top-1/3 left-1/3 w-[200px] h-[200px] bg-accent/5 rounded-full blur-[80px]" />
         </div>
 
-        <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-            <div className="space-y-8">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card text-xs font-semibold tracking-wide uppercase text-secondary">
-                <Sparkles className="h-3.5 w-3.5" />
-                {t.home.badge}
+        <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+            {/* Left content - spans 7 cols */}
+            <div className="lg:col-span-7 space-y-8">
+              <div className="flex items-center gap-3">
+                <div className="decorative-line" />
+                <span className="text-xs font-medium tracking-[0.2em] uppercase text-muted-foreground font-body">
+                  {t.home.badge}
+                </span>
               </div>
 
-              <h1 id="hero-heading" className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-foreground leading-[1.05] tracking-tight">
+              <h1 id="hero-heading" className="text-5xl md:text-6xl lg:text-[5.5rem] font-bold text-foreground leading-[1.0] tracking-tight">
                 <BlurText text={t.home.heroTitle1} delay={100} className="inline" animateBy="words" direction="top" />
                 <br />
-                <BlurText text={t.home.heroTitle2} delay={100} className="inline text-foreground" animateBy="words" direction="top" />
+                <span className="italic text-primary">
+                  <BlurText text={t.home.heroTitle2} delay={200} className="inline" animateBy="words" direction="top" />
+                </span>
               </h1>
 
-              <p className="text-muted-foreground text-lg max-w-lg leading-relaxed">
+              <p className="text-muted-foreground text-lg max-w-xl leading-relaxed font-body font-light">
                 {t.home.heroDescription}
               </p>
 
-              <div className="flex flex-wrap gap-4 pt-2">
-                <Button size="lg" className="rounded-full px-8 font-semibold gradient-bg text-white border-0 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 h-12" asChild>
+              <div className="flex flex-wrap items-center gap-4 pt-4">
+                <Button size="lg" className="rounded-full px-8 h-13 font-body font-medium bg-secondary text-secondary-foreground hover:bg-secondary/90 transition-all duration-300 shadow-none hover:shadow-lg" asChild>
                   <Link href="/diagnostic">
-                    <Sparkles className="h-4 w-4 mr-2" />
                     <ShinyText
                       text={t.home.startQuiz}
-                      {...startQuizShineProps}
+                      color="rgba(255,255,255,0.88)"
+                      shineColor="#ffffff"
+                      spread={110}
+                      speed={2.2}
+                      delay={0.4}
                     />
+                    <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
-                <Button variant="outline" size="lg" className="rounded-full px-8 font-semibold glass-card hover:bg-white/80 transition-all duration-300 h-12" asChild>
+                <Button variant="ghost" size="lg" className="rounded-full px-8 h-13 font-body font-medium text-foreground hover:bg-muted/50 transition-all duration-300" asChild>
                   <Link href="/products">
-                    {t.home.exploreCatalog} <ArrowRight className="ml-2 h-4 w-4" />
+                    {t.home.exploreCatalog}
                   </Link>
                 </Button>
               </div>
 
-              <div className="flex items-center gap-4 pt-4">
+              {/* Social proof */}
+              <div className="flex items-center gap-5 pt-6 border-t border-border/50">
                 <div className="flex -space-x-2">
                   {[1, 2, 3, 4].map((i) => (
-                    <div key={i} className="w-8 h-8 rounded-full border-2 border-white overflow-hidden shadow-sm">
+                    <div key={i} className="w-8 h-8 rounded-full border-2 border-background overflow-hidden">
                       <Image src={`https://picsum.photos/seed/user${i}/100/100`} alt={`User ${i}`} width={32} height={32} className="object-cover" />
                     </div>
                   ))}
                 </div>
-                <div className="text-sm">
-                  <div className="flex items-center gap-1">
+                <div>
+                  <div className="flex items-center gap-0.5">
                     {[1, 2, 3, 4, 5].map((i) => (
-                      <Star key={i} className="h-3.5 w-3.5 text-amber-400 fill-amber-400" />
+                      <Star key={i} className="h-3 w-3 text-primary fill-primary" />
                     ))}
                   </div>
-                  <p className="text-muted-foreground text-xs mt-0.5">{t.home.lovedByUsers}</p>
+                  <p className="text-muted-foreground text-xs mt-0.5 font-body">{t.home.lovedByUsers}</p>
                 </div>
               </div>
             </div>
 
-            <div className="relative flex justify-center lg:justify-end">
-              <div className="relative">
-                <Stack
-                  cards={[
-                    <div key="1" className="card-image" style={{ position: "relative", width: "100%", height: "100%" }}><Image src="https://picsum.photos/seed/beauty-hero/800/1000" alt="Beauty portrait" fill className="object-cover" /></div>,
-                    <div key="2" className="card-image" style={{ position: "relative", width: "100%", height: "100%" }}><Image src="https://picsum.photos/seed/makeup-look/800/1000" alt="Makeup look" fill className="object-cover" /></div>,
-                    <div key="3" className="card-image" style={{ position: "relative", width: "100%", height: "100%" }}><Image src="https://picsum.photos/seed/skincare-glow/800/1000" alt="Skincare glow" fill className="object-cover" /></div>,
-                    <div key="4" className="card-image" style={{ position: "relative", width: "100%", height: "100%" }}><Image src="https://picsum.photos/seed/beauty-routine/800/1000" alt="Beauty routine" fill className="object-cover" /></div>,
-                  ]}
-                  sendToBackOnClick
-                  autoplay
-                  autoplayDelay={4000}
-                  pauseOnHover
-                  mobileClickOnly
-                  randomRotation
-                  animationConfig={{ stiffness: 260, damping: 20 }}
+            {/* Right - Hero Image */}
+            <div className="lg:col-span-5 relative">
+              <div className="relative aspect-[3/4] rounded-[2rem] overflow-hidden shadow-2xl shadow-primary/10">
+                <Image
+                  src="https://picsum.photos/seed/beauty-editorial/800/1060"
+                  alt="Beauty editorial portrait"
+                  fill
+                  className="object-cover"
+                  priority
                 />
-                <div className="absolute -top-4 -left-8 glass-card-strong rounded-2xl px-4 py-3 animate-float shadow-xl z-10">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full gradient-bg flex items-center justify-center">
-                      <Droplets className="h-4 w-4 text-white" />
-                    </div>
-                    <div>
-                      <p className="text-xs font-bold text-foreground">{t.home.skinTypeAnalyzed}</p>
-                      <p className="text-[10px] text-muted-foreground">{t.home.analyzed}</p>
-                    </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-secondary/30 via-transparent to-transparent" />
+              </div>
+
+              {/* Floating badge top-left */}
+              <div className="absolute -top-3 -left-4 lg:-left-8 glass-card-strong rounded-xl px-4 py-3 animate-float shadow-lg z-10">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                    <Droplets className="h-4 w-4 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-foreground font-body">{t.home.skinTypeAnalyzed}</p>
+                    <p className="text-[10px] text-muted-foreground font-body">{t.home.analyzed}</p>
                   </div>
                 </div>
-                <div className="absolute -bottom-4 -right-6 glass-card-strong rounded-2xl px-4 py-3 animate-float-delayed shadow-xl z-10">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center">
-                      <Palette className="h-4 w-4 text-white" />
-                    </div>
-                    <div>
-                      <p className="text-xs font-bold text-foreground">{t.home.perfectMatch}</p>
-                      <p className="text-[10px] text-muted-foreground">{t.home.accurate}</p>
-                    </div>
+              </div>
+
+              {/* Floating badge bottom-right */}
+              <div className="absolute -bottom-3 -right-4 lg:-right-8 glass-card-strong rounded-xl px-4 py-3 animate-float-delayed shadow-lg z-10">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                    <Palette className="h-4 w-4 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-foreground font-body">{t.home.perfectMatch}</p>
+                    <p className="text-[10px] text-muted-foreground font-body">{t.home.accurate}</p>
                   </div>
                 </div>
-                <div className="absolute -bottom-8 -left-8 w-32 h-32 rounded-full bg-primary/20 blur-2xl -z-10" />
-                <div className="absolute -top-8 -right-8 w-24 h-24 rounded-full bg-secondary/20 blur-2xl -z-10" />
               </div>
             </div>
           </div>
         </div>
 
+        {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
-          <div className="w-10 h-10 rounded-full glass-card flex items-center justify-center animate-bounce shadow-md">
-            <ChevronDown className="h-5 w-5 text-secondary" />
+          <div className="w-8 h-12 rounded-full border border-border/60 flex items-start justify-center p-2">
+            <div className="w-1 h-2 rounded-full bg-primary animate-bounce" />
           </div>
         </div>
       </section>
 
-      {/* Problem Solving Section */}
+
+
+      {/* Problem Section — Editorial grid */}
       <motion.section
-        className="relative py-24 lg:py-32"
+        className="relative py-28 lg:py-36 noise-texture"
         role="region"
         aria-labelledby="problem-solving-heading"
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-pink-50 via-rose-50/60 to-pink-50" />
+        <div className="section-divider mb-28" />
         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-2xl mx-auto text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-pink-100 text-pink-700 text-xs font-semibold mb-4">
-              <AlertTriangle className="h-3 w-3" />
-              {t.home.commonProblem}
+          <div className="max-w-xl mx-auto text-center mb-16">
+            <div className="flex items-center justify-center gap-3 mb-6">
+              <div className="decorative-line" />
+              <span className="text-xs font-medium tracking-[0.2em] uppercase text-muted-foreground font-body">
+                {t.home.commonProblem}
+              </span>
+              <div className="decorative-line" />
             </div>
-            <h2 id="problem-solving-heading" className="text-4xl md:text-5xl font-extrabold text-foreground mb-5 tracking-tight">
-              <span className="gradient-text">{t.home.whyWrongMakeup}</span>
+            <h2 id="problem-solving-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 tracking-tight text-balance">
+              {t.home.whyWrongMakeup}
             </h2>
-            <p className="text-muted-foreground text-lg leading-relaxed">{t.home.problemDescription}</p>
+            <p className="text-muted-foreground text-base leading-relaxed font-body">{t.home.problemDescription}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-            <article className="glass-card rounded-3xl p-8 hover-lift group">
+            <article className="editorial-card rounded-2xl p-8 group">
               <div className="mb-6">
-                <div className="w-14 h-14 rounded-2xl bg-rose-100 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300">
-                  <span className="text-2xl" role="img" aria-label="skin">💧</span>
-                </div>
-                <h3 className="text-xl font-bold text-foreground mb-2">{t.home.problem1Title}</h3>
+                <span className="text-4xl font-display font-bold text-primary/20">01</span>
+                <h3 className="text-xl font-display font-bold text-foreground mt-3 mb-2">{t.home.problem1Title}</h3>
               </div>
-              <p className="text-muted-foreground text-sm leading-relaxed mb-4">{t.home.problem1Desc}</p>
-              <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-green-50 border border-green-200">
-                <Sparkles className="h-3.5 w-3.5 text-green-600" />
-                <span className="text-xs font-semibold text-green-700">{t.home.problem1Solution}</span>
+              <p className="text-muted-foreground text-sm leading-relaxed font-body mb-6">{t.home.problem1Desc}</p>
+              <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-primary/5 border border-primary/10 w-fit">
+                <Sparkles className="h-3 w-3 text-primary" />
+                <span className="text-xs font-medium text-primary font-body">{t.home.problem1Solution}</span>
               </div>
             </article>
 
-            <article className="glass-card rounded-3xl p-8 hover-lift group">
+            <article className="editorial-card rounded-2xl p-8 group">
               <div className="mb-6">
-                <div className="w-14 h-14 rounded-2xl bg-amber-100 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300">
-                  <span className="text-2xl" role="img" aria-label="shade">🎨</span>
-                </div>
-                <h3 className="text-xl font-bold text-foreground mb-2">{t.home.problem2Title}</h3>
+                <span className="text-4xl font-display font-bold text-primary/20">02</span>
+                <h3 className="text-xl font-display font-bold text-foreground mt-3 mb-2">{t.home.problem2Title}</h3>
               </div>
-              <p className="text-muted-foreground text-sm leading-relaxed mb-4">{t.home.problem2Desc}</p>
-              <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-green-50 border border-green-200">
-                <Sparkles className="h-3.5 w-3.5 text-green-600" />
-                <span className="text-xs font-semibold text-green-700">{t.home.problem2Solution}</span>
+              <p className="text-muted-foreground text-sm leading-relaxed font-body mb-6">{t.home.problem2Desc}</p>
+              <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-primary/5 border border-primary/10 w-fit">
+                <Sparkles className="h-3 w-3 text-primary" />
+                <span className="text-xs font-medium text-primary font-body">{t.home.problem2Solution}</span>
               </div>
             </article>
 
-            <article className="glass-card rounded-3xl p-8 hover-lift group">
+            <article className="editorial-card rounded-2xl p-8 group">
               <div className="mb-6">
-                <div className="w-14 h-14 rounded-2xl bg-purple-100 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300">
-                  <span className="text-2xl" role="img" aria-label="contour">✨</span>
-                </div>
-                <h3 className="text-xl font-bold text-foreground mb-2">{t.home.problem3Title}</h3>
+                <span className="text-4xl font-display font-bold text-primary/20">03</span>
+                <h3 className="text-xl font-display font-bold text-foreground mt-3 mb-2">{t.home.problem3Title}</h3>
               </div>
-              <p className="text-muted-foreground text-sm leading-relaxed mb-4">{t.home.problem3Desc}</p>
-              <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-green-50 border border-green-200">
-                <Sparkles className="h-3.5 w-3.5 text-green-600" />
-                <span className="text-xs font-semibold text-green-700">{t.home.problem3Solution}</span>
+              <p className="text-muted-foreground text-sm leading-relaxed font-body mb-6">{t.home.problem3Desc}</p>
+              <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-primary/5 border border-primary/10 w-fit">
+                <Sparkles className="h-3 w-3 text-primary" />
+                <span className="text-xs font-medium text-primary font-body">{t.home.problem3Solution}</span>
               </div>
             </article>
           </div>
 
-          <div className="mt-12 text-center">
-            <Button size="lg" className="rounded-full px-10 font-semibold gradient-bg text-white border-0 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 h-12" asChild>
+          <div className="mt-14 text-center">
+            <Button size="lg" className="rounded-full px-10 h-13 font-body font-medium bg-secondary text-secondary-foreground hover:bg-secondary/90 transition-all duration-300" asChild>
               <Link href="/diagnostic">
                 {t.home.tryQuiz} <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
@@ -280,76 +283,93 @@ export function HomeContent({ featuredProducts }: { featuredProducts: ProductDat
         </div>
       </motion.section>
 
+
+
       {/* Triple Skin Diagnostic Section */}
       <motion.section
-        className="relative py-24 lg:py-32"
+        className="relative py-28 lg:py-36 bg-secondary text-secondary-foreground noise-texture overflow-hidden"
         role="region"
         aria-labelledby="triple-skin-heading"
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
         viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        transition={{ duration: 0.8 }}
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-pink-50 via-rose-50/60 to-pink-50" />
+        {/* Decorative circles */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/[0.02] rounded-full -translate-y-1/2 translate-x-1/3" aria-hidden="true" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-white/[0.02] rounded-full translate-y-1/2 -translate-x-1/3" aria-hidden="true" />
+
         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-2xl mx-auto text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary/10 text-secondary text-xs font-semibold mb-4">
-              <Layers className="h-3 w-3" />
-              {t.home.howItWorks}
+          <div className="max-w-xl mx-auto text-center mb-16">
+            <div className="flex items-center justify-center gap-3 mb-6">
+              <div className="w-12 h-px bg-white/20" />
+              <span className="text-xs font-medium tracking-[0.2em] uppercase text-white/60 font-body">
+                {t.home.howItWorks}
+              </span>
+              <div className="w-12 h-px bg-white/20" />
             </div>
-            <h2 id="triple-skin-heading" className="text-4xl md:text-5xl font-extrabold text-foreground mb-5 tracking-tight">
+            <h2 id="triple-skin-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 tracking-tight text-balance">
               {t.home.tripleSkinTitle}{" "}
-              <span className="gradient-text">Diagnostic</span>
+              <span className="italic text-primary">&ldquo;Diagnostic&rdquo;</span>
             </h2>
-            <p className="text-muted-foreground text-lg leading-relaxed">{t.home.tripleSkinDesc}</p>
+            <p className="text-white/60 text-base leading-relaxed font-body">{t.home.tripleSkinDesc}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-            <div className="glass-card rounded-3xl p-8 hover-lift group">
+            <motion.div
+              className="bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/8 transition-all duration-500 group"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+            >
               <div className="mb-6">
-                <div className="w-14 h-14 rounded-2xl gradient-bg flex items-center justify-center mb-5 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                  <Droplets className="w-6 h-6 text-white" />
+                <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mb-5 group-hover:bg-primary/30 transition-colors">
+                  <Droplets className="w-5 h-5 text-primary" />
                 </div>
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="text-xs font-bold text-secondary uppercase tracking-wider">{t.home.step01}</span>
-                  <div className="h-px flex-1 bg-border/50" />
-                </div>
-                <h3 className="text-2xl font-bold text-foreground">{t.home.skinType}</h3>
+                <span className="text-xs font-medium text-white/40 uppercase tracking-wider font-body">{t.home.step01}</span>
+                <h3 className="text-2xl font-display font-bold text-white mt-2">{t.home.skinType}</h3>
               </div>
-              <p className="text-muted-foreground text-sm leading-relaxed">{t.home.skinTypeDesc}</p>
-            </div>
+              <p className="text-white/50 text-sm leading-relaxed font-body">{t.home.skinTypeDesc}</p>
+            </motion.div>
 
-            <div className="glass-card rounded-3xl p-8 hover-lift group">
+            <motion.div
+              className="bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/8 transition-all duration-500 group"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+            >
               <div className="mb-6">
-                <div className="w-14 h-14 rounded-2xl bg-secondary flex items-center justify-center mb-5 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                  <Palette className="w-6 h-6 text-white" />
+                <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mb-5 group-hover:bg-primary/30 transition-colors">
+                  <Palette className="w-5 h-5 text-primary" />
                 </div>
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="text-xs font-bold text-secondary uppercase tracking-wider">{t.home.step02}</span>
-                  <div className="h-px flex-1 bg-border/50" />
-                </div>
-                <h3 className="text-2xl font-bold text-foreground">{t.home.skinTone}</h3>
+                <span className="text-xs font-medium text-white/40 uppercase tracking-wider font-body">{t.home.step02}</span>
+                <h3 className="text-2xl font-display font-bold text-white mt-2">{t.home.skinTone}</h3>
               </div>
-              <p className="text-muted-foreground text-sm leading-relaxed">{t.home.skinToneDesc}</p>
-            </div>
+              <p className="text-white/50 text-sm leading-relaxed font-body">{t.home.skinToneDesc}</p>
+            </motion.div>
 
-            <div className="glass-card rounded-3xl p-8 hover-lift group">
+            <motion.div
+              className="bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/8 transition-all duration-500 group"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+            >
               <div className="mb-6">
-                <div className="w-14 h-14 rounded-2xl bg-foreground flex items-center justify-center mb-5 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                  <Layers className="w-6 h-6 text-white" />
+                <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mb-5 group-hover:bg-primary/30 transition-colors">
+                  <Layers className="w-5 h-5 text-primary" />
                 </div>
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="text-xs font-bold text-secondary uppercase tracking-wider">{t.home.step03}</span>
-                  <div className="h-px flex-1 bg-border/50" />
-                </div>
-                <h3 className="text-2xl font-bold text-foreground">{t.home.faceShape}</h3>
+                <span className="text-xs font-medium text-white/40 uppercase tracking-wider font-body">{t.home.step03}</span>
+                <h3 className="text-2xl font-display font-bold text-white mt-2">{t.home.faceShape}</h3>
               </div>
-              <p className="text-muted-foreground text-sm leading-relaxed">{t.home.faceShapeDesc}</p>
-            </div>
+              <p className="text-white/50 text-sm leading-relaxed font-body">{t.home.faceShapeDesc}</p>
+            </motion.div>
           </div>
 
-          <div className="mt-12 text-center">
-            <Button size="lg" className="rounded-full px-10 font-semibold gradient-bg text-white border-0 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 h-12" asChild>
+          <div className="mt-14 text-center">
+            <Button size="lg" className="rounded-full px-10 h-13 font-body font-medium bg-white text-secondary hover:bg-white/90 transition-all duration-300" asChild>
               <Link href="/diagnostic">
                 {t.home.startFreeDiagnostic} <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
@@ -358,55 +378,54 @@ export function HomeContent({ featuredProducts }: { featuredProducts: ProductDat
         </div>
       </motion.section>
 
+
+
       {/* Featured Catalog Section */}
       <motion.section
-        className="py-24 lg:py-32 relative"
+        className="py-28 lg:py-36 relative noise-texture"
         role="region"
         aria-labelledby="featured-catalog-heading"
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-pink-50 via-rose-50/60 to-pink-50" aria-hidden="true" />
-        <div className="absolute top-20 right-0 w-96 h-96 bg-pink-200/20 rounded-full blur-3xl" aria-hidden="true" />
         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-12 gap-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-14 gap-4">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/20 text-foreground text-xs font-semibold mb-4">
-                <Star className="h-3 w-3 text-secondary" />
-                {t.home.curatedForYou}
+              <div className="flex items-center gap-3 mb-4">
+                <div className="decorative-line" />
+                <span className="text-xs font-medium tracking-[0.2em] uppercase text-muted-foreground font-body">
+                  {t.home.curatedForYou}
+                </span>
               </div>
-              <h2 id="featured-catalog-heading" className="text-4xl md:text-5xl font-extrabold text-foreground tracking-tight">{t.home.featuredCatalog}</h2>
-              <p className="text-muted-foreground mt-3 text-lg">{t.home.featuredDesc}</p>
+              <h2 id="featured-catalog-heading" className="text-4xl md:text-5xl font-bold text-foreground tracking-tight">{t.home.featuredCatalog}</h2>
+              <p className="text-muted-foreground mt-3 text-base font-body">{t.home.featuredDesc}</p>
             </div>
-            <Link href="/products" className="hidden md:inline-flex items-center gap-2 text-sm font-semibold text-secondary hover:text-secondary/80 transition-colors group">
+            <Link href="/products" className="hidden md:inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-primary transition-colors group font-body">
               {t.home.viewAll}
-              <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              <ArrowUpRight className="h-4 w-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </Link>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {featuredProducts.map((product) => (
               <Link key={product.id} href={`/products/${product.id}`} className="group block">
-                <div className="glass-card rounded-2xl overflow-hidden hover-lift">
-                  <div className="relative aspect-[4/5] overflow-hidden bg-gradient-to-br from-primary/10 to-secondary/10">
-                    <Image src={product.imageUrl} alt={product.name} fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
+                <div className="editorial-card rounded-2xl overflow-hidden">
+                  <div className="relative aspect-[4/5] overflow-hidden bg-muted/30">
+                    <Image src={product.imageUrl} alt={product.name} fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <button aria-label="Add to favorites" className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center shadow-md hover:bg-white hover:scale-110 transition-all">
-                      <Heart className="h-4 w-4 text-muted-foreground" />
-                    </button>
                     <div className="absolute top-3 left-3">
-                      <span className="px-2.5 py-1 rounded-full bg-white/80 backdrop-blur-md text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">{product.category}</span>
+                      <span className="px-2.5 py-1 rounded-full bg-white/90 backdrop-blur-sm text-[10px] font-medium uppercase tracking-wider text-muted-foreground font-body">{product.category}</span>
                     </div>
                   </div>
                   <div className="p-4 space-y-1.5">
-                    <h3 className="font-semibold text-foreground group-hover:text-secondary transition-colors line-clamp-1 text-sm">{product.name}</h3>
+                    <h3 className="font-body font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-1 text-sm">{product.name}</h3>
                     <div className="flex items-center justify-between">
-                      <p className="text-sm font-bold text-foreground">{product.priceEstimate}</p>
+                      <p className="text-sm font-bold text-foreground font-body">{product.priceEstimate}</p>
                       <div className="flex items-center gap-0.5">
-                        <Star className="h-3 w-3 text-amber-400 fill-amber-400" />
-                        <span className="text-xs text-muted-foreground">4.8</span>
+                        <Star className="h-3 w-3 text-primary fill-primary" />
+                        <span className="text-xs text-muted-foreground font-body">4.8</span>
                       </div>
                     </div>
                   </div>
@@ -416,47 +435,50 @@ export function HomeContent({ featuredProducts }: { featuredProducts: ProductDat
           </div>
 
           <div className="mt-10 text-center md:hidden">
-            <Button variant="outline" className="rounded-full glass-card" asChild>
+            <Button variant="outline" className="rounded-full font-body" asChild>
               <Link href="/products">{t.home.viewAllProducts}</Link>
             </Button>
           </div>
         </div>
       </motion.section>
 
+
+
       {/* Testimonials Section */}
       <motion.section
-        className="py-24 lg:py-32 relative overflow-hidden"
+        className="py-28 lg:py-36 relative overflow-hidden"
         role="region"
         aria-labelledby="testimonials-heading"
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-pink-50 via-rose-50/60 to-pink-50" aria-hidden="true" />
-        <div className="absolute top-0 left-0 w-80 h-80 bg-pink-200/20 rounded-full blur-3xl" aria-hidden="true" />
-        <div className="absolute bottom-0 right-0 w-64 h-64 bg-pink-300/10 rounded-full blur-3xl" aria-hidden="true" />
+        <div className="section-divider mb-28" />
         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-2xl mx-auto text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/20 text-foreground text-xs font-semibold mb-4">
-              <Heart className="h-3 w-3 text-pink-400 fill-pink-400" />
-              {t.home.testimonials}
+          <div className="max-w-xl mx-auto text-center mb-16">
+            <div className="flex items-center justify-center gap-3 mb-6">
+              <div className="decorative-line" />
+              <span className="text-xs font-medium tracking-[0.2em] uppercase text-muted-foreground font-body">
+                {t.home.testimonials}
+              </span>
+              <div className="decorative-line" />
             </div>
-            <h2 id="testimonials-heading" className="text-4xl md:text-5xl font-extrabold text-foreground tracking-tight">
+            <h2 id="testimonials-heading" className="text-4xl md:text-5xl font-bold text-foreground tracking-tight">
               {t.home.whatCommunitySays}{" "}
-              <span className="gradient-text">{t.home.says}</span>
+              <span className="italic text-primary">{t.home.says}</span>
             </h2>
           </div>
 
           <div className="relative mx-auto max-w-6xl overflow-hidden" aria-label="Customer testimonials">
-            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-background to-transparent" />
-            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-background to-transparent" />
-            <Marquee pauseOnHover className="[--duration:42s] py-2">
+            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-32 bg-gradient-to-r from-background to-transparent" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-32 bg-gradient-to-l from-background to-transparent" />
+            <Marquee pauseOnHover className="[--duration:45s] py-2">
               {communityTestimonials.map((item) => (
                 <TestimonialCard key={`community-left-${item.id}`} item={item} />
               ))}
             </Marquee>
-            <Marquee reverse pauseOnHover className="[--duration:48s] py-2 mt-4">
+            <Marquee reverse pauseOnHover className="[--duration:50s] py-2 mt-4">
               {communityTestimonials.map((item) => (
                 <TestimonialCard key={`community-right-${item.id}`} item={item} />
               ))}
@@ -465,42 +487,40 @@ export function HomeContent({ featuredProducts }: { featuredProducts: ProductDat
         </div>
       </motion.section>
 
-      {/* CTA Section */}
+      {/* CTA Section — Dramatic, full-width */}
       <motion.section
-        className="py-24 lg:py-32 relative overflow-hidden"
+        className="py-28 lg:py-40 relative overflow-hidden noise-texture"
         role="region"
         aria-labelledby="cta-heading"
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
         viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        transition={{ duration: 0.8 }}
       >
-        <div className="absolute inset-0 bg-gradient-to-br from-pink-100 via-rose-50 to-pink-100" aria-hidden="true" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.4),transparent_70%)]" aria-hidden="true" />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/5" aria-hidden="true" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[150px]" aria-hidden="true" />
+
         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="max-w-2xl mx-auto space-y-6">
-            <h2 id="cta-heading" className="text-4xl md:text-5xl font-extrabold text-foreground tracking-tight">
+          <div className="max-w-2xl mx-auto space-y-8">
+            <h2 id="cta-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight text-balance">
               {t.home.readyToFind}{" "}
-              <span className="gradient-text">{t.home.readyToFindHighlight}</span>
+              <span className="italic text-primary">{t.home.readyToFindHighlight}</span>
             </h2>
-            <p className="text-muted-foreground text-lg leading-relaxed">{t.home.ctaDescription}</p>
+            <p className="text-muted-foreground text-lg leading-relaxed font-body">{t.home.ctaDescription}</p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-              <Button size="lg" className="rounded-full px-10 font-semibold gradient-bg text-white border-0 shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 h-13 text-base w-full sm:w-auto" asChild>
+              <Button size="lg" className="rounded-full px-10 h-14 font-body font-medium bg-secondary text-secondary-foreground hover:bg-secondary/90 transition-all duration-300 text-base w-full sm:w-auto" asChild>
                 <Link href="/diagnostic">
                   <Sparkles className="h-4 w-4 mr-2" />
-                  <ShinyText
-                    text={t.home.startQuiz}
-                    {...startQuizShineProps}
-                  />
+                  {t.home.startQuiz}
                 </Link>
               </Button>
-              <Button variant="outline" size="lg" className="rounded-full px-10 font-semibold border-2 border-foreground/20 hover:bg-white/80 transition-all duration-300 h-13 text-base w-full sm:w-auto" asChild>
+              <Button variant="outline" size="lg" className="rounded-full px-10 h-14 font-body font-medium border-border hover:bg-muted/50 transition-all duration-300 text-base w-full sm:w-auto" asChild>
                 <Link href="/products">
                   {t.home.seeAllProducts} <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
             </div>
-            <p className="text-sm text-muted-foreground pt-2">{t.home.proMuaRecommendation}</p>
+            <p className="text-xs text-muted-foreground pt-2 font-body tracking-wide">{t.home.proMuaRecommendation}</p>
           </div>
         </div>
       </motion.section>
