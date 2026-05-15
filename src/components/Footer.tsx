@@ -8,11 +8,11 @@ export function Footer() {
   const { t } = useLanguage();
 
   return (
-    <footer className="relative overflow-hidden">
+    <footer aria-label="Site footer" className="relative overflow-hidden">
       {/* Background gradient decoration */}
-      <div className="absolute inset-0 gradient-bg-soft opacity-50" />
-      <div className="absolute top-0 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 right-1/4 w-48 h-48 bg-secondary/10 rounded-full blur-3xl" />
+      <div className="absolute inset-0 gradient-bg-soft opacity-50" aria-hidden="true" />
+      <div className="absolute top-0 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl" aria-hidden="true" />
+      <div className="absolute bottom-0 right-1/4 w-48 h-48 bg-secondary/10 rounded-full blur-3xl" aria-hidden="true" />
 
       <div className="relative border-t border-white/40">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
@@ -38,7 +38,7 @@ export function Footer() {
             </div>
 
             {/* Quick Links */}
-            <div className="space-y-4">
+            <nav aria-label="Explore links" className="space-y-4">
               <h3 className="font-semibold text-sm text-foreground uppercase tracking-wider">
                 {t.footer.explore}
               </h3>
@@ -59,36 +59,36 @@ export function Footer() {
                   </Link>
                 </li>
               </ul>
-            </div>
+            </nav>
 
             {/* Legal */}
-            <div className="space-y-4">
+            <nav aria-label="Company links" className="space-y-4">
               <h3 className="font-semibold text-sm text-foreground uppercase tracking-wider">
                 {t.footer.company}
               </h3>
               <ul className="space-y-2.5">
                 <li>
-                  <Link href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  <Link href="#" aria-disabled="true" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                     {t.footer.aboutUs}
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  <Link href="#" aria-disabled="true" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                     {t.footer.privacyPolicy}
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  <Link href="#" aria-disabled="true" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                     {t.footer.termsOfService}
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  <Link href="#" aria-disabled="true" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                     {t.footer.contactUs}
                   </Link>
                 </li>
               </ul>
-            </div>
+            </nav>
           </div>
 
           {/* Bottom Bar */}

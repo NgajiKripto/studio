@@ -9,6 +9,7 @@ import BlurText from "@/components/ui/blur-text";
 import { Heart, ArrowRight, ChevronDown, Sparkles, Star, Droplets, Palette, Layers, AlertTriangle } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
 import Stack from "@/components/ui/Stack";
+import { motion } from "motion/react";
 
 interface ProductData {
   id: string;
@@ -17,9 +18,9 @@ interface ProductData {
   category: string;
   imageUrl: string;
   priceEstimate: string;
-  skinTypes: any[];
-  skinTones: any[];
-  faceShapes: any[];
+  skinTypes: { id: string; productId: string; skinType: string }[];
+  skinTones: { id: string; productId: string; skinTone: string }[];
+  faceShapes: { id: string; productId: string; faceShape: string }[];
 }
 
 const communityTestimonials = [
@@ -88,11 +89,11 @@ export function HomeContent({ featuredProducts }: { featuredProducts: ProductDat
   return (
     <main className="flex flex-col">
       {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center overflow-hidden">
+      <section className="relative min-h-[90vh] flex items-center overflow-hidden" role="region" aria-labelledby="hero-heading">
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-pink-200/40 rounded-full blur-3xl animate-float" />
-          <div className="absolute -bottom-40 -left-40 w-[600px] h-[600px] bg-pink-100/30 rounded-full blur-3xl animate-float-delayed" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-rose-50/50 rounded-full blur-3xl" />
+          <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-pink-200/40 rounded-full blur-3xl animate-float" aria-hidden="true" />
+          <div className="absolute -bottom-40 -left-40 w-[600px] h-[600px] bg-pink-100/30 rounded-full blur-3xl animate-float-delayed" aria-hidden="true" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-rose-50/50 rounded-full blur-3xl" aria-hidden="true" />
         </div>
 
         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
@@ -103,7 +104,7 @@ export function HomeContent({ featuredProducts }: { featuredProducts: ProductDat
                 {t.home.badge}
               </div>
 
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-foreground leading-[1.05] tracking-tight">
+              <h1 id="hero-heading" className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-foreground leading-[1.05] tracking-tight">
                 <BlurText text={t.home.heroTitle1} delay={100} className="inline" animateBy="words" direction="top" />
                 <br />
                 <BlurText text={t.home.heroTitle2} delay={100} className="inline text-foreground" animateBy="words" direction="top" />
@@ -153,10 +154,10 @@ export function HomeContent({ featuredProducts }: { featuredProducts: ProductDat
               <div className="relative">
                 <Stack
                   cards={[
-                    <img key="1" src="https://picsum.photos/seed/beauty-hero/800/1000" alt="Beauty portrait" className="card-image" />,
-                    <img key="2" src="https://picsum.photos/seed/makeup-look/800/1000" alt="Makeup look" className="card-image" />,
-                    <img key="3" src="https://picsum.photos/seed/skincare-glow/800/1000" alt="Skincare glow" className="card-image" />,
-                    <img key="4" src="https://picsum.photos/seed/beauty-routine/800/1000" alt="Beauty routine" className="card-image" />,
+                    <div key="1" className="card-image" style={{ position: "relative", width: "100%", height: "100%" }}><Image src="https://picsum.photos/seed/beauty-hero/800/1000" alt="Beauty portrait" fill className="object-cover" /></div>,
+                    <div key="2" className="card-image" style={{ position: "relative", width: "100%", height: "100%" }}><Image src="https://picsum.photos/seed/makeup-look/800/1000" alt="Makeup look" fill className="object-cover" /></div>,
+                    <div key="3" className="card-image" style={{ position: "relative", width: "100%", height: "100%" }}><Image src="https://picsum.photos/seed/skincare-glow/800/1000" alt="Skincare glow" fill className="object-cover" /></div>,
+                    <div key="4" className="card-image" style={{ position: "relative", width: "100%", height: "100%" }}><Image src="https://picsum.photos/seed/beauty-routine/800/1000" alt="Beauty routine" fill className="object-cover" /></div>,
                   ]}
                   sendToBackOnClick
                   autoplay
@@ -203,7 +204,15 @@ export function HomeContent({ featuredProducts }: { featuredProducts: ProductDat
       </section>
 
       {/* Problem Solving Section */}
-      <section className="relative py-24 lg:py-32">
+      <motion.section
+        className="relative py-24 lg:py-32"
+        role="region"
+        aria-labelledby="problem-solving-heading"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
         <div className="absolute inset-0 bg-gradient-to-b from-pink-50 via-rose-50/60 to-pink-50" />
         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mx-auto text-center mb-16">
@@ -211,7 +220,7 @@ export function HomeContent({ featuredProducts }: { featuredProducts: ProductDat
               <AlertTriangle className="h-3 w-3" />
               {t.home.commonProblem}
             </div>
-            <h2 className="text-4xl md:text-5xl font-extrabold text-foreground mb-5 tracking-tight">
+            <h2 id="problem-solving-heading" className="text-4xl md:text-5xl font-extrabold text-foreground mb-5 tracking-tight">
               <span className="gradient-text">{t.home.whyWrongMakeup}</span>
             </h2>
             <p className="text-muted-foreground text-lg leading-relaxed">{t.home.problemDescription}</p>
@@ -269,10 +278,18 @@ export function HomeContent({ featuredProducts }: { featuredProducts: ProductDat
             </Button>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Triple Skin Diagnostic Section */}
-      <section className="relative py-24 lg:py-32">
+      <motion.section
+        className="relative py-24 lg:py-32"
+        role="region"
+        aria-labelledby="triple-skin-heading"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
         <div className="absolute inset-0 bg-gradient-to-b from-pink-50 via-rose-50/60 to-pink-50" />
         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mx-auto text-center mb-16">
@@ -280,7 +297,7 @@ export function HomeContent({ featuredProducts }: { featuredProducts: ProductDat
               <Layers className="h-3 w-3" />
               {t.home.howItWorks}
             </div>
-            <h2 className="text-4xl md:text-5xl font-extrabold text-foreground mb-5 tracking-tight">
+            <h2 id="triple-skin-heading" className="text-4xl md:text-5xl font-extrabold text-foreground mb-5 tracking-tight">
               {t.home.tripleSkinTitle}{" "}
               <span className="gradient-text">Diagnostic</span>
             </h2>
@@ -339,12 +356,20 @@ export function HomeContent({ featuredProducts }: { featuredProducts: ProductDat
             </Button>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Featured Catalog Section */}
-      <section className="py-24 lg:py-32 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-pink-50 via-rose-50/60 to-pink-50" />
-        <div className="absolute top-20 right-0 w-96 h-96 bg-pink-200/20 rounded-full blur-3xl" />
+      <motion.section
+        className="py-24 lg:py-32 relative"
+        role="region"
+        aria-labelledby="featured-catalog-heading"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-pink-50 via-rose-50/60 to-pink-50" aria-hidden="true" />
+        <div className="absolute top-20 right-0 w-96 h-96 bg-pink-200/20 rounded-full blur-3xl" aria-hidden="true" />
         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-12 gap-4">
             <div>
@@ -352,7 +377,7 @@ export function HomeContent({ featuredProducts }: { featuredProducts: ProductDat
                 <Star className="h-3 w-3 text-secondary" />
                 {t.home.curatedForYou}
               </div>
-              <h2 className="text-4xl md:text-5xl font-extrabold text-foreground tracking-tight">{t.home.featuredCatalog}</h2>
+              <h2 id="featured-catalog-heading" className="text-4xl md:text-5xl font-extrabold text-foreground tracking-tight">{t.home.featuredCatalog}</h2>
               <p className="text-muted-foreground mt-3 text-lg">{t.home.featuredDesc}</p>
             </div>
             <Link href="/products" className="hidden md:inline-flex items-center gap-2 text-sm font-semibold text-secondary hover:text-secondary/80 transition-colors group">
@@ -368,7 +393,7 @@ export function HomeContent({ featuredProducts }: { featuredProducts: ProductDat
                   <div className="relative aspect-[4/5] overflow-hidden bg-gradient-to-br from-primary/10 to-secondary/10">
                     <Image src={product.imageUrl} alt={product.name} fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <button className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center shadow-md hover:bg-white hover:scale-110 transition-all">
+                    <button aria-label="Add to favorites" className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center shadow-md hover:bg-white hover:scale-110 transition-all">
                       <Heart className="h-4 w-4 text-muted-foreground" />
                     </button>
                     <div className="absolute top-3 left-3">
@@ -396,26 +421,34 @@ export function HomeContent({ featuredProducts }: { featuredProducts: ProductDat
             </Button>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Testimonials Section */}
-      <section className="py-24 lg:py-32 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-pink-50 via-rose-50/60 to-pink-50" />
-        <div className="absolute top-0 left-0 w-80 h-80 bg-pink-200/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-0 w-64 h-64 bg-pink-300/10 rounded-full blur-3xl" />
+      <motion.section
+        className="py-24 lg:py-32 relative overflow-hidden"
+        role="region"
+        aria-labelledby="testimonials-heading"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-pink-50 via-rose-50/60 to-pink-50" aria-hidden="true" />
+        <div className="absolute top-0 left-0 w-80 h-80 bg-pink-200/20 rounded-full blur-3xl" aria-hidden="true" />
+        <div className="absolute bottom-0 right-0 w-64 h-64 bg-pink-300/10 rounded-full blur-3xl" aria-hidden="true" />
         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mx-auto text-center mb-16">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/20 text-foreground text-xs font-semibold mb-4">
               <Heart className="h-3 w-3 text-pink-400 fill-pink-400" />
               {t.home.testimonials}
             </div>
-            <h2 className="text-4xl md:text-5xl font-extrabold text-foreground tracking-tight">
+            <h2 id="testimonials-heading" className="text-4xl md:text-5xl font-extrabold text-foreground tracking-tight">
               {t.home.whatCommunitySays}{" "}
               <span className="gradient-text">{t.home.says}</span>
             </h2>
           </div>
 
-          <div className="relative mx-auto max-w-6xl overflow-hidden">
+          <div className="relative mx-auto max-w-6xl overflow-hidden" aria-label="Customer testimonials">
             <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-background to-transparent" />
             <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-background to-transparent" />
             <Marquee pauseOnHover className="[--duration:42s] py-2">
@@ -430,15 +463,23 @@ export function HomeContent({ featuredProducts }: { featuredProducts: ProductDat
             </Marquee>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* CTA Section */}
-      <section className="py-24 lg:py-32 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-pink-100 via-rose-50 to-pink-100" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.4),transparent_70%)]" />
+      <motion.section
+        className="py-24 lg:py-32 relative overflow-hidden"
+        role="region"
+        aria-labelledby="cta-heading"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-br from-pink-100 via-rose-50 to-pink-100" aria-hidden="true" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.4),transparent_70%)]" aria-hidden="true" />
         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="max-w-2xl mx-auto space-y-6">
-            <h2 className="text-4xl md:text-5xl font-extrabold text-foreground tracking-tight">
+            <h2 id="cta-heading" className="text-4xl md:text-5xl font-extrabold text-foreground tracking-tight">
               {t.home.readyToFind}{" "}
               <span className="gradient-text">{t.home.readyToFindHighlight}</span>
             </h2>
@@ -462,7 +503,7 @@ export function HomeContent({ featuredProducts }: { featuredProducts: ProductDat
             <p className="text-sm text-muted-foreground pt-2">{t.home.proMuaRecommendation}</p>
           </div>
         </div>
-      </section>
+      </motion.section>
     </main>
   );
 }

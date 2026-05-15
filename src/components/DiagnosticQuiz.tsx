@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ConfettiButton } from "@/components/ui/confetti-button";
@@ -59,9 +59,11 @@ export function DiagnosticQuiz() {
   const [activity, setActivity] = useState<Activity | null>(null);
   const [consentGiven, setConsentGiven] = useState(false);
   const [results, setResults] = useState<DiagnosticProfile | null>(null);
+  const stepHeadingRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
     setProgress((step / 4) * 100);
+    stepHeadingRef.current?.focus();
   }, [step]);
 
   const calculateUndertone = () => {
@@ -129,11 +131,11 @@ export function DiagnosticQuiz() {
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="text-center space-y-2">
         <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{t.diagnostic.step1of3}</p>
-        <h2 className="font-headline text-2xl md:text-3xl font-bold text-foreground">{t.diagnostic.whatSkinType}</h2>
+        <h2 ref={step === 1 ? stepHeadingRef : undefined} tabIndex={-1} className="font-headline text-2xl md:text-3xl font-bold text-foreground outline-none">{t.diagnostic.whatSkinType}</h2>
         <p className="text-muted-foreground text-sm">{t.diagnostic.skinTypeInstruction}</p>
       </div>
 
-      <div className="grid grid-cols-1 gap-3">
+      <div className="grid grid-cols-1 gap-3" role="radiogroup" aria-label="Skin type options">
         {[
           { id: "OILY", label: t.diagnostic.oily, desc: t.diagnostic.oilyDesc },
           { id: "DRY", label: t.diagnostic.dry, desc: t.diagnostic.dryDesc },
@@ -144,6 +146,10 @@ export function DiagnosticQuiz() {
           <div
             key={type.id}
             onClick={() => setSkinType(type.id as SkinType)}
+            onKeyDown={(e) => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); setSkinType(type.id as SkinType); } }}
+            tabIndex={0}
+            role="radio"
+            aria-checked={skinType === type.id}
             className={cn(
               "p-4 rounded-xl border-2 transition-all cursor-pointer hover:border-primary/50",
               skinType === type.id ? "border-primary bg-primary/5" : "border-border bg-card"
@@ -166,7 +172,7 @@ export function DiagnosticQuiz() {
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="text-center space-y-2">
         <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{t.diagnostic.step2of3}</p>
-        <h2 className="font-headline text-2xl md:text-3xl font-bold text-foreground">{t.diagnostic.skinToneUndertone}</h2>
+        <h2 ref={step === 2 ? stepHeadingRef : undefined} tabIndex={-1} className="font-headline text-2xl md:text-3xl font-bold text-foreground outline-none">{t.diagnostic.skinToneUndertone}</h2>
         <p className="text-muted-foreground text-sm">{t.diagnostic.skinToneInstruction}</p>
       </div>
 
@@ -183,7 +189,7 @@ export function DiagnosticQuiz() {
                 key={opt.val}
                 variant={undertoneAnswers.jewelry === opt.val ? "default" : "outline"}
                 className="rounded-xl h-11"
-                onClick={() => setUndertoneAnswers({...undertoneAnswers, jewelry: opt.val as any})}
+                onClick={() => setUndertoneAnswers({...undertoneAnswers, jewelry: opt.val as "WARM" | "COOL" | "NEUTRAL"})}
               >
                 {opt.label}
               </Button>
@@ -203,7 +209,7 @@ export function DiagnosticQuiz() {
                 key={opt.val}
                 variant={undertoneAnswers.veins === opt.val ? "default" : "outline"}
                 className="rounded-xl h-11"
-                onClick={() => setUndertoneAnswers({...undertoneAnswers, veins: opt.val as any})}
+                onClick={() => setUndertoneAnswers({...undertoneAnswers, veins: opt.val as "WARM" | "COOL" | "NEUTRAL"})}
               >
                 {opt.label}
               </Button>
@@ -223,7 +229,7 @@ export function DiagnosticQuiz() {
             ].map((d) => (
               <div
                 key={d.id}
-                onClick={() => setSkinDepth(d.id as any)}
+                onClick={() => setSkinDepth(d.id as "FAIR" | "LIGHT" | "MEDIUM" | "TAN" | "DEEP")}
                 className="flex flex-col items-center gap-2 cursor-pointer"
               >
                 <div className={cn(
@@ -244,11 +250,11 @@ export function DiagnosticQuiz() {
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="text-center space-y-2">
         <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{t.diagnostic.step3of3}</p>
-        <h2 className="font-headline text-2xl md:text-3xl font-bold text-foreground">{t.diagnostic.faceShapeTitle}</h2>
+        <h2 ref={step === 3 ? stepHeadingRef : undefined} tabIndex={-1} className="font-headline text-2xl md:text-3xl font-bold text-foreground outline-none">{t.diagnostic.faceShapeTitle}</h2>
         <p className="text-muted-foreground text-sm">{t.diagnostic.faceShapeInstruction}</p>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4" role="radiogroup" aria-label="Face shape options">
         {[
           { id: "OVAL", label: t.diagnostic.oval },
           { id: "ROUND", label: t.diagnostic.round },
@@ -260,6 +266,10 @@ export function DiagnosticQuiz() {
           <div
             key={shape.id}
             onClick={() => setFaceShape(shape.id as FaceShape)}
+            onKeyDown={(e) => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); setFaceShape(shape.id as FaceShape); } }}
+            tabIndex={0}
+            role="radio"
+            aria-checked={faceShape === shape.id}
             className={cn(
               "flex flex-col items-center p-5 rounded-2xl border-2 transition-all cursor-pointer",
               faceShape === shape.id ? "border-primary bg-primary/5" : "border-border bg-card hover:border-primary/30"
@@ -285,13 +295,17 @@ export function DiagnosticQuiz() {
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="text-center space-y-2">
         <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{t.diagnostic.step4of4}</p>
-        <h2 className="font-headline text-2xl md:text-3xl font-bold text-foreground">{t.diagnostic.activityTitle}</h2>
+        <h2 ref={step === 4 ? stepHeadingRef : undefined} tabIndex={-1} className="font-headline text-2xl md:text-3xl font-bold text-foreground outline-none">{t.diagnostic.activityTitle}</h2>
         <p className="text-muted-foreground text-sm">{t.diagnostic.activityInstruction}</p>
       </div>
 
-      <div className="grid grid-cols-1 gap-3">
+      <div className="grid grid-cols-1 gap-3" role="radiogroup" aria-label="Activity options">
         <div
           onClick={() => setActivity("OUTDOOR")}
+          onKeyDown={(e) => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); setActivity("OUTDOOR"); } }}
+          tabIndex={0}
+          role="radio"
+          aria-checked={activity === "OUTDOOR"}
           className={cn(
             "p-4 rounded-xl border-2 transition-all cursor-pointer hover:border-primary/50",
             activity === "OUTDOOR" ? "border-primary bg-primary/5" : "border-border bg-card"
@@ -308,6 +322,10 @@ export function DiagnosticQuiz() {
 
         <div
           onClick={() => setActivity("INDOOR")}
+          onKeyDown={(e) => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); setActivity("INDOOR"); } }}
+          tabIndex={0}
+          role="radio"
+          aria-checked={activity === "INDOOR"}
           className={cn(
             "p-4 rounded-xl border-2 transition-all cursor-pointer hover:border-primary/50",
             activity === "INDOOR" ? "border-primary bg-primary/5" : "border-border bg-card"
@@ -427,7 +445,7 @@ export function DiagnosticQuiz() {
 
   return (
     <Card className="w-full max-w-xl mx-auto overflow-hidden border border-border/50 shadow-lg bg-card rounded-2xl">
-      <div className="px-8 pt-8">
+      <div className="px-8 pt-8" aria-live="polite">
         {step < 5 && <Progress value={progress} className="h-1.5 bg-muted rounded-full" />}
       </div>
 

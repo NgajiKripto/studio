@@ -52,13 +52,33 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
   }
 
   const tags = {
-    skinTypes: product.skinTypes.map(t => t.skinType),
-    skinTones: product.skinTones.map(t => t.skinTone),
-    faceShapes: product.faceShapes.map(t => t.faceShape),
+    skinTypes: product.skinTypes.map((t: { skinType: string }) => t.skinType),
+    skinTones: product.skinTones.map((t: { skinTone: string }) => t.skinTone),
+    faceShapes: product.faceShapes.map((t: { faceShape: string }) => t.faceShape),
   };
 
   return (
     <main className="min-h-screen bg-background">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            name: product.name,
+            brand: { "@type": "Brand", name: product.brand },
+            image: product.imageUrl,
+            description: product.description || `${product.name} by ${product.brand}`,
+            ...(/^\D*(\d[\d.]*)\D*$/.test(product.priceEstimate) ? {
+              offers: {
+                "@type": "Offer",
+                price: product.priceEstimate.replace(/[^0-9]/g, ""),
+                priceCurrency: "IDR",
+              },
+            } : {}),
+          }),
+        }}
+      />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <Link href="/products" className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-foreground mb-10 transition-colors">
           <ArrowLeft className="h-4 w-4 mr-2" /> Back to Catalog
@@ -66,7 +86,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
           {/* Image */}
-          <div className="space-y-4">
+          <div className="space-y-4" role="region" aria-label="Product image gallery">
             <div className="relative aspect-square rounded-2xl overflow-hidden bg-muted/50 border border-border/50">
               <Image
                 src={product.imageUrl}
@@ -78,7 +98,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
             </div>
             <div className="grid grid-cols-3 gap-3">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="relative aspect-square rounded-xl overflow-hidden bg-muted/50 border border-border/50 opacity-70 hover:opacity-100 transition-opacity cursor-pointer">
+                <div key={i} role="img" aria-label={`${product.name} detail view ${i}`} className="relative aspect-square rounded-xl overflow-hidden bg-muted/50 border border-border/50 opacity-70 hover:opacity-100 transition-opacity cursor-pointer">
                   <Image
                     src={`https://picsum.photos/seed/detail-${id}-${i}/400/400`}
                     alt={`${product.name} dari ${product.brand} - tampilan detail ${i}`}
@@ -137,7 +157,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
               <div className="space-y-2">
                 <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Best For</h4>
                 <div className="flex flex-wrap gap-1.5">
-                  {tags.skinTypes.map(t => (
+                  {tags.skinTypes.map((t: string) => (
                     <span key={t} className="text-xs font-medium bg-secondary px-3 py-1 rounded-full">{t}</span>
                   ))}
                 </div>
@@ -145,7 +165,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
               <div className="space-y-2">
                 <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Face Shapes</h4>
                 <div className="flex flex-wrap gap-1.5">
-                  {tags.faceShapes.map(s => (
+                  {tags.faceShapes.map((s: string) => (
                     <span key={s} className="text-xs font-medium border border-border px-3 py-1 rounded-full">{s}</span>
                   ))}
                 </div>
@@ -161,7 +181,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
 export async function generateStaticParams() {
   try {
     const products = await prisma.product.findMany({ select: { id: true } });
-    return products.map((p) => ({ id: p.id }));
+    return products.map((p: { id: string }) => ({ id: p.id }));
   } catch (error) {
     const errorName = error instanceof Error ? error.name : String(error);
     if (errorName !== "PrismaClientInitializationError") {
