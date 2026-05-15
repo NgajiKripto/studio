@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { Menu, Sparkles, Globe, Home, Search, LayoutDashboard, ShoppingBag } from "lucide-react";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/i18n";
 import CircularNavigation from "@/components/ui/circular-navigation-bar";
 
@@ -107,16 +106,6 @@ export function Navbar() {
                 {locale === "id" ? "EN" : "ID"}
               </button>
 
-              <Button
-                size="sm"
-                className="rounded-full px-6 font-semibold gradient-bg text-white border-0 shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
-                onClick={toggleMenu}
-                aria-expanded={isOpen}
-                aria-label={isOpen ? "Close menu" : "Open menu"}
-              >
-                <Menu className="h-3.5 w-3.5 mr-1.5" />
-                Menu
-              </Button>
             </div>
 
             {/* Mobile Menu Button */}
