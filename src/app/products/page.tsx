@@ -74,23 +74,24 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
   });
 
   return (
-    <main className="min-h-screen relative" aria-label="Product catalog">
-      <div className="absolute top-0 right-0 w-96 h-96 bg-pink-200/20 rounded-full blur-3xl -z-10" />
-      <div className="absolute bottom-40 left-0 w-80 h-80 bg-pink-100/20 rounded-full blur-3xl -z-10" />
+    <main className="min-h-screen relative noise-texture" aria-label="Product catalog">
+      {/* Subtle background accents */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/3 rounded-full blur-[150px] -z-10" aria-hidden="true" />
+      <div className="absolute bottom-40 left-0 w-[400px] h-[400px] bg-primary/3 rounded-full blur-[120px] -z-10" aria-hidden="true" />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <ProductsHeader />
         <ProfileBanner />
 
-        <div className="flex flex-col lg:flex-row gap-10 mt-10">
+        <div className="flex flex-col lg:flex-row gap-10 mt-12">
           <aside className="hidden lg:block w-72 shrink-0" aria-label="Filter products">
-            <div className="sticky top-24 glass-card rounded-2xl p-6 shadow-lg">
+            <div className="sticky top-24 bg-card border border-border/50 rounded-2xl p-6 shadow-sm">
               <ProductFilters />
             </div>
           </aside>
 
           <div className="flex-grow">
-            <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center justify-between mb-8">
               <div aria-live="polite" aria-atomic="true">
                 <ProductsCount count={products.length} />
               </div>

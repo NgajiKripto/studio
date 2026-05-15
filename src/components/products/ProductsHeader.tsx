@@ -1,6 +1,5 @@
 "use client";
 
-import { Sparkles } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
 
 export function ProductsHeader() {
@@ -8,14 +7,16 @@ export function ProductsHeader() {
 
   return (
     <header className="mb-10">
-      <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary/10 text-secondary text-xs font-semibold mb-4">
-        <Sparkles className="h-3 w-3" />
-        {t.products.badge}
+      <div className="flex items-center gap-3 mb-4">
+        <div className="w-8 h-px bg-primary/60" />
+        <span className="text-xs font-medium tracking-[0.2em] uppercase text-muted-foreground font-body">
+          {t.products.badge}
+        </span>
       </div>
-      <h1 className="text-4xl md:text-5xl font-extrabold text-foreground mb-3 tracking-tight">
+      <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4 tracking-tight">
         {t.products.title}
       </h1>
-      <p className="text-muted-foreground text-lg">
+      <p className="text-muted-foreground text-base font-body max-w-lg">
         {t.products.description}
       </p>
     </header>

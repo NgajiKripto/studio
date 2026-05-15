@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     description: 'Temukan makeup yang cocok untuk jenis kulit, warna kulit, dan bentuk wajahmu. Rekomendasi dari MUA profesional.',
   },
   other: {
-    'theme-color': '#C9BEFF',
+    'theme-color': '#C17B3E',
   },
 };
 
