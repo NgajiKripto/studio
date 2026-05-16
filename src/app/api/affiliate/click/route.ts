@@ -69,7 +69,14 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.redirect(finalUrl.toString(), 302);
   } catch (error) {
-    console.error("Affiliate click tracking error:", error instanceof Error ? error.message : "Unknown error");
+    const message = error instanceof Error ? error.message : "Unknown error";
+    console.error("Affiliate click tracking error:", message);
+    if (message.includes("DATABASE_URL") || (error as any)?.name === "PrismaClientInitializationError") {
+      return NextResponse.json(
+        { error: "Database service unavailable" },
+        { status: 503 }
+      );
+    }
 
     return NextResponse.json(
       { error: "Internal server error" },

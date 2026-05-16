@@ -22,7 +22,11 @@ export async function GET() {
     });
     return NextResponse.json(products);
   } catch (error) {
-    console.error("Product fetch failed:", error instanceof Error ? error.message : "Unknown error");
+    const message = error instanceof Error ? error.message : "Unknown error";
+    console.error("Product fetch failed:", message);
+    if (message.includes("DATABASE_URL") || (error as any)?.name === "PrismaClientInitializationError") {
+      return NextResponse.json({ error: 'Database service unavailable' }, { status: 503 });
+    }
     return NextResponse.json({ error: 'Failed to fetch products' }, { status: 500 });
   }
 }
@@ -70,7 +74,11 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(product);
   } catch (error) {
-    console.error("Product creation failed:", error instanceof Error ? error.message : "Unknown error");
+    const message = error instanceof Error ? error.message : "Unknown error";
+    console.error("Product creation failed:", message);
+    if (message.includes("DATABASE_URL") || (error as any)?.name === "PrismaClientInitializationError") {
+      return NextResponse.json({ error: 'Database service unavailable' }, { status: 503 });
+    }
     return NextResponse.json({ error: 'Failed to create product' }, { status: 500 });
   }
 }

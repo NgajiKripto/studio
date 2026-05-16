@@ -64,7 +64,25 @@ export default function RecommendPage() {
         });
         setResults(response);
       } catch (error) {
-        console.error("Failed to fetch recommendations:", error);
+        console.error("AI recommendations failed, falling back to filter-based:", error);
+        // Fallback: filter products by matching criteria
+        const filtered = products.filter((p: any) => {
+          const matchesSkinType = p.skinTypes?.some((st: any) => st.skinType === profile.skinType);
+          const matchesSkinTone = p.skinTones?.some((st: any) => st.skinTone === profile.skinTone);
+          const matchesFaceShape = p.faceShapes?.some((fs: any) => fs.faceShape === profile.faceShape);
+          return matchesSkinType || matchesSkinTone || matchesFaceShape;
+        });
+        const fallbackResults = filtered.slice(0, 6).map((p: any) => ({
+          id: p.id,
+          name: p.name,
+          brand: p.brand || "",
+          imageUrl: p.imageUrl || "/placeholder.png",
+          reasonsForRecommendation: p.muaVerdict || "Cocok berdasarkan profil kecantikan kamu.",
+        }));
+        setResults({
+          recommendations: fallbackResults,
+          _fallback: true,
+        } as any);
       } finally {
         setLoading(false);
       }
@@ -234,6 +252,11 @@ export default function RecommendPage() {
                   <div className="text-center">
                     <h2 className="font-headline text-3xl md:text-4xl font-bold mb-2">{t.recommend.recommendedForYou}</h2>
                     <p className="text-muted-foreground text-sm">{t.recommend.basedOnProfile}</p>
+                    {(results as any)._fallback && (
+                      <p className="text-xs text-amber-600 mt-2 bg-amber-50 dark:bg-amber-950/30 inline-block px-3 py-1 rounded-full">
+                        Rekomendasi berbasis filter (AI tidak tersedia)
+                      </p>
+                    )}
                   </div>
 
                   <div className="space-y-6">

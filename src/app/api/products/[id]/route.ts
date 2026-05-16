@@ -30,7 +30,11 @@ export async function GET(
 
     return NextResponse.json(product);
   } catch (error) {
-    console.error("Product fetch failed:", error instanceof Error ? error.message : "Unknown error");
+    const message = error instanceof Error ? error.message : "Unknown error";
+    console.error("Product fetch failed:", message);
+    if (message.includes("DATABASE_URL") || (error as any)?.name === "PrismaClientInitializationError") {
+      return NextResponse.json({ error: 'Database service unavailable' }, { status: 503 });
+    }
     return NextResponse.json({ error: 'Failed to fetch product' }, { status: 500 });
   }
 }
@@ -97,7 +101,11 @@ export async function PUT(
 
     return NextResponse.json(product);
   } catch (error) {
-    console.error("Product operation failed:", error instanceof Error ? error.message : "Unknown error");
+    const message = error instanceof Error ? error.message : "Unknown error";
+    console.error("Product operation failed:", message);
+    if (message.includes("DATABASE_URL") || (error as any)?.name === "PrismaClientInitializationError") {
+      return NextResponse.json({ error: 'Database service unavailable' }, { status: 503 });
+    }
     return NextResponse.json({ error: 'Failed to update product' }, { status: 500 });
   }
 }
@@ -120,7 +128,11 @@ export async function DELETE(
     });
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("Product deletion failed:", error instanceof Error ? error.message : "Unknown error");
+    const message = error instanceof Error ? error.message : "Unknown error";
+    console.error("Product deletion failed:", message);
+    if (message.includes("DATABASE_URL") || (error as any)?.name === "PrismaClientInitializationError") {
+      return NextResponse.json({ error: 'Database service unavailable' }, { status: 503 });
+    }
     return NextResponse.json({ error: 'Failed to delete product' }, { status: 500 });
   }
 }
