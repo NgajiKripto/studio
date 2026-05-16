@@ -40,38 +40,44 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
   const selectedFaceShapes = params.face_shapes ? (params.face_shapes.split(",") as FaceShape[]) : [];
   const searchQuery = params.q || "";
 
-  const whereClause = {
-    AND: [
-      searchQuery ? {
-        OR: [
-          { name: { contains: searchQuery, mode: 'insensitive' as const } },
-          { brand: { contains: searchQuery, mode: 'insensitive' as const } },
-          { category: { contains: searchQuery, mode: 'insensitive' as const } },
-        ]
-      } : {},
-      selectedSkinTypes.length > 0 ? {
-        skinTypes: { some: { skinType: { in: selectedSkinTypes } } }
-      } : {},
-      selectedSkinTones.length > 0 ? {
-        skinTones: { some: { skinTone: { in: selectedSkinTones } } }
-      } : {},
-      selectedFaceShapes.length > 0 ? {
-        faceShapes: { some: { faceShape: { in: selectedFaceShapes } } }
-      } : {},
-    ]
-  };
+  let products: ProductWithRelations[] = [];
 
-  const products = await prisma.product.findMany({
-    where: whereClause,
-    include: {
-      skinTypes: true,
-      skinTones: true,
-      faceShapes: true,
-    },
-    orderBy: {
-      name: 'asc'
-    }
-  });
+  try {
+    const whereClause = {
+      AND: [
+        searchQuery ? {
+          OR: [
+            { name: { contains: searchQuery, mode: 'insensitive' as const } },
+            { brand: { contains: searchQuery, mode: 'insensitive' as const } },
+            { category: { contains: searchQuery, mode: 'insensitive' as const } },
+          ]
+        } : {},
+        selectedSkinTypes.length > 0 ? {
+          skinTypes: { some: { skinType: { in: selectedSkinTypes } } }
+        } : {},
+        selectedSkinTones.length > 0 ? {
+          skinTones: { some: { skinTone: { in: selectedSkinTones } } }
+        } : {},
+        selectedFaceShapes.length > 0 ? {
+          faceShapes: { some: { faceShape: { in: selectedFaceShapes } } }
+        } : {},
+      ]
+    };
+
+    products = await prisma.product.findMany({
+      where: whereClause,
+      include: {
+        skinTypes: true,
+        skinTones: true,
+        faceShapes: true,
+      },
+      orderBy: {
+        name: 'asc'
+      }
+    }) as ProductWithRelations[];
+  } catch (error) {
+    console.error("Failed to fetch products:", error instanceof Error ? error.message : "Unknown error");
+  }
 
   return (
     <main className="min-h-screen relative noise-texture" aria-label="Product catalog">

@@ -2,19 +2,19 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Product } from "@/lib/mock-data";
+import type { ProductWithRelations } from "@/lib/types";
 import { Heart, Star, ArrowUpRight } from "lucide-react";
 import { useState } from "react";
 
 interface ProductCardProps {
-  product: Product;
+  product: ProductWithRelations;
 }
 
 export function ProductCard({ product }: ProductCardProps) {
   const [isLiked, setIsLiked] = useState(false);
 
   return (
-    <Link href={`/product/${product.id}`} className="group block">
+    <Link href={`/products/${product.id}`} className="group block">
       <div className="glass-card rounded-2xl overflow-hidden hover-lift">
         {/* Image Container */}
         <div className="relative aspect-[4/5] overflow-hidden bg-gradient-to-br from-primary/10 to-secondary/10">

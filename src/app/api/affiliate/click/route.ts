@@ -1,6 +1,7 @@
 export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { isDatabaseUnavailable } from "@/lib/db-utils";
 import { affiliateClickSchema } from "@/lib/validations";
 
 export async function GET(request: NextRequest) {
@@ -70,6 +71,12 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(finalUrl.toString(), 302);
   } catch (error) {
     console.error("Affiliate click tracking error:", error instanceof Error ? error.message : "Unknown error");
+    if (isDatabaseUnavailable(error)) {
+      return NextResponse.json(
+        { error: "Database service unavailable" },
+        { status: 503 }
+      );
+    }
 
     return NextResponse.json(
       { error: "Internal server error" },

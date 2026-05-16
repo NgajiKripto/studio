@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { isDatabaseUnavailable } from "@/lib/db-utils";
 import { z } from "zod";
 
 const quizResultSchema = z.object({
@@ -49,7 +50,14 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     );
   } catch (error) {
-    console.error("Error saving quiz result:", error);
+    const message = error instanceof Error ? error.message : "Unknown error";
+    console.error("Error saving quiz result:", message);
+    if (isDatabaseUnavailable(error)) {
+      return NextResponse.json(
+        { error: "Database service unavailable" },
+        { status: 503 }
+      );
+    }
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

@@ -1,12 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { SKIN_TYPES, SKIN_TONES, FACE_SHAPES, SkinType, SkinTone, FaceShape } from "@/lib/constants";
-import { PRODUCTS } from "@/lib/mock-data";
 import { aiPersonalizedProductRecommendations, AIPersonalizedProductRecommendationsOutput } from "@/ai/flows/ai-personalized-product-recommendations";
 import { ArrowRight, ArrowLeft, Loader2, Star, CheckCircle2 } from "lucide-react";
 import Image from "next/image";
@@ -30,6 +29,25 @@ export default function RecommendPage() {
   });
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState<AIPersonalizedProductRecommendationsOutput | null>(null);
+  const [products, setProducts] = useState<any[]>([]);
+  const [productsLoading, setProductsLoading] = useState(true);
+  const [productsError, setProductsError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function fetchProducts() {
+      try {
+        const res = await fetch("/api/products");
+        if (!res.ok) throw new Error("Failed to fetch products");
+        const data = await res.json();
+        setProducts(data);
+      } catch (err) {
+        setProductsError(err instanceof Error ? err.message : "Failed to load products");
+      } finally {
+        setProductsLoading(false);
+      }
+    }
+    fetchProducts();
+  }, []);
 
   const handleNext = async () => {
     if (step === "SKIN_TYPE") setStep("SKIN_TONE");
@@ -42,11 +60,29 @@ export default function RecommendPage() {
           skinType: profile.skinType!,
           skinTone: profile.skinTone!,
           faceShape: profile.faceShape!,
-          allProducts: PRODUCTS as any,
+          allProducts: products as any,
         });
         setResults(response);
       } catch (error) {
-        console.error("Failed to fetch recommendations:", error);
+        console.error("AI recommendations failed, falling back to filter-based:", error);
+        // Fallback: filter products by matching criteria
+        const filtered = products.filter((p: any) => {
+          const matchesSkinType = p.skinTypes?.some((st: any) => st.skinType === profile.skinType);
+          const matchesSkinTone = p.skinTones?.some((st: any) => st.skinTone === profile.skinTone);
+          const matchesFaceShape = p.faceShapes?.some((fs: any) => fs.faceShape === profile.faceShape);
+          return matchesSkinType || matchesSkinTone || matchesFaceShape;
+        });
+        const fallbackResults = filtered.slice(0, 6).map((p: any) => ({
+          id: p.id,
+          name: p.name,
+          brand: p.brand || "",
+          imageUrl: p.imageUrl || "/placeholder.png",
+          reasonsForRecommendation: p.muaVerdict || "Cocok berdasarkan profil kecantikan kamu.",
+        }));
+        setResults({
+          recommendations: fallbackResults,
+          _fallback: true,
+        } as any);
       } finally {
         setLoading(false);
       }
@@ -99,6 +135,24 @@ export default function RecommendPage() {
         )}
 
         <Card className="bg-card rounded-2xl shadow-lg border border-border/50 p-8 md:p-10">
+          {productsLoading ? (
+            <div className="flex flex-col items-center justify-center py-16 space-y-4">
+              <Loader2 className="h-12 w-12 text-primary animate-spin" />
+              <p className="text-muted-foreground text-sm">Loading products...</p>
+            </div>
+          ) : productsError ? (
+            <div className="text-center py-16 space-y-4">
+              <h2 className="font-headline text-2xl font-bold">Unable to load products</h2>
+              <p className="text-muted-foreground text-sm">{productsError}</p>
+              <Button onClick={() => window.location.reload()} className="rounded-full">Try Again</Button>
+            </div>
+          ) : products.length === 0 ? (
+            <div className="text-center py-16 space-y-4">
+              <h2 className="font-headline text-2xl font-bold">No products available</h2>
+              <p className="text-muted-foreground text-sm">There are no products in the database yet.</p>
+            </div>
+          ) : (
+            <>
           {step === "SKIN_TYPE" && (
             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4">
               <div className="text-center">
@@ -198,6 +252,11 @@ export default function RecommendPage() {
                   <div className="text-center">
                     <h2 className="font-headline text-3xl md:text-4xl font-bold mb-2">{t.recommend.recommendedForYou}</h2>
                     <p className="text-muted-foreground text-sm">{t.recommend.basedOnProfile}</p>
+                    {(results as any)._fallback && (
+                      <p className="text-xs text-amber-600 mt-2 bg-amber-50 dark:bg-amber-950/30 inline-block px-3 py-1 rounded-full">
+                        Rekomendasi berbasis filter (AI tidak tersedia)
+                      </p>
+                    )}
                   </div>
 
                   <div className="space-y-6">
@@ -213,7 +272,7 @@ export default function RecommendPage() {
                           </div>
                           <p className="text-xs text-muted-foreground line-clamp-2">{rec.reasonsForRecommendation}</p>
                           <Button size="sm" variant="outline" className="rounded-full text-xs h-7" asChild>
-                            <Link href={`/product/${rec.id}`}>{t.recommend.viewDetails}</Link>
+                            <Link href={`/products/${rec.id}`}>{t.recommend.viewDetails}</Link>
                           </Button>
                         </div>
                       </div>
@@ -254,6 +313,8 @@ export default function RecommendPage() {
                 {step === "FACE_SHAPE" ? t.recommend.getResults : t.recommend.continue_} <ArrowRight className="h-4 w-4 ml-2" />
               </Button>
             </div>
+          )}
+            </>
           )}
         </Card>
       </div>

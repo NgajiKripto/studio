@@ -62,25 +62,47 @@ async function incrementProfileView(userId: string) {
 
 export async function generateMetadata({ params }: Props) {
   const { username } = await params;
-  const user = await getUser(username);
-  if (!user) return { title: "User Not Found - Muakeup" };
+  try {
+    const user = await getUser(username);
+    if (!user) return { title: "User Not Found - Muakeup" };
 
-  return {
-    title: `${user.name} - Glow Circle | Muakeup`,
-    description: user.bio || `Lihat profil Beauty DNA dan rekomendasi produk dari ${user.name}`,
-  };
+    return {
+      title: `${user.name} - Glow Circle | Muakeup`,
+      description: user.bio || `Lihat profil Beauty DNA dan rekomendasi produk dari ${user.name}`,
+    };
+  } catch {
+    return { title: "User Not Found - Muakeup" };
+  }
 }
 
 export default async function ProfilePage({ params }: Props) {
   const { username } = await params;
-  const user = await getUser(username);
+
+  let user: Awaited<ReturnType<typeof getUser>>;
+  try {
+    user = await getUser(username);
+  } catch (error) {
+    console.error("Failed to load profile:", error instanceof Error ? error.message : "Unknown error");
+    return (
+      <main className="min-h-screen bg-background py-16 md:py-24">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl text-center">
+          <h1 className="text-2xl font-bold mb-4">Unable to load profile</h1>
+          <p className="text-muted-foreground">The database is currently unavailable. Please try again later.</p>
+        </div>
+      </main>
+    );
+  }
 
   if (!user) {
     notFound();
   }
 
   // Increment profile view count
-  await incrementProfileView(user.id);
+  try {
+    await incrementProfileView(user.id);
+  } catch (error) {
+    console.error("Failed to increment profile view:", error instanceof Error ? error.message : "Unknown error");
+  }
 
   const isPremium = ["GLOW_BASIC", "GLOW_PRO", "GLOW_STAR"].includes(user.role);
 
@@ -183,7 +205,7 @@ export default async function ProfilePage({ params }: Props) {
             </Card>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {user.recommendedProducts.map(({ product, note }) => (
+              {user.recommendedProducts.map(({ product, note }: { product: any; note: string | null }) => (
                 <Card
                   key={product.id}
                   className="overflow-hidden rounded-2xl border border-border/50 group hover:shadow-lg transition-all duration-300"

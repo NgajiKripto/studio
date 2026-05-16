@@ -1,6 +1,7 @@
 export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { isDatabaseUnavailable } from "@/lib/db-utils";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { dashboardProductsSchema } from "@/lib/validations";
@@ -54,7 +55,14 @@ export async function PUT(request: NextRequest) {
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("Error updating recommended products:", error instanceof Error ? error.message : "Unknown error");
+    const message = error instanceof Error ? error.message : "Unknown error";
+    console.error("Error updating recommended products:", message);
+    if (isDatabaseUnavailable(error)) {
+      return NextResponse.json(
+        { error: "Database service unavailable" },
+        { status: 503 }
+      );
+    }
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

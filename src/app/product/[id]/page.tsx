@@ -1,4 +1,7 @@
-import { PRODUCTS } from "@/lib/mock-data";
+export const dynamic = 'force-dynamic';
+
+import { prisma } from "@/lib/prisma";
+import { isDatabaseUnavailable } from "@/lib/db-utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Star, ArrowLeft, Heart } from "lucide-react";
@@ -6,6 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
+import type { ProductWithRelations } from "@/lib/types";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -13,18 +17,67 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
-  const product = PRODUCTS.find((p) => p.id === id);
-  if (!product) return { title: "Product Not Found" };
+  try {
+    const product = await prisma.product.findUnique({ where: { id } });
+    if (!product) return { title: "Product Not Found" };
 
-  return {
-    title: `${product.name} by ${product.brand} - Muakeup`,
-    description: `MUA Verdict: ${product.muaVerdict}`,
-  };
+    return {
+      title: `${product.name} by ${product.brand} - Muakeup`,
+      description: `MUA Verdict: ${product.muaVerdict}`,
+    };
+  } catch {
+    return { title: "Product Not Found" };
+  }
 }
 
 export default async function ProductPage({ params }: Props) {
   const { id } = await params;
-  const product = PRODUCTS.find((p) => p.id === id);
+
+  let product: ProductWithRelations | null = null;
+  let relatedProducts: ProductWithRelations[] = [];
+  let dbUnavailable = false;
+
+  try {
+    product = await prisma.product.findUnique({
+      where: { id },
+      include: {
+        skinTypes: true,
+        skinTones: true,
+        faceShapes: true,
+      },
+    }) as ProductWithRelations | null;
+
+    if (product) {
+      relatedProducts = await prisma.product.findMany({
+        where: { id: { not: id } },
+        include: {
+          skinTypes: true,
+          skinTones: true,
+          faceShapes: true,
+        },
+        take: 4,
+      }) as ProductWithRelations[];
+    }
+  } catch (error) {
+    console.error("Failed to fetch product:", error instanceof Error ? error.message : "Unknown error");
+    if (isDatabaseUnavailable(error)) {
+      dbUnavailable = true;
+    }
+  }
+
+  if (dbUnavailable) {
+    return (
+      <main className="min-h-screen bg-background py-12">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center py-24">
+          <h1 className="font-headline text-3xl font-bold text-foreground mb-4">Layanan sedang tidak tersedia</h1>
+          <p className="text-muted-foreground mb-8">Database sedang tidak dapat diakses. Silakan coba lagi nanti.</p>
+          <Button asChild className="rounded-full">
+            <Link href="/products">Back to Catalog</Link>
+          </Button>
+        </div>
+      </main>
+    );
+  }
 
   if (!product) {
     notFound();
@@ -33,7 +86,7 @@ export default async function ProductPage({ params }: Props) {
   return (
     <main className="min-h-screen bg-background py-12">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <Link href="/catalog" className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-foreground mb-10 transition-colors">
+        <Link href="/products" className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-foreground mb-10 transition-colors">
           <ArrowLeft className="h-4 w-4 mr-2" /> Back to Catalog
         </Link>
 
@@ -107,7 +160,7 @@ export default async function ProductPage({ params }: Props) {
                 <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Best For</h4>
                 <div className="flex flex-wrap gap-1.5">
                   {product.skinTypes.map((t) => (
-                    <span key={t} className="text-xs font-medium bg-secondary px-3 py-1 rounded-full">{t}</span>
+                    <span key={t.id} className="text-xs font-medium bg-secondary px-3 py-1 rounded-full">{t.skinType}</span>
                   ))}
                 </div>
               </div>
@@ -115,7 +168,7 @@ export default async function ProductPage({ params }: Props) {
                 <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Face Shapes</h4>
                 <div className="flex flex-wrap gap-1.5">
                   {product.faceShapes.map((s) => (
-                    <span key={s} className="text-xs font-medium border border-border px-3 py-1 rounded-full">{s}</span>
+                    <span key={s.id} className="text-xs font-medium border border-border px-3 py-1 rounded-full">{s.faceShape}</span>
                   ))}
                 </div>
               </div>
@@ -136,24 +189,26 @@ export default async function ProductPage({ params }: Props) {
         </div>
 
         {/* Related Section */}
-        <section className="mt-24">
-          <h2 className="font-headline text-3xl font-bold text-foreground mb-8">You might also love</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {PRODUCTS.filter(p => p.id !== id).slice(0, 4).map((related) => (
-              <Link key={related.id} href={`/product/${related.id}`} className="group">
-                <div className="relative aspect-[4/5] rounded-2xl overflow-hidden mb-4 bg-muted/50">
-                  <Image src={related.imageUrl} alt={related.name} fill className="object-cover transition-transform group-hover:scale-105 duration-500" />
-                  <button className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-sm">
-                    <Heart className="h-4 w-4 text-muted-foreground" />
-                  </button>
-                </div>
-                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">{related.brand}</p>
-                <h4 className="font-semibold text-foreground group-hover:text-primary transition-colors">{related.name}</h4>
-                <p className="text-sm text-muted-foreground">{related.priceEstimate}</p>
-              </Link>
-            ))}
-          </div>
-        </section>
+        {relatedProducts.length > 0 && (
+          <section className="mt-24">
+            <h2 className="font-headline text-3xl font-bold text-foreground mb-8">You might also love</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {relatedProducts.map((related) => (
+                <Link key={related.id} href={`/products/${related.id}`} className="group">
+                  <div className="relative aspect-[4/5] rounded-2xl overflow-hidden mb-4 bg-muted/50">
+                    <Image src={related.imageUrl} alt={related.name} fill className="object-cover transition-transform group-hover:scale-105 duration-500" />
+                    <button className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-sm">
+                      <Heart className="h-4 w-4 text-muted-foreground" />
+                    </button>
+                  </div>
+                  <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">{related.brand}</p>
+                  <h4 className="font-semibold text-foreground group-hover:text-primary transition-colors">{related.name}</h4>
+                  <p className="text-sm text-muted-foreground">{related.priceEstimate}</p>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
       </div>
     </main>
   );

@@ -2,6 +2,8 @@
 export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { isDatabaseUnavailable } from '@/lib/db-utils';
+import { Prisma } from '@prisma/client';
 import {
   getAdminSessionTokenFromRequest,
   isAdminAuthorizedRequest,
@@ -29,7 +31,11 @@ export async function GET(
 
     return NextResponse.json(product);
   } catch (error) {
-    console.error("Product fetch failed:", error instanceof Error ? error.message : "Unknown error");
+    const message = error instanceof Error ? error.message : "Unknown error";
+    console.error("Product fetch failed:", message);
+    if (isDatabaseUnavailable(error)) {
+      return NextResponse.json({ error: 'Database service unavailable' }, { status: 503 });
+    }
     return NextResponse.json({ error: 'Failed to fetch product' }, { status: 500 });
   }
 }
@@ -63,7 +69,7 @@ export async function PUT(
     const { name, brand, category, description, priceEstimate, affiliateUrl, imageUrl, muaVerdict, skinTypes, skinTones, faceShapes } = result.data;
 
     // We handle updates by deleting old relations and creating new ones in a transaction
-    const product = await prisma.$transaction(async (tx) => {
+    const product = await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
       // Clear existing relations
       await tx.productSkinType.deleteMany({ where: { productId: id } });
       await tx.productSkinTone.deleteMany({ where: { productId: id } });
@@ -96,7 +102,11 @@ export async function PUT(
 
     return NextResponse.json(product);
   } catch (error) {
-    console.error("Product operation failed:", error instanceof Error ? error.message : "Unknown error");
+    const message = error instanceof Error ? error.message : "Unknown error";
+    console.error("Product operation failed:", message);
+    if (isDatabaseUnavailable(error)) {
+      return NextResponse.json({ error: 'Database service unavailable' }, { status: 503 });
+    }
     return NextResponse.json({ error: 'Failed to update product' }, { status: 500 });
   }
 }
@@ -119,7 +129,11 @@ export async function DELETE(
     });
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("Product deletion failed:", error instanceof Error ? error.message : "Unknown error");
+    const message = error instanceof Error ? error.message : "Unknown error";
+    console.error("Product deletion failed:", message);
+    if (isDatabaseUnavailable(error)) {
+      return NextResponse.json({ error: 'Database service unavailable' }, { status: 503 });
+    }
     return NextResponse.json({ error: 'Failed to delete product' }, { status: 500 });
   }
 }
