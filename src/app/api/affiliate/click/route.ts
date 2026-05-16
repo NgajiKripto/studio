@@ -1,6 +1,7 @@
 export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { isDatabaseUnavailable } from "@/lib/db-utils";
 import { affiliateClickSchema } from "@/lib/validations";
 
 export async function GET(request: NextRequest) {
@@ -69,9 +70,8 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.redirect(finalUrl.toString(), 302);
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Unknown error";
-    console.error("Affiliate click tracking error:", message);
-    if (message.includes("DATABASE_URL") || (error as any)?.name === "PrismaClientInitializationError") {
+    console.error("Affiliate click tracking error:", error instanceof Error ? error.message : "Unknown error");
+    if (isDatabaseUnavailable(error)) {
       return NextResponse.json(
         { error: "Database service unavailable" },
         { status: 503 }

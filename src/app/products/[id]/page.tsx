@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
+import { isDatabaseUnavailable } from "@/lib/db-utils";
 import { MUAVerdict } from "@/components/products/MUAVerdict";
 import { ProductDetailClient } from "@/components/products/ProductDetailClient";
 import { Badge } from "@/components/ui/badge";
@@ -43,6 +44,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
   const { id } = await params;
 
   let product = null;
+  let dbUnavailable = false;
 
   try {
     product = await prisma.product.findUnique({
@@ -55,6 +57,23 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
     });
   } catch (error) {
     console.error("Failed to fetch product:", error instanceof Error ? error.message : "Unknown error");
+    if (isDatabaseUnavailable(error)) {
+      dbUnavailable = true;
+    }
+  }
+
+  if (dbUnavailable) {
+    return (
+      <main className="min-h-screen bg-background">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center py-24">
+          <h1 className="font-headline text-3xl font-bold text-foreground mb-4">Layanan sedang tidak tersedia</h1>
+          <p className="text-muted-foreground mb-8">Database sedang tidak dapat diakses. Silakan coba lagi nanti.</p>
+          <Link href="/products" className="inline-flex items-center text-sm font-medium text-primary hover:underline">
+            Back to Catalog
+          </Link>
+        </div>
+      </main>
+    );
   }
 
   if (!product) {
@@ -193,12 +212,10 @@ export async function generateStaticParams() {
     const products = await prisma.product.findMany({ select: { id: true } });
     return products.map((p: { id: string }) => ({ id: p.id }));
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : String(error);
-    const isDbUnavailable = errorMessage.includes("DATABASE_URL") || 
-      (error instanceof Error && error.name === "PrismaClientInitializationError");
-    if (!isDbUnavailable) {
+    if (!isDatabaseUnavailable(error)) {
       throw error;
     }
+    const errorMessage = error instanceof Error ? error.message : String(error);
     console.warn(`Failed to generate static params for /products/[id], falling back to runtime rendering. (${errorMessage})`);
     return [];
   }

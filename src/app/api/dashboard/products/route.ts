@@ -1,6 +1,7 @@
 export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { isDatabaseUnavailable } from "@/lib/db-utils";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { dashboardProductsSchema } from "@/lib/validations";
@@ -56,7 +57,7 @@ export async function PUT(request: NextRequest) {
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
     console.error("Error updating recommended products:", message);
-    if (message.includes("DATABASE_URL") || (error as any)?.name === "PrismaClientInitializationError") {
+    if (isDatabaseUnavailable(error)) {
       return NextResponse.json(
         { error: "Database service unavailable" },
         { status: 503 }

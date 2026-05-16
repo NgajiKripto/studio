@@ -1,6 +1,7 @@
 export const dynamic = 'force-dynamic';
 
 import { prisma } from "@/lib/prisma";
+import { isDatabaseUnavailable } from "@/lib/db-utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Star, ArrowLeft, Heart } from "lucide-react";
@@ -34,6 +35,7 @@ export default async function ProductPage({ params }: Props) {
 
   let product: ProductWithRelations | null = null;
   let relatedProducts: ProductWithRelations[] = [];
+  let dbUnavailable = false;
 
   try {
     product = await prisma.product.findUnique({
@@ -58,6 +60,23 @@ export default async function ProductPage({ params }: Props) {
     }
   } catch (error) {
     console.error("Failed to fetch product:", error instanceof Error ? error.message : "Unknown error");
+    if (isDatabaseUnavailable(error)) {
+      dbUnavailable = true;
+    }
+  }
+
+  if (dbUnavailable) {
+    return (
+      <main className="min-h-screen bg-background py-12">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center py-24">
+          <h1 className="font-headline text-3xl font-bold text-foreground mb-4">Layanan sedang tidak tersedia</h1>
+          <p className="text-muted-foreground mb-8">Database sedang tidak dapat diakses. Silakan coba lagi nanti.</p>
+          <Button asChild className="rounded-full">
+            <Link href="/products">Back to Catalog</Link>
+          </Button>
+        </div>
+      </main>
+    );
   }
 
   if (!product) {

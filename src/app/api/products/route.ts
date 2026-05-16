@@ -2,6 +2,7 @@
 export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { isDatabaseUnavailable } from '@/lib/db-utils';
 import {
   getAdminSessionTokenFromRequest,
   isAdminAuthorizedRequest,
@@ -24,7 +25,7 @@ export async function GET() {
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
     console.error("Product fetch failed:", message);
-    if (message.includes("DATABASE_URL") || (error as any)?.name === "PrismaClientInitializationError") {
+    if (isDatabaseUnavailable(error)) {
       return NextResponse.json({ error: 'Database service unavailable' }, { status: 503 });
     }
     return NextResponse.json({ error: 'Failed to fetch products' }, { status: 500 });
@@ -76,7 +77,7 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
     console.error("Product creation failed:", message);
-    if (message.includes("DATABASE_URL") || (error as any)?.name === "PrismaClientInitializationError") {
+    if (isDatabaseUnavailable(error)) {
       return NextResponse.json({ error: 'Database service unavailable' }, { status: 503 });
     }
     return NextResponse.json({ error: 'Failed to create product' }, { status: 500 });

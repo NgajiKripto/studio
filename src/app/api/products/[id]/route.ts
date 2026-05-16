@@ -2,6 +2,7 @@
 export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { isDatabaseUnavailable } from '@/lib/db-utils';
 import { Prisma } from '@prisma/client';
 import {
   getAdminSessionTokenFromRequest,
@@ -32,7 +33,7 @@ export async function GET(
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
     console.error("Product fetch failed:", message);
-    if (message.includes("DATABASE_URL") || (error as any)?.name === "PrismaClientInitializationError") {
+    if (isDatabaseUnavailable(error)) {
       return NextResponse.json({ error: 'Database service unavailable' }, { status: 503 });
     }
     return NextResponse.json({ error: 'Failed to fetch product' }, { status: 500 });
@@ -103,7 +104,7 @@ export async function PUT(
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
     console.error("Product operation failed:", message);
-    if (message.includes("DATABASE_URL") || (error as any)?.name === "PrismaClientInitializationError") {
+    if (isDatabaseUnavailable(error)) {
       return NextResponse.json({ error: 'Database service unavailable' }, { status: 503 });
     }
     return NextResponse.json({ error: 'Failed to update product' }, { status: 500 });
@@ -130,7 +131,7 @@ export async function DELETE(
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
     console.error("Product deletion failed:", message);
-    if (message.includes("DATABASE_URL") || (error as any)?.name === "PrismaClientInitializationError") {
+    if (isDatabaseUnavailable(error)) {
       return NextResponse.json({ error: 'Database service unavailable' }, { status: 503 });
     }
     return NextResponse.json({ error: 'Failed to delete product' }, { status: 500 });

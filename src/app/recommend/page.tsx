@@ -272,7 +272,7 @@ export default function RecommendPage() {
                           </div>
                           <p className="text-xs text-muted-foreground line-clamp-2">{rec.reasonsForRecommendation}</p>
                           <Button size="sm" variant="outline" className="rounded-full text-xs h-7" asChild>
-                            <Link href={`/product/${rec.id}`}>{t.recommend.viewDetails}</Link>
+                            <Link href={`/products/${rec.id}`}>{t.recommend.viewDetails}</Link>
                           </Button>
                         </div>
                       </div>

@@ -6,6 +6,7 @@ const globalForPrisma = globalThis as unknown as {
 
 function createPrismaClient(): PrismaClient {
   if (!process.env.DATABASE_URL) {
+    console.warn("[WARN] DATABASE_URL is not set. Database operations will fail at runtime.");
     // Return a proxy that throws a clear error at runtime when DB is unavailable
     // This allows the build to succeed without DATABASE_URL
     return new Proxy({} as PrismaClient, {

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { isDatabaseUnavailable } from "@/lib/db-utils";
 
 export const dynamic = "force-dynamic";
 
@@ -83,7 +84,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
     console.error("Error fetching aggregate data:", message);
-    if (message.includes("DATABASE_URL") || (error as any)?.name === "PrismaClientInitializationError") {
+    if (isDatabaseUnavailable(error)) {
       return NextResponse.json(
         { error: "Database service unavailable" },
         { status: 503 }
