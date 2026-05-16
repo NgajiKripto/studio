@@ -109,7 +109,20 @@ function StatTable({ title, data, emoji }: { title: string; data: Record<string,
 }
 
 export default async function AdminDataPage() {
-  const data = await getAggregateData();
+  let data: AggregateData;
+  try {
+    data = await getAggregateData();
+  } catch (error) {
+    console.error("Failed to load aggregate data:", error instanceof Error ? error.message : "Unknown error");
+    return (
+      <div className="min-h-screen bg-background">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center">
+          <h1 className="text-2xl font-bold mb-4">Unable to load data</h1>
+          <p className="text-muted-foreground">The database is currently unavailable. Please try again later.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">

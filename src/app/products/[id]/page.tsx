@@ -16,36 +16,46 @@ interface ProductPageProps {
 
 export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
   const { id } = await params;
-  const product = await prisma.product.findUnique({ where: { id } });
+  try {
+    const product = await prisma.product.findUnique({ where: { id } });
 
-  if (!product) return { title: "Produk Tidak Ditemukan" };
+    if (!product) return { title: "Produk Tidak Ditemukan" };
 
-  const description = product.muaVerdict
-    ? `${product.muaVerdict.substring(0, 150)}...`
-    : `Beli ${product.name} dari ${product.brand}. Rekomendasi makeup ${product.category} sesuai jenis kulit dan warna kulitmu.`;
+    const description = product.muaVerdict
+      ? `${product.muaVerdict.substring(0, 150)}...`
+      : `Beli ${product.name} dari ${product.brand}. Rekomendasi makeup ${product.category} sesuai jenis kulit dan warna kulitmu.`;
 
-  return {
-    title: `${product.name} - ${product.brand} | Review & Rekomendasi`,
-    description,
-    openGraph: {
-      title: `${product.name} oleh ${product.brand} | Muakeup`,
+    return {
+      title: `${product.name} - ${product.brand} | Review & Rekomendasi`,
       description,
-      images: [{ url: product.imageUrl, alt: `Produk ${product.name} dari ${product.brand}` }],
-    },
-  };
+      openGraph: {
+        title: `${product.name} oleh ${product.brand} | Muakeup`,
+        description,
+        images: [{ url: product.imageUrl, alt: `Produk ${product.name} dari ${product.brand}` }],
+      },
+    };
+  } catch {
+    return { title: "Produk Tidak Ditemukan" };
+  }
 }
 
 export default async function ProductDetailPage({ params }: ProductPageProps) {
   const { id } = await params;
 
-  const product = await prisma.product.findUnique({
-    where: { id },
-    include: {
-      skinTypes: true,
-      skinTones: true,
-      faceShapes: true,
-    },
-  });
+  let product = null;
+
+  try {
+    product = await prisma.product.findUnique({
+      where: { id },
+      include: {
+        skinTypes: true,
+        skinTones: true,
+        faceShapes: true,
+      },
+    });
+  } catch (error) {
+    console.error("Failed to fetch product:", error instanceof Error ? error.message : "Unknown error");
+  }
 
   if (!product) {
     notFound();
@@ -183,11 +193,13 @@ export async function generateStaticParams() {
     const products = await prisma.product.findMany({ select: { id: true } });
     return products.map((p: { id: string }) => ({ id: p.id }));
   } catch (error) {
-    const errorName = error instanceof Error ? error.name : String(error);
-    if (errorName !== "PrismaClientInitializationError") {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    const isDbUnavailable = errorMessage.includes("DATABASE_URL") || 
+      (error instanceof Error && error.name === "PrismaClientInitializationError");
+    if (!isDbUnavailable) {
       throw error;
     }
-    console.warn(`Failed to generate static params for /products/[id], falling back to runtime rendering. (${errorName})`);
+    console.warn(`Failed to generate static params for /products/[id], falling back to runtime rendering. (${errorMessage})`);
     return [];
   }
 }

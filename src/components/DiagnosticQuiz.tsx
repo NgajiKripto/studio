@@ -120,11 +120,11 @@ export function DiagnosticQuiz() {
   const goToCatalog = () => {
     if (!results) return;
     const params = new URLSearchParams({
-      type: results.skinType,
-      tone: results.skinTone,
-      shape: results.faceShape,
+      skin_types: results.skinType,
+      skin_tones: results.skinTone,
+      face_shapes: results.faceShape,
     });
-    router.push(`/catalog?${params.toString()}`);
+    router.push(`/products?${params.toString()}`);
   };
 
   const renderStep1 = () => (

@@ -1,12 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { SKIN_TYPES, SKIN_TONES, FACE_SHAPES, SkinType, SkinTone, FaceShape } from "@/lib/constants";
-import { PRODUCTS } from "@/lib/mock-data";
 import { aiPersonalizedProductRecommendations, AIPersonalizedProductRecommendationsOutput } from "@/ai/flows/ai-personalized-product-recommendations";
 import { ArrowRight, ArrowLeft, Loader2, Star, CheckCircle2 } from "lucide-react";
 import Image from "next/image";
@@ -30,6 +29,25 @@ export default function RecommendPage() {
   });
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState<AIPersonalizedProductRecommendationsOutput | null>(null);
+  const [products, setProducts] = useState<any[]>([]);
+  const [productsLoading, setProductsLoading] = useState(true);
+  const [productsError, setProductsError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function fetchProducts() {
+      try {
+        const res = await fetch("/api/products");
+        if (!res.ok) throw new Error("Failed to fetch products");
+        const data = await res.json();
+        setProducts(data);
+      } catch (err) {
+        setProductsError(err instanceof Error ? err.message : "Failed to load products");
+      } finally {
+        setProductsLoading(false);
+      }
+    }
+    fetchProducts();
+  }, []);
 
   const handleNext = async () => {
     if (step === "SKIN_TYPE") setStep("SKIN_TONE");
@@ -42,7 +60,7 @@ export default function RecommendPage() {
           skinType: profile.skinType!,
           skinTone: profile.skinTone!,
           faceShape: profile.faceShape!,
-          allProducts: PRODUCTS as any,
+          allProducts: products as any,
         });
         setResults(response);
       } catch (error) {
@@ -99,6 +117,24 @@ export default function RecommendPage() {
         )}
 
         <Card className="bg-card rounded-2xl shadow-lg border border-border/50 p-8 md:p-10">
+          {productsLoading ? (
+            <div className="flex flex-col items-center justify-center py-16 space-y-4">
+              <Loader2 className="h-12 w-12 text-primary animate-spin" />
+              <p className="text-muted-foreground text-sm">Loading products...</p>
+            </div>
+          ) : productsError ? (
+            <div className="text-center py-16 space-y-4">
+              <h2 className="font-headline text-2xl font-bold">Unable to load products</h2>
+              <p className="text-muted-foreground text-sm">{productsError}</p>
+              <Button onClick={() => window.location.reload()} className="rounded-full">Try Again</Button>
+            </div>
+          ) : products.length === 0 ? (
+            <div className="text-center py-16 space-y-4">
+              <h2 className="font-headline text-2xl font-bold">No products available</h2>
+              <p className="text-muted-foreground text-sm">There are no products in the database yet.</p>
+            </div>
+          ) : (
+            <>
           {step === "SKIN_TYPE" && (
             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4">
               <div className="text-center">
@@ -254,6 +290,8 @@ export default function RecommendPage() {
                 {step === "FACE_SHAPE" ? t.recommend.getResults : t.recommend.continue_} <ArrowRight className="h-4 w-4 ml-2" />
               </Button>
             </div>
+          )}
+            </>
           )}
         </Card>
       </div>
