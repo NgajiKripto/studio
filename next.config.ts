@@ -27,8 +27,8 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  // Security headers are intentionally duplicated here and in middleware.ts for defense-in-depth.
-  // Middleware covers dynamic routes; this headers() config covers static assets served by Next.js.
+  // Security headers are intentionally duplicated here and in proxy.ts for defense-in-depth.
+  // Proxy covers dynamic routes; this headers() config covers static assets served by Next.js.
   // Both sources should be kept in sync.
   async headers() {
     return [
